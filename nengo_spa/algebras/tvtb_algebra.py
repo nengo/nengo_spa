@@ -386,7 +386,16 @@ class TvtbAlgebra(AbstractAlgebra):
 
 
 class TvtbSign(GenericSign):
-    """Represents a sign in the `.TvtbAlgebra`."""
+    """Represents a sign in the `.TvtbAlgebra`.
+
+    The sign depends on the symmetry and positive/negative definiteness of the
+    binding matrix derived from the vector. For all non-symmetric matrices,
+    the sign is indefinite. It is also indefenite, if the matrices eigenvalues
+    have different signs. A symmetric, positive (negative) definite binding
+    matrix corresponds to a positive (negative) sign (equivalent to all
+    eigenvalues being greater than 0, respectively lower than 0). If all
+    eigenvalues are equal to 0, the sign is also 0.
+    """
 
     def to_vector(self, d):
         if self.sign is None:

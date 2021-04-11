@@ -30,6 +30,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.todo",
     "sphinx.ext.viewcode",
+    "matplotlib.sphinxext.plot_directive",
     "nbsphinx",
     "nengo_sphinx_theme.ext.redirects",
 ]
