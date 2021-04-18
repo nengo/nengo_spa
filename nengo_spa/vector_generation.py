@@ -161,3 +161,41 @@ class ExpectedUnitLengthVectors:
 
     def next(self):
         return self.__next__()
+
+
+class VectorsWithProperties:
+    """Generator for vectors with given properties.
+
+    Supported properties depend on the algebra. See the respective algebra's
+    :meth:`.AbstractAlgebra.create_vector` method.
+
+    Parameters
+    ----------
+    d : int
+        Dimensionality of returned vectors.
+    properties
+        Properties that the generated vectors have to fulfill. Details depend
+        on the exact algebra.
+    algebra : AbstractAlgebra
+        Algebra that determines the interpretation of the properties.
+    rng : numpy.random.RandomState, optional
+        The random number generator to use to create new vectors.
+    """
+
+    def __init__(self, d, properties, algebra, *, rng=None):
+        if rng is None:
+            rng = np.random.RandomState()
+
+        self.d = d
+        self.properties = properties
+        self.algebra = algebra
+        self.rng = rng
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.algebra.create_vector(self.d, self.properties, rng=self.rng)
+
+    def next(self):
+        return self.__next__()

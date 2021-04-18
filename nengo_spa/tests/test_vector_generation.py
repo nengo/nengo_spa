@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from nengo_spa.algebras import HrrAlgebra
+from nengo_spa.algebras import CommonProperties, HrrAlgebra
 from nengo_spa.semantic_pointer import SemanticPointer
 from nengo_spa.vector_generation import (
     AxisAlignedVectors,
@@ -9,6 +9,7 @@ from nengo_spa.vector_generation import (
     OrthonormalVectors,
     UnitaryVectors,
     UnitLengthVectors,
+    VectorsWithProperties,
 )
 
 
@@ -44,6 +45,16 @@ def test_expected_unit_length_vectors(rng):
     assert np.abs(np.mean([np.linalg.norm(next(g)) for i in range(50)]) - 1.0) < 0.1
 
 
+def test_vectors_with_properties(rng):
+    algebra = HrrAlgebra()
+    g = VectorsWithProperties(
+        64, {CommonProperties.POSITIVE, CommonProperties.UNITARY}, algebra, rng=rng
+    )
+    v = next(g)
+    sqrt_v = algebra.binding_power(v, 0.5)
+    assert np.allclose(v, algebra.bind(sqrt_v, sqrt_v))
+
+
 @pytest.mark.parametrize(
     "vg",
     (
@@ -52,6 +63,9 @@ def test_expected_unit_length_vectors(rng):
         OrthonormalVectors,
         UnitLengthVectors,
         lambda d: UnitaryVectors(d, algebra=HrrAlgebra()),
+        lambda d: VectorsWithProperties(
+            d, {CommonProperties.POSITIVE}, algebra=HrrAlgebra()
+        ),
     ),
 )
 def test_instantiation_without_rng(vg):
@@ -67,6 +81,9 @@ def test_instantiation_without_rng(vg):
         OrthonormalVectors,
         UnitLengthVectors,
         lambda d: UnitaryVectors(d, algebra=HrrAlgebra()),
+        lambda d: VectorsWithProperties(
+            d, {CommonProperties.POSITIVE}, algebra=HrrAlgebra()
+        ),
     ),
 )
 def test_iter(vg):

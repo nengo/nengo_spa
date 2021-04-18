@@ -13,3 +13,4 @@ nengo\_spa\.vector_generation
       UnitaryVectors
       OrthonormalVectors
       ExpectedUnitLengthVectors
+      VectorsWithProperties

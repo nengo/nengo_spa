@@ -26,6 +26,7 @@ from nengo_spa.vector_generation import (
     OrthonormalVectors,
     UnitaryVectors,
     UnitLengthVectors,
+    VectorsWithProperties,
 )
 from nengo_spa.vocabulary import Vocabulary
 
