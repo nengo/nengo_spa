@@ -5,6 +5,7 @@ from nengo_spa.algebras import CommonProperties, HrrAlgebra
 from nengo_spa.semantic_pointer import SemanticPointer
 from nengo_spa.vector_generation import (
     AxisAlignedVectors,
+    EquallySpacedPositiveUnitaryHrrVectors,
     ExpectedUnitLengthVectors,
     OrthonormalVectors,
     UnitaryVectors,
@@ -31,6 +32,39 @@ def test_unitary_pointers(rng):
     b = SemanticPointer(next(g), algebra=algebra)
     c = SemanticPointer(next(g), algebra=algebra)
     assert np.allclose(a.compare(c), (a * b).compare(c * b))
+
+
+@pytest.mark.parametrize(
+    "constructor_kwargs,expected",
+    [
+        (dict(d=16, n=8, offset=0), np.eye(16)[::2]),
+        (dict(d=16, n=8, offset=2), np.roll(np.eye(16)[::2], -2, axis=0)),
+        (dict(d=16, n=8, offset=0.3), HrrAlgebra().binding_power(np.eye(16)[2], 0.3)),
+        (dict(d=16, n=20, offset=1), None),
+        (dict(d=9, n=9, offset=0), np.eye(9)),
+        (dict(d=9, n=9, offset=2), np.roll(np.eye(9), -2, axis=0)),
+        (dict(d=9, n=9, offset=0.3), HrrAlgebra().binding_power(np.eye(9)[1], 0.3)),
+        (dict(d=9, n=20, offset=1), None),
+    ],
+)
+def test_equally_spaced_positive_unitary_hrr_vectors(constructor_kwargs, expected):
+    g = EquallySpacedPositiveUnitaryHrrVectors(**constructor_kwargs)
+
+    assert np.all(
+        np.array(list(g)) == g.vectors
+    ), "Iterating should yield `vectors` property."
+    assert len(g.vectors) == constructor_kwargs["n"], "Should produce `n` vectors."
+
+    similarities = np.array(
+        [
+            np.dot(g.vectors[i], g.vectors[(i + 1) % len(g.vectors)])
+            for i in range(len(g.vectors))
+        ]
+    )
+    assert np.allclose(
+        similarities, similarities[0]
+    ), "Similarities of neighbouring pairs should all be the same."
+    assert np.all(similarities < 1.0), "Vectors should not be the same."
 
 
 def test_orthonormal_pointers(rng):

@@ -27,7 +27,8 @@ Release History
 
 - Support for (fractional) binding powers and the notion of signs in algebras.
   (`#271 <https://github.com/nengo/nengo_spa/pull/271>`__)
-- ``VectorsWithProperties`` vector generator.
+- ``EquallySpacedPositiveUnitaryHrrVectors`` and ``VectorsWithProperties``
+  vector generators.
   (`#284 <https://github.com/nengo/nengo_spa/issues/284>`__,
   `#285 <https://github.com/nengo/nengo_spa/pull/285>`__)
 
