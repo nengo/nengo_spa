@@ -22,10 +22,12 @@ from nengo_spa.operators import dot, reinterpret, translate
 from nengo_spa.semantic_pointer import SemanticPointer
 from nengo_spa.vector_generation import (
     AxisAlignedVectors,
+    EquallySpacedPositiveUnitaryHrrVectors,
     ExpectedUnitLengthVectors,
     OrthonormalVectors,
     UnitaryVectors,
     UnitLengthVectors,
+    VectorsWithProperties,
 )
 from nengo_spa.vocabulary import Vocabulary
 

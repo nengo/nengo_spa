@@ -9,7 +9,9 @@ nengo\_spa\.vector_generation
    .. autosummary::
 
       AxisAlignedVectors
+      EquallySpacedPositiveUnitaryHrrVectors
+      ExpectedUnitLengthVectors
       UnitLengthVectors
       UnitaryVectors
       OrthonormalVectors
-      ExpectedUnitLengthVectors
+      VectorsWithProperties
