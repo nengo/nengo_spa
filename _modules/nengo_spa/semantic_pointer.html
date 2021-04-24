@@ -1,0 +1,868 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.semantic_pointer &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+  
+  
+<script src="../../_static/underscore.js"></script>
+  
+  
+<script src="../../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../../v1.2.0/_modules/nengo_spa/semantic_pointer.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../../v1.1.1/_modules/nengo_spa/semantic_pointer.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../../v1.1.0/_modules/nengo_spa/semantic_pointer.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../../v1.2.0/_modules/nengo_spa/semantic_pointer.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <h1>Source code for nengo_spa.semantic_pointer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">nengo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nengo.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+
+<span class="kn">from</span> <span class="nn">nengo_spa.algebras.base</span> <span class="kn">import</span> <span class="n">AbstractAlgebra</span><span class="p">,</span> <span class="n">ElementSidedness</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.algebras.hrr_algebra</span> <span class="kn">import</span> <span class="n">HrrAlgebra</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.ast.base</span> <span class="kn">import</span> <span class="n">Fixed</span><span class="p">,</span> <span class="n">TypeCheckedBinaryOp</span><span class="p">,</span> <span class="n">infer_types</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.ast.expr_tree</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AttributeAccess</span><span class="p">,</span>
+    <span class="n">BinaryOperator</span><span class="p">,</span>
+    <span class="n">FunctionCall</span><span class="p">,</span>
+    <span class="n">Leaf</span><span class="p">,</span>
+    <span class="n">Node</span><span class="p">,</span>
+    <span class="n">UnaryOperator</span><span class="p">,</span>
+    <span class="n">limit_str_length</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.typechecks</span> <span class="kn">import</span> <span class="n">is_array</span><span class="p">,</span> <span class="n">is_array_like</span><span class="p">,</span> <span class="n">is_number</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.types</span> <span class="kn">import</span> <span class="n">TAnyVocab</span><span class="p">,</span> <span class="n">TScalar</span><span class="p">,</span> <span class="n">TVocabulary</span>
+
+
+<div class="viewcode-block" id="SemanticPointer"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer">[docs]</a><span class="k">class</span> <span class="nc">SemanticPointer</span><span class="p">(</span><span class="n">Fixed</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A Semantic Pointer, based on Holographic Reduced Representations.</span>
+
+<span class="sd">    Operators are overloaded so that ``+`` and ``-`` are addition,</span>
+<span class="sd">    ``*`` is circular convolution, and ``~`` is the two-sided inversion operator.</span>
+<span class="sd">    The left and right inverese can be obtained with the `linv` and `rinv`</span>
+<span class="sd">    methods.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array_like</span>
+<span class="sd">        The vector constituting the Semantic Pointer.</span>
+<span class="sd">    vocab : Vocabulary, optional</span>
+<span class="sd">        Vocabulary that the Semantic Pointer is considered to be part of.</span>
+<span class="sd">        Mutually exclusive with the *algebra* argument.</span>
+<span class="sd">    algebra : AbstractAlgebra, optional</span>
+<span class="sd">        Algebra used to perform vector symbolic operations on the Semantic</span>
+<span class="sd">        Pointer. Defaults to `.HrrAlgebra`. Mutually exclusive</span>
+<span class="sd">        with the *vocab* argument.</span>
+<span class="sd">    name : str, optional</span>
+<span class="sd">        A name for the Semantic Pointer.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    v : array_like</span>
+<span class="sd">        The vector constituting the Semantic Pointer.</span>
+<span class="sd">    algebra : AbstractAlgebra</span>
+<span class="sd">        Algebra that defines the vector symbolic operations on this Semantic</span>
+<span class="sd">        Pointer.</span>
+<span class="sd">    vocab : Vocabulary or None</span>
+<span class="sd">        The vocabulary the this Semantic Pointer is considered to be part of.</span>
+<span class="sd">    name : str or None</span>
+<span class="sd">        Name of the Semantic Pointer.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">MAX_NAME</span> <span class="o">=</span> <span class="mi">1024</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">algebra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SemanticPointer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">TAnyVocab</span> <span class="k">if</span> <span class="n">vocab</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">TVocabulary</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">algebra</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_algebra</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="s2">&quot;&#39;data&#39; must be a vector&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="o">.</span><span class="n">setflags</span><span class="p">(</span><span class="n">write</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">vocab</span>
+
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">Node</span><span class="p">):</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="n">Leaf</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">limit_str_length</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_NAME</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span> <span class="o">=</span> <span class="n">name</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_algebra</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">algebra</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">vocab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">algebra</span> <span class="o">=</span> <span class="n">HrrAlgebra</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">algebra</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">algebra</span>
+        <span class="k">elif</span> <span class="n">vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">vocab</span><span class="o">.</span><span class="n">algebra</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">algebra</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;vocab and algebra argument are mutually exclusive&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">algebra</span><span class="p">,</span> <span class="n">AbstractAlgebra</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;&#39;algebra&#39; must be an instance of AbstractAlgebra&quot;</span><span class="p">,</span> <span class="s2">&quot;algebra&quot;</span><span class="p">,</span> <span class="n">algebra</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">algebra</span>
+
+    <span class="k">def</span> <span class="nf">_get_unary_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">UnaryOperator</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span> <span class="k">else</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">_get_method_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="n">FunctionCall</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(),</span> <span class="n">AttributeAccess</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span><span class="p">))</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_binary_name</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">op</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">):</span>
+            <span class="n">other_expr_tree</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">_expr_tree</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">other_expr_tree</span> <span class="o">=</span> <span class="n">Leaf</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">other</span><span class="p">))</span>
+        <span class="n">self_expr_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span>
+        <span class="k">if</span> <span class="n">self_expr_tree</span> <span class="ow">and</span> <span class="n">other_expr_tree</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">swap</span><span class="p">:</span>
+                <span class="n">self_expr_tree</span><span class="p">,</span> <span class="n">other_expr_tree</span> <span class="o">=</span> <span class="n">other_expr_tree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_expr_tree</span>
+            <span class="k">return</span> <span class="n">BinaryOperator</span><span class="p">(</span><span class="n">op</span><span class="p">,</span> <span class="n">self_expr_tree</span><span class="p">,</span> <span class="n">other_expr_tree</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">connect_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sink</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">construct</span><span class="p">(),</span> <span class="n">sink</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">construct</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+
+<div class="viewcode-block" id="SemanticPointer.normalized"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.normalized">[docs]</a>    <span class="k">def</span> <span class="nf">normalized</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Normalize the Semantic Pointer and return it as a new object.</span>
+
+<span class="sd">        If the vector length is zero, the Semantic Pointer will be returned</span>
+<span class="sd">        unchanged.</span>
+
+<span class="sd">        The original object is not modified.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nrm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nrm</span> <span class="o">&lt;=</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="n">nrm</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">/</span> <span class="n">nrm</span><span class="p">,</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_method_name</span><span class="p">(</span><span class="s2">&quot;normalized&quot;</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.unitary"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.unitary">[docs]</a>    <span class="k">def</span> <span class="nf">unitary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make the Semantic Pointer unitary and return it as a new object.</span>
+
+<span class="sd">        The original object is not modified.</span>
+
+<span class="sd">        A unitary Semantic Pointer has the property that it does not change</span>
+<span class="sd">        the length of Semantic Pointers it is bound with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">make_unitary</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">),</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_method_name</span><span class="p">(</span><span class="s2">&quot;unitary&quot;</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.copy"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return another semantic pointer with the same data.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.length"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.length">[docs]</a>    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the L2 norm of the vector.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the number of dimensions in the vector.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;SemanticPointer&lt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&gt;&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;SemanticPointer(</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="si">!r}</span><span class="s2">, vocab=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="si">!r}</span><span class="s2">, &quot;</span>
+            <span class="sa">f</span><span class="s2">&quot;algebra=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="si">!r}</span><span class="s2">, name=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">!r}</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+
+    <span class="nd">@TypeCheckedBinaryOp</span><span class="p">(</span><span class="n">Fixed</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="nd">@TypeCheckedBinaryOp</span><span class="p">(</span><span class="n">Fixed</span><span class="p">)</span>
+    <span class="k">def</span> <span class="fm">__radd__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_add</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">type_</span> <span class="o">=</span> <span class="n">infer_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="n">vocab</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="n">TAnyVocab</span> <span class="k">else</span> <span class="n">type_</span><span class="o">.</span><span class="n">vocab</span>
+        <span class="k">if</span> <span class="n">vocab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_algebra_match</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="n">other_pointer</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">other_pointer</span><span class="o">.</span><span class="n">v</span>
+        <span class="k">if</span> <span class="n">swap</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">superpose</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_binary_name</span><span class="p">(</span><span class="n">other_pointer</span><span class="p">,</span> <span class="s2">&quot;+&quot;</span><span class="p">,</span> <span class="n">swap</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__neg__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=-</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_unary_name</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__sub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="n">other</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__rsub__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="p">)</span> <span class="o">+</span> <span class="n">other</span>
+
+    <span class="k">def</span> <span class="fm">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Multiplication of two SemanticPointers is circular convolution.</span>
+
+<span class="sd">        If multiplied by a scalar, we do normal multiplication.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mul</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__rmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Multiplication of two SemanticPointers is circular convolution.</span>
+
+<span class="sd">        If multiplied by a scalar, we do normal multiplication.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_mul</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_mul</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_number</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">*</span> <span class="n">other</span><span class="p">,</span>
+                <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+                <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_binary_name</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">swap</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_array</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                <span class="s2">&quot;Multiplication of Semantic Pointers with arrays in not allowed.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Fixed</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">other</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="n">TScalar</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+                    <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">*</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(),</span>
+                    <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+                    <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+                    <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_binary_name</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">swap</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="n">swap</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+    <span class="k">def</span> <span class="fm">__truediv__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">is_number</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">other</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s2">&quot;Semantic Pointer division by zero&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">/</span> <span class="n">other</span><span class="p">,</span>
+                <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+                <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+                <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_binary_name</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;/&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">is_array</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Division of Semantic Pointers with arrays is not allowed.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">NotImplemented</span>
+
+<div class="viewcode-block" id="SemanticPointer.__invert__"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.__invert__">[docs]</a>    <span class="k">def</span> <span class="fm">__invert__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a reorganized `SemanticPointer` that acts as a two-sided</span>
+<span class="sd">        inverse for binding.</span>
+
+<span class="sd">        .. seealso:: `linv`, `rinv`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">),</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_unary_name</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.linv"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.linv">[docs]</a>    <span class="k">def</span> <span class="nf">linv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a reorganized `SemanticPointer` that acts as a left inverse</span>
+<span class="sd">        for binding.</span>
+
+<span class="sd">        .. seealso:: `__invert__`, `rinv`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">LEFT</span><span class="p">),</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_method_name</span><span class="p">(</span><span class="s2">&quot;rinv&quot;</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.rinv"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.rinv">[docs]</a>    <span class="k">def</span> <span class="nf">rinv</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a reorganized `SemanticPointer` that acts as a right inverse</span>
+<span class="sd">        for binding.</span>
+
+<span class="sd">        .. seealso:: `__invert__`, `linv`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">),</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_method_name</span><span class="p">(</span><span class="s2">&quot;rinv&quot;</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.bind"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.bind">[docs]</a>    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the binding of two SemanticPointers.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.rbind"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.rbind">[docs]</a>    <span class="k">def</span> <span class="nf">rbind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the binding of two SemanticPointers.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bind</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="n">swap</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">type_</span> <span class="o">=</span> <span class="n">infer_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="n">vocab</span> <span class="o">=</span> <span class="kc">None</span> <span class="k">if</span> <span class="n">type_</span> <span class="o">==</span> <span class="n">TAnyVocab</span> <span class="k">else</span> <span class="n">type_</span><span class="o">.</span><span class="n">vocab</span>
+        <span class="k">if</span> <span class="n">vocab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ensure_algebra_match</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="n">other_pointer</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">other_pointer</span><span class="o">.</span><span class="n">v</span>
+        <span class="k">if</span> <span class="n">swap</span><span class="p">:</span>
+            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span>
+            <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span>
+            <span class="n">algebra</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_binary_name</span><span class="p">(</span><span class="n">other_pointer</span><span class="p">,</span> <span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">swap</span><span class="p">),</span>
+        <span class="p">)</span>
+
+<div class="viewcode-block" id="SemanticPointer.get_binding_matrix"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.get_binding_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_binding_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">swap_inputs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the matrix that does a binding with this vector.</span>
+
+<span class="sd">        This should be such that</span>
+<span class="sd">        ``A*B == dot(A.get_binding_matrix(), B.v)``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">algebra</span><span class="o">.</span><span class="n">get_binding_matrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">swap_inputs</span><span class="o">=</span><span class="n">swap_inputs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.dot"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.dot">[docs]</a>    <span class="k">def</span> <span class="nf">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the dot product of the two vectors.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Fixed</span><span class="p">):</span>
+            <span class="n">infer_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span><span class="o">.</span><span class="n">v</span>
+        <span class="k">if</span> <span class="n">is_array_like</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">other</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__matmul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SemanticPointer.compare"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.compare">[docs]</a>    <span class="k">def</span> <span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the similarity between two SemanticPointers.</span>
+
+<span class="sd">        This is the normalized dot product, or (equivalently), the cosine of</span>
+<span class="sd">        the angle between the two vectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">):</span>
+            <span class="n">infer_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span><span class="o">.</span><span class="n">v</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">other</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span> <span class="o">/</span> <span class="n">scale</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.reinterpret"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.reinterpret">[docs]</a>    <span class="k">def</span> <span class="nf">reinterpret</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Reinterpret the Semantic Pointer as part of vocabulary *vocab*.</span>
+
+<span class="sd">        The *vocab* parameter can be set to *None* to clear the associated</span>
+<span class="sd">        vocabulary and allow the *source* to be interpreted as part of the</span>
+<span class="sd">        vocabulary of any Semantic Pointer it is combined with.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.translate"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.translate">[docs]</a>    <span class="k">def</span> <span class="nf">translate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="p">,</span> <span class="n">populate</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Translate the Semantic Pointer to vocabulary *vocab*.</span>
+
+<span class="sd">        The translation of a Semantic Pointer uses some form of projection to</span>
+<span class="sd">        convert the Semantic Pointer to a Semantic Pointer of another</span>
+<span class="sd">        vocabulary. By default the outer products of terms in the source and</span>
+<span class="sd">        target vocabulary are used, but if *solver* is given, it is used to</span>
+<span class="sd">        find a least squares solution for this projection.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        vocab : Vocabulary</span>
+<span class="sd">            Target vocabulary.</span>
+<span class="sd">        populate : bool, optional</span>
+<span class="sd">            Whether the target vocabulary should be populated with missing</span>
+<span class="sd">            keys.  This is done by default, but with a warning. Set this</span>
+<span class="sd">            explicitly to *True* or *False* to silence the warning or raise an</span>
+<span class="sd">            error.</span>
+<span class="sd">        keys : list, optional</span>
+<span class="sd">            All keys to translate. If *None*, all keys in the source vocabulary</span>
+<span class="sd">            will be translated.</span>
+<span class="sd">        solver : nengo.Solver, optional</span>
+<span class="sd">            If given, the solver will be used to solve the least squares</span>
+<span class="sd">            problem to provide a better projection for the translation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">populate</span><span class="o">=</span><span class="n">populate</span><span class="p">,</span> <span class="n">keys</span><span class="o">=</span><span class="n">keys</span><span class="p">,</span> <span class="n">solver</span><span class="o">=</span><span class="n">solver</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SemanticPointer</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">tr</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span><span class="o">.</span><span class="n">v</span><span class="p">),</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.distance"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.distance">[docs]</a>    <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a distance measure between the vectors.</span>
+
+<span class="sd">        This is ``1-cos(angle)``, so that it is 0 when they are identical, and</span>
+<span class="sd">        the distance gets larger as the vectors are farther apart.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare</span><span class="p">(</span><span class="n">other</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SemanticPointer.mse"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.mse">[docs]</a>    <span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the mean-squared-error between two vectors.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">):</span>
+            <span class="n">infer_types</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">)</span>
+            <span class="n">other</span> <span class="o">=</span> <span class="n">other</span><span class="o">.</span><span class="n">evaluate</span><span class="p">()</span><span class="o">.</span><span class="n">v</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span> <span class="o">-</span> <span class="n">other</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">v</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_ensure_algebra_match</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the algebra of the *other*.</span>
+
+<span class="sd">        If the *other* parameter is a `SemanticPointer` and uses a different</span>
+<span class="sd">        algebra, a `TypeError` will be raised.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">algebra</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">other</span><span class="o">.</span><span class="n">algebra</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+                    <span class="s2">&quot;Operation not supported for SemanticPointer with &quot;</span>
+                    <span class="s2">&quot;different algebra.&quot;</span>
+                <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Identity"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.Identity">[docs]</a><span class="k">class</span> <span class="nc">Identity</span><span class="p">(</span><span class="n">SemanticPointer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Identity element.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_dimensions : int</span>
+<span class="sd">        Dimensionality of the identity vector.</span>
+<span class="sd">    vocab : Vocabulary, optional</span>
+<span class="sd">        Vocabulary that the Semantic Pointer is considered to be part of.</span>
+<span class="sd">        Mutually exclusive with the *algebra* argument.</span>
+<span class="sd">    algebra : AbstractAlgebra, optional</span>
+<span class="sd">        Algebra used to perform vector symbolic operations on the Semantic</span>
+<span class="sd">        Pointer. Defaults to `.HrrAlgebra`. Mutually exclusive</span>
+<span class="sd">        with the *vocab* argument.</span>
+<span class="sd">    sidedness : ElementSidedness, optional</span>
+<span class="sd">        Side in the binding operation on which the element acts as identity.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">n_dimensions</span><span class="p">,</span>
+        <span class="n">vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">algebra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_algebra</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="p">)</span><span class="o">.</span><span class="n">identity_element</span><span class="p">(</span>
+            <span class="n">n_dimensions</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">sidedness</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Identity</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="o">=</span><span class="n">algebra</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Identity&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="AbsorbingElement"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.AbsorbingElement">[docs]</a><span class="k">class</span> <span class="nc">AbsorbingElement</span><span class="p">(</span><span class="n">SemanticPointer</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Absorbing element.</span>
+
+<span class="sd">    If :math:`z` denotes the absorbing element, :math:`v \circledast z = c z`,</span>
+<span class="sd">    where :math:`v` is a Semantic Pointer and :math:`c` is a real-valued</span>
+<span class="sd">    scalar. Furthermore :math:`\|z\| = 1`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_dimensions : int</span>
+<span class="sd">        Dimensionality of the identity vector.</span>
+<span class="sd">    vocab : Vocabulary, optional</span>
+<span class="sd">        Vocabulary that the Semantic Pointer is considered to be part of.</span>
+<span class="sd">        Mutually exclusive with the *algebra* argument.</span>
+<span class="sd">    algebra : AbstractAlgebra, optional</span>
+<span class="sd">        Algebra used to perform vector symbolic operations on the Semantic</span>
+<span class="sd">        Pointer. Defaults to `.HrrAlgebra`. Mutually exclusive with the *vocab*</span>
+<span class="sd">        argument.</span>
+<span class="sd">    sidedness : ElementSidedness, optional</span>
+<span class="sd">        Side in the binding operation on which the element acts as absorbing element.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">n_dimensions</span><span class="p">,</span>
+        <span class="n">vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">algebra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">*</span><span class="p">,</span>
+        <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_algebra</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="p">)</span><span class="o">.</span><span class="n">absorbing_element</span><span class="p">(</span>
+            <span class="n">n_dimensions</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">sidedness</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AbsorbingElement</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="o">=</span><span class="n">algebra</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;AbsorbingElement&quot;</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Zero"><a class="viewcode-back" href="../../modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.Zero">[docs]</a><span class="k">class</span> <span class="nc">Zero</span><span class="p">(</span><span class="n">SemanticPointer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Zero element.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_dimensions : int</span>
+<span class="sd">        Dimensionality of the identity vector.</span>
+<span class="sd">    vocab : Vocabulary, optional</span>
+<span class="sd">        Vocabulary that the Semantic Pointer is considered to be part of.</span>
+<span class="sd">        Mutually exclusive with the *algebra* argument.</span>
+<span class="sd">    algebra : AbstractAlgebra, optional</span>
+<span class="sd">        Algebra used to perform vector symbolic operations on the Semantic</span>
+<span class="sd">        Pointer. Defaults to `.HrrAlgebra`. Mutually exclusive with the *vocab*</span>
+<span class="sd">        argument.</span>
+<span class="sd">    sidedness : ElementSidedness, optional</span>
+<span class="sd">        Side in the binding operation on which the element acts as zero element.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">n_dimensions</span><span class="p">,</span>
+        <span class="n">vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">algebra</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_algebra</span><span class="p">(</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="p">)</span><span class="o">.</span><span class="n">zero_element</span><span class="p">(</span>
+            <span class="n">n_dimensions</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">sidedness</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Zero</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">algebra</span><span class="o">=</span><span class="n">algebra</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Zero&quot;</span><span class="p">)</span></div>
+</pre></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

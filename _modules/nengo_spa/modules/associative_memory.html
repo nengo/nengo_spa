@@ -1,0 +1,596 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.modules.associative_memory &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+  
+<script src="../../../_static/underscore.js"></script>
+  
+  
+<script src="../../../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../../../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../../../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../../../v1.2.0/_modules/nengo_spa/modules/associative_memory.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.1/_modules/nengo_spa/modules/associative_memory.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.0/_modules/nengo_spa/modules/associative_memory.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../../../v1.2.0/_modules/nengo_spa/modules/associative_memory.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <h1>Source code for nengo_spa.modules.associative_memory</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Associative memory implementations.</span>
+
+<span class="sd">See :doc:`examples/associative_memory` for an introduction and examples.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">nengo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nengo.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">nengo.utils.network</span> <span class="kn">import</span> <span class="n">with_self</span>
+
+<span class="kn">from</span> <span class="nn">nengo_spa.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.networks.selection</span> <span class="kn">import</span> <span class="n">IA</span><span class="p">,</span> <span class="n">WTA</span><span class="p">,</span> <span class="n">Thresholding</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.vocabulary</span> <span class="kn">import</span> <span class="n">VocabularyOrDimParam</span>
+
+
+<div class="viewcode-block" id="AssociativeMemory"><a class="viewcode-back" href="../../../modules/nengo_spa.modules.html#nengo_spa.modules.AssociativeMemory">[docs]</a><span class="k">class</span> <span class="nc">AssociativeMemory</span><span class="p">(</span><span class="n">Network</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;General associative memory network.</span>
+
+<span class="sd">    This provides a low-level selection network with the necessary interface</span>
+<span class="sd">    to include it within the SPA system.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    selection_net : Network</span>
+<span class="sd">        The network that is used to select the response. It needs to accept</span>
+<span class="sd">        the arguments *n_neurons* (number of neurons to use to represent each</span>
+<span class="sd">        possible choice) and *n_ensembles* (number of choices). The returned</span>
+<span class="sd">        network needs to have an *input* attribute to which the utilities for</span>
+<span class="sd">        each choice are connected and an *output* attribute from which a</span>
+<span class="sd">        connection will be created to read the selected output(s).</span>
+<span class="sd">    input_vocab: Vocabulary or int</span>
+<span class="sd">        The vocabulary to match.</span>
+<span class="sd">    output_vocab: Vocabulary or int, optional</span>
+<span class="sd">        The vocabulary to be produced for each match. If</span>
+<span class="sd">        None, the associative memory will act like an auto-associative memory</span>
+<span class="sd">        (cleanup memory).</span>
+<span class="sd">    mapping: dict, str, or sequence of str</span>
+<span class="sd">        A dictionary that defines the mapping from Semantic Pointers in the</span>
+<span class="sd">        input vocabulary to Semantic Pointers in the output vocabulary. If set</span>
+<span class="sd">        to the string ``&#39;by-key&#39;``, the mapping will be done based on the keys</span>
+<span class="sd">        of the to vocabularies. If a sequence is provided, an auto-associative</span>
+<span class="sd">        (cleanup) memory with the given set of keys will be created.</span>
+<span class="sd">    n_neurons : int</span>
+<span class="sd">        Number of neurons to represent each choice, passed on to the</span>
+<span class="sd">        *selection_net*.</span>
+<span class="sd">    label : str, optional</span>
+<span class="sd">        A name for the ensemble. Used for debugging and visualization.</span>
+<span class="sd">    seed : int, optional</span>
+<span class="sd">        The seed used for random number generation.</span>
+<span class="sd">    add_to_container : bool, optional</span>
+<span class="sd">        Determines if this Network will be added to the current container.</span>
+<span class="sd">        See `nengo.Network` for more details.</span>
+<span class="sd">    vocabs : VocabularyMap, optional</span>
+<span class="sd">        Maps dimensionalities to the corresponding default vocabularies.</span>
+<span class="sd">    **selection_net_kwargs : dict</span>
+<span class="sd">        Additional keyword arguments that will passed to the *selection_net*.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">input_vocab</span> <span class="o">=</span> <span class="n">VocabularyOrDimParam</span><span class="p">(</span><span class="s2">&quot;input_vocab&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">output_vocab</span> <span class="o">=</span> <span class="n">VocabularyOrDimParam</span><span class="p">(</span><span class="s2">&quot;output_vocab&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">selection_net</span><span class="p">,</span>
+        <span class="n">input_vocab</span><span class="p">,</span>
+        <span class="n">output_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_neurons</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">add_to_container</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">selection_net_kwargs</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AssociativeMemory</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span> <span class="n">add_to_container</span><span class="o">=</span><span class="n">add_to_container</span><span class="p">,</span> <span class="n">vocabs</span><span class="o">=</span><span class="n">vocabs</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">output_vocab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output_vocab</span> <span class="o">=</span> <span class="n">input_vocab</span>
+        <span class="k">elif</span> <span class="n">mapping</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;The mapping argument needs to be provided if an output &quot;</span>
+                <span class="s2">&quot;vocabulary is given.&quot;</span><span class="p">,</span>
+                <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;mapping&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span> <span class="o">=</span> <span class="n">input_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span> <span class="o">=</span> <span class="n">output_vocab</span>
+
+        <span class="k">if</span> <span class="n">mapping</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Must provide &#39;mapping&#39; argument.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mapping</span> <span class="o">==</span> <span class="s2">&quot;by-key&quot;</span><span class="p">:</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;The mapping argument must be a dictionary, the string &quot;</span>
+                <span class="s2">&quot;&#39;by-key&#39; or a sequence of strings.&quot;</span><span class="p">,</span>
+                <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;mapping&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mapping</span><span class="p">,</span> <span class="s2">&quot;keys&quot;</span><span class="p">):</span>
+            <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;At least one item must be provided with the mapping &quot;</span> <span class="s2">&quot;argument.&quot;</span><span class="p">,</span>
+                <span class="n">attr</span><span class="o">=</span><span class="s2">&quot;mapping&quot;</span><span class="p">,</span>
+                <span class="n">obj</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">input_keys</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">input_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">v</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">input_keys</span><span class="p">]</span>
+        <span class="n">output_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">mapping</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">input_keys</span><span class="p">]</span>
+        <span class="n">output_vectors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">v</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">output_keys</span><span class="p">]</span>
+
+        <span class="n">input_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">input_vectors</span><span class="p">)</span>
+        <span class="n">output_vectors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">output_vectors</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span> <span class="o">=</span> <span class="n">selection_net</span><span class="p">(</span>
+                <span class="n">n_neurons</span><span class="o">=</span><span class="n">n_neurons</span><span class="p">,</span>
+                <span class="n">n_ensembles</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">input_vectors</span><span class="p">),</span>
+                <span class="n">label</span><span class="o">=</span><span class="s2">&quot;selection&quot;</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">selection_net_kwargs</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">size_in</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="o">.</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;input&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
+                <span class="n">size_in</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="o">.</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;output&quot;</span>
+            <span class="p">)</span>
+
+            <span class="n">nengo</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">input_vectors</span><span class="p">)</span>
+            <span class="n">nengo</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">output_vectors</span><span class="o">.</span><span class="n">T</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_input</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_output</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AssociativeMemory.add_default_output"><a class="viewcode-back" href="../../../modules/nengo_spa.modules.html#nengo_spa.modules.AssociativeMemory.add_default_output">[docs]</a>    <span class="nd">@with_self</span>
+    <span class="k">def</span> <span class="nf">add_default_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">min_activation_value</span><span class="p">,</span> <span class="n">n_neurons</span><span class="o">=</span><span class="mi">50</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Adds a Semantic Pointer to output when no other pointer is active.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : str</span>
+<span class="sd">            Semantic Pointer to output.</span>
+<span class="sd">        min_activation_value : float</span>
+<span class="sd">            Minimum output of another Semantic Pointer to deactivate the</span>
+<span class="sd">            default output.</span>
+<span class="sd">        n_neurons : int, optional</span>
+<span class="sd">            Number of neurons used to represent the default Semantic Pointer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;default_ens&quot;</span><span class="p">),</span> <span class="s2">&quot;Can add default output only once.&quot;</span>
+
+        <span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">presets</span><span class="o">.</span><span class="n">ThresholdingEnsembles</span><span class="p">(</span><span class="mf">0.0</span><span class="p">):</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;default_ens&quot;</span><span class="p">,</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Ensemble</span><span class="p">(</span><span class="n">n_neurons</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">))</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;bias&quot;</span><span class="p">,</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;bias&quot;</span><span class="p">))</span>
+        <span class="n">nengo</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bias</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">default_ens</span><span class="p">)</span>
+        <span class="n">nengo</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_ens</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+            <span class="n">transform</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">nengo</span><span class="o">.</span><span class="n">Connection</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">default_ens</span><span class="p">,</span>
+            <span class="n">transform</span><span class="o">=-</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">size_out</span><span class="p">))</span>
+            <span class="o">/</span> <span class="n">min_activation_value</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="IAAssocMem"><a class="viewcode-back" href="../../../modules/nengo_spa.modules.html#nengo_spa.modules.IAAssocMem">[docs]</a><span class="k">class</span> <span class="nc">IAAssocMem</span><span class="p">(</span><span class="n">AssociativeMemory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Associative memory based on the `.IA` network.</span>
+
+<span class="sd">    See `AssociativeMemory` and `.IA` for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">input_vocab</span><span class="p">,</span>
+        <span class="n">output_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_neurons</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">add_to_container</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">selection_net_kwargs</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">IAAssocMem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">selection_net</span><span class="o">=</span><span class="n">IA</span><span class="p">,</span>
+            <span class="n">input_vocab</span><span class="o">=</span><span class="n">input_vocab</span><span class="p">,</span>
+            <span class="n">output_vocab</span><span class="o">=</span><span class="n">output_vocab</span><span class="p">,</span>
+            <span class="n">mapping</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+            <span class="n">n_neurons</span><span class="o">=</span><span class="n">n_neurons</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">add_to_container</span><span class="o">=</span><span class="n">add_to_container</span><span class="p">,</span>
+            <span class="n">vocabs</span><span class="o">=</span><span class="n">vocabs</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">selection_net_kwargs</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_reset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection</span><span class="o">.</span><span class="n">input_reset</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">declare_input</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input_reset</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ThresholdingAssocMem"><a class="viewcode-back" href="../../../modules/nengo_spa.modules.html#nengo_spa.modules.ThresholdingAssocMem">[docs]</a><span class="k">class</span> <span class="nc">ThresholdingAssocMem</span><span class="p">(</span><span class="n">AssociativeMemory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Associative memory based on `.Thresholding`.</span>
+
+<span class="sd">    See `AssociativeMemory` and `.Thresholding` for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">threshold</span><span class="p">,</span>
+        <span class="n">input_vocab</span><span class="p">,</span>
+        <span class="n">output_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_neurons</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">add_to_container</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">selection_net_kwargs</span>
+    <span class="p">):</span>
+        <span class="n">selection_net_kwargs</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ThresholdingAssocMem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">selection_net</span><span class="o">=</span><span class="n">Thresholding</span><span class="p">,</span>
+            <span class="n">input_vocab</span><span class="o">=</span><span class="n">input_vocab</span><span class="p">,</span>
+            <span class="n">output_vocab</span><span class="o">=</span><span class="n">output_vocab</span><span class="p">,</span>
+            <span class="n">mapping</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+            <span class="n">n_neurons</span><span class="o">=</span><span class="n">n_neurons</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">add_to_container</span><span class="o">=</span><span class="n">add_to_container</span><span class="p">,</span>
+            <span class="n">vocabs</span><span class="o">=</span><span class="n">vocabs</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">selection_net_kwargs</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="WTAAssocMem"><a class="viewcode-back" href="../../../modules/nengo_spa.modules.html#nengo_spa.modules.WTAAssocMem">[docs]</a><span class="k">class</span> <span class="nc">WTAAssocMem</span><span class="p">(</span><span class="n">AssociativeMemory</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Associative memory based on the `.WTA` network.</span>
+
+<span class="sd">    See `AssociativeMemory` and `.WTA` for more information.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">threshold</span><span class="p">,</span>
+        <span class="n">input_vocab</span><span class="p">,</span>
+        <span class="n">output_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">mapping</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">n_neurons</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">seed</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">add_to_container</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">vocabs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">selection_net_kwargs</span>
+    <span class="p">):</span>
+        <span class="n">selection_net_kwargs</span><span class="p">[</span><span class="s2">&quot;threshold&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">WTAAssocMem</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">selection_net</span><span class="o">=</span><span class="n">WTA</span><span class="p">,</span>
+            <span class="n">input_vocab</span><span class="o">=</span><span class="n">input_vocab</span><span class="p">,</span>
+            <span class="n">output_vocab</span><span class="o">=</span><span class="n">output_vocab</span><span class="p">,</span>
+            <span class="n">mapping</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+            <span class="n">n_neurons</span><span class="o">=</span><span class="n">n_neurons</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span>
+            <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">,</span>
+            <span class="n">add_to_container</span><span class="o">=</span><span class="n">add_to_container</span><span class="p">,</span>
+            <span class="n">vocabs</span><span class="o">=</span><span class="n">vocabs</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">selection_net_kwargs</span>
+        <span class="p">)</span></div>
+</pre></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

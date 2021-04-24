@@ -1,0 +1,1142 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.modules &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+  
+<script src="../_static/underscore.js"></script>
+  
+  
+<script src="../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="nengo_spa.networks" href="nengo_spa.networks.html" />
+    <link rel="prev" title="nengo_spa.math" href="nengo_spa.math.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.html">nengo_spa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.algebras.html">nengo_spa.algebras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.examine.html">nengo_spa.examine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.exceptions.html">nengo_spa.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.math.html">nengo_spa.math</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nengo_spa.modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.networks.html">nengo_spa.networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.operators.html">nengo_spa.operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.semantic_pointer.html">nengo_spa.semantic_pointer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.testing.html">nengo_spa.testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.vector_generation.html">nengo_spa.vector_generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.version.html">nengo_spa.version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.vocabulary.html">nengo_spa.vocabulary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../v1.2.0/modules/nengo_spa.modules.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../v1.1.1/modules/nengo_spa.modules.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../v1.1.0/modules/nengo_spa.modules.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../v1.2.0/modules/nengo_spa.modules.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <div class="section" id="module-nengo_spa.modules">
+<span id="nengo-spa-modules"></span><h1>nengo_spa.modules<a class="headerlink" href="#module-nengo_spa.modules" title="Permalink to this headline">¶</a></h1>
+<p>SPA modules with defined inputs and outputs usable in action rules.</p>
+<p>SPA modules derive from <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a> and thus provide information about
+inputs and outputs that can be used in action rules and the associated
+vocabularies. Note that a module might have no inputs and outputs that can be
+used in action rules (like <a class="reference internal" href="#nengo_spa.modules.BasalGanglia" title="nengo_spa.modules.BasalGanglia"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasalGanglia</span></code></a> and <a class="reference internal" href="#nengo_spa.modules.Thalamus" title="nengo_spa.modules.Thalamus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Thalamus</span></code></a>), but only inputs and
+outputs that must be manually connected to. Many SPA modules are networks that
+might be automatically created by building action rules. Because of this, it is
+possible to set module parameters with <a class="reference external" href="https://www.nengo.ai/nengo/config.html#nengo.Config" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.Config</span></code></a> objects to allow to
+easily change parameters of networks created in this way.</p>
+<p>Note that SPA modules can be used as standalone networks without using
+any other NengoSPA features.</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.modules.AssociativeMemory" title="nengo_spa.modules.AssociativeMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssociativeMemory</span></code></a>(selection_net, input_vocab)</p></td>
+<td><p>General associative memory network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.modules.BasalGanglia" title="nengo_spa.modules.BasalGanglia"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasalGanglia</span></code></a>(action_count[, …])</p></td>
+<td><p>Winner take all network, typically used for action selection.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.modules.Bind" title="nengo_spa.modules.Bind"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Bind</span></code></a>([vocab, neurons_per_dimension, …])</p></td>
+<td><p>Network for binding together two inputs.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.modules.Compare" title="nengo_spa.modules.Compare"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Compare</span></code></a>([vocab, neurons_per_dimension])</p></td>
+<td><p>Computes the dot product of two inputs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.modules.IAAssocMem" title="nengo_spa.modules.IAAssocMem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IAAssocMem</span></code></a>(input_vocab[, output_vocab, …])</p></td>
+<td><p>Associative memory based on the <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.IA" title="nengo_spa.networks.selection.IA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IA</span></code></a> network.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.modules.Product" title="nengo_spa.modules.Product"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Product</span></code></a>([n_neurons])</p></td>
+<td><p>Multiplies two scalars.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.modules.Scalar" title="nengo_spa.modules.Scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Scalar</span></code></a>([n_neurons])</p></td>
+<td><p>Represents a single scalar.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.modules.State" title="nengo_spa.modules.State"><code class="xref py py-obj docutils literal notranslate"><span class="pre">State</span></code></a>([vocab, subdimensions, …])</p></td>
+<td><p>Represents a single vector, with optional memory.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.modules.Thalamus" title="nengo_spa.modules.Thalamus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Thalamus</span></code></a>(action_count[, neurons_action, …])</p></td>
+<td><p>Inhibits non-selected actions.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.modules.ThresholdingAssocMem" title="nengo_spa.modules.ThresholdingAssocMem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ThresholdingAssocMem</span></code></a>(threshold, input_vocab)</p></td>
+<td><p>Associative memory based on <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding" title="nengo_spa.networks.selection.Thresholding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Thresholding</span></code></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.modules.Transcode" title="nengo_spa.modules.Transcode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Transcode</span></code></a>([function, input_vocab, …])</p></td>
+<td><p>Transcode from, to, and between Semantic Pointers.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.modules.WTAAssocMem" title="nengo_spa.modules.WTAAssocMem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WTAAssocMem</span></code></a>(threshold, input_vocab[, …])</p></td>
+<td><p>Associative memory based on the <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.WTA" title="nengo_spa.networks.selection.WTA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WTA</span></code></a> network.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="nengo_spa.modules.AssociativeMemory">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">AssociativeMemory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selection_net</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_to_container</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">selection_net_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/associative_memory.html#AssociativeMemory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.AssociativeMemory" title="Permalink to this definition">¶</a></dt>
+<dd><p>General associative memory network.</p>
+<p>This provides a low-level selection network with the necessary interface
+to include it within the SPA system.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>selection_net</strong> (<a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><em>Network</em></a>) – The network that is used to select the response. It needs to accept
+the arguments <em>n_neurons</em> (number of neurons to use to represent each
+possible choice) and <em>n_ensembles</em> (number of choices). The returned
+network needs to have an <em>input</em> attribute to which the utilities for
+each choice are connected and an <em>output</em> attribute from which a
+connection will be created to read the selected output(s).</p></li>
+<li><p><strong>input_vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em> or </em><em>int</em>) – The vocabulary to match.</p></li>
+<li><p><strong>output_vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em> or </em><em>int</em><em>, </em><em>optional</em>) – The vocabulary to be produced for each match. If
+None, the associative memory will act like an auto-associative memory
+(cleanup memory).</p></li>
+<li><p><strong>mapping</strong> (<em>dict</em><em>, </em><em>str</em><em>, or </em><em>sequence of str</em>) – A dictionary that defines the mapping from Semantic Pointers in the
+input vocabulary to Semantic Pointers in the output vocabulary. If set
+to the string <code class="docutils literal notranslate"><span class="pre">'by-key'</span></code>, the mapping will be done based on the keys
+of the to vocabularies. If a sequence is provided, an auto-associative
+(cleanup) memory with the given set of keys will be created.</p></li>
+<li><p><strong>n_neurons</strong> (<em>int</em>) – Number of neurons to represent each choice, passed on to the
+<em>selection_net</em>.</p></li>
+<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – A name for the ensemble. Used for debugging and visualization.</p></li>
+<li><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – The seed used for random number generation.</p></li>
+<li><p><strong>add_to_container</strong> (<em>bool</em><em>, </em><em>optional</em>) – Determines if this Network will be added to the current container.
+See <a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Network" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.Network</span></code></a> for more details.</p></li>
+<li><p><strong>vocabs</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyMap" title="nengo_spa.vocabulary.VocabularyMap"><em>VocabularyMap</em></a><em>, </em><em>optional</em>) – Maps dimensionalities to the corresponding default vocabularies.</p></li>
+<li><p><strong>**selection_net_kwargs</strong> (<em>dict</em>) – Additional keyword arguments that will passed to the <em>selection_net</em>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="nengo_spa.modules.AssociativeMemory.add_default_output">
+<code class="sig-name descname"><span class="pre">add_default_output</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_activation_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/associative_memory.html#AssociativeMemory.add_default_output"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.AssociativeMemory.add_default_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds a Semantic Pointer to output when no other pointer is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Semantic Pointer to output.</p></li>
+<li><p><strong>min_activation_value</strong> (<em>float</em>) – Minimum output of another Semantic Pointer to deactivate the
+default output.</p></li>
+<li><p><strong>n_neurons</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of neurons used to represent the default Semantic Pointer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.IAAssocMem">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">IAAssocMem</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_to_container</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">selection_net_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/associative_memory.html#IAAssocMem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.IAAssocMem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associative memory based on the <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.IA" title="nengo_spa.networks.selection.IA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IA</span></code></a> network.</p>
+<p>See <a class="reference internal" href="#nengo_spa.modules.AssociativeMemory" title="nengo_spa.modules.AssociativeMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssociativeMemory</span></code></a> and <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.IA" title="nengo_spa.networks.selection.IA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IA</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.ThresholdingAssocMem">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">ThresholdingAssocMem</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_to_container</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">selection_net_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/associative_memory.html#ThresholdingAssocMem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.ThresholdingAssocMem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associative memory based on <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding" title="nengo_spa.networks.selection.Thresholding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Thresholding</span></code></a>.</p>
+<p>See <a class="reference internal" href="#nengo_spa.modules.AssociativeMemory" title="nengo_spa.modules.AssociativeMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssociativeMemory</span></code></a> and <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding" title="nengo_spa.networks.selection.Thresholding"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Thresholding</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.WTAAssocMem">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">WTAAssocMem</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mapping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">add_to_container</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">selection_net_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/associative_memory.html#WTAAssocMem"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.WTAAssocMem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Associative memory based on the <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.WTA" title="nengo_spa.networks.selection.WTA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WTA</span></code></a> network.</p>
+<p>See <a class="reference internal" href="#nengo_spa.modules.AssociativeMemory" title="nengo_spa.modules.AssociativeMemory"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AssociativeMemory</span></code></a> and <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.selection.WTA" title="nengo_spa.networks.selection.WTA"><code class="xref py py-obj docutils literal notranslate"><span class="pre">WTA</span></code></a> for more information.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.BasalGanglia">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">BasalGanglia</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_neurons_per_ensemble</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_bias</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ampa_synapse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gaba_synapse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/basalganglia.html#BasalGanglia"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.BasalGanglia" title="Permalink to this definition">¶</a></dt>
+<dd><p>Winner take all network, typically used for action selection.</p>
+<p>The basal ganglia network outputs approximately 0 at the dimension with
+the largest value, and is negative elsewhere.</p>
+<p>While the basal ganglia is primarily defined by its winner-take-all
+function, it is also organized to match the organization of the human
+basal ganglia. It consists of five ensembles:</p>
+<ul class="simple">
+<li><p>Striatal D1 dopamine-receptor neurons (<em>strD1</em>)</p></li>
+<li><p>Striatal D2 dopamine-receptor neurons (<em>strD2</em>)</p></li>
+<li><p>Subthalamic nucleus (<em>stn</em>)</p></li>
+<li><p>Globus pallidus internus / substantia nigra reticulata (<em>gpi</em>)</p></li>
+<li><p>Globus pallidus externus (<em>gpe</em>)</p></li>
+</ul>
+<p>Interconnections between these areas are also based on known
+neuroanatomical connections. See <a class="footnote-reference brackets" href="#id3" id="id1">1</a> for more details, and <a class="footnote-reference brackets" href="#id4" id="id2">2</a> for
+the original non-spiking basal ganglia model by
+Gurney, Prescott &amp; Redgrave that this model is based on.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The default <a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.solvers.Solver" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.solvers.Solver</span></code></a> for the basal ganglia is
+<a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.solvers.NnlsL2nz" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.solvers.NnlsL2nz</span></code></a>, which requires SciPy. If SciPy is not
+installed, the global default solver will be used instead.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action_count</strong> (<em>int</em>) – Number of actions.</p></li>
+<li><p><strong>n_neuron_per_ensemble</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of neurons in each ensemble in the network.</p></li>
+<li><p><strong>output_weight</strong> (<em>float</em><em>, </em><em>optional</em>) – A scaling factor on the output of the basal ganglia
+(specifically on the connection out of the GPi).</p></li>
+<li><p><strong>input_bias</strong> (<em>float</em><em>, </em><em>optional</em>) – An amount by which to bias all dimensions of the input node.
+Biasing the input node is important for ensuring that all input
+dimensions are positive and easily comparable.</p></li>
+<li><p><strong>ampa_synapse</strong> (<em>Synapse</em><em>, </em><em>optional</em>) – Synapse for connections corresponding to biological connections
+to AMPA receptors (i.e., connections from STN to to GPi and GPe).</p></li>
+<li><p><strong>gaba_synapse</strong> (<em>Synapse</em><em>, </em><em>optional</em>) – Synapse for connections corresponding to biological connections
+to GABA receptors (i.e., connections from StrD1 to GPi, StrD2 to GPe,
+and GPe to GPi and STN).</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through the <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.bias_input">
+<code class="sig-name descname"><span class="pre">bias_input</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.bias_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <em>input_bias</em> is non-zero, this node will be created to bias
+all of the dimensions of the input signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a> or None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.gpe">
+<code class="sig-name descname"><span class="pre">gpe</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.gpe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Globus pallidus externus ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)">nengo.networks.EnsembleArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.gpi">
+<code class="sig-name descname"><span class="pre">gpi</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.gpi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Globus pallidus internus ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)">nengo.networks.EnsembleArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.input">
+<code class="sig-name descname"><span class="pre">input</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accepts the input signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides the output signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.stn">
+<code class="sig-name descname"><span class="pre">stn</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.stn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subthalamic nucleus ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)">nengo.networks.EnsembleArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.strD1">
+<code class="sig-name descname"><span class="pre">strD1</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.strD1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Striatal D1 ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)">nengo.networks.EnsembleArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.BasalGanglia.strD2">
+<code class="sig-name descname"><span class="pre">strD2</span></code><a class="headerlink" href="#nengo_spa.modules.BasalGanglia.strD2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Striatal D2 ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)">nengo.networks.EnsembleArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Stewart, T. C., Choo, X., &amp; Eliasmith, C. (2010).
+Dynamic behaviour of a spiking model of action selection in the
+basal ganglia. In Proceedings of the 10th international conference on
+cognitive modeling (pp. 235-40).</p>
+</dd>
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id2">2</a></span></dt>
+<dd><p>Gurney, K., Prescott, T., &amp; Redgrave, P. (2001).
+A computational model of action selection in the basal
+ganglia. Biological Cybernetics 84, 401-423.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Bind">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Bind</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_per_dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unbind_left</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unbind_right</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/bind.html#Bind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Network for binding together two inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em> or </em><em>int</em>) – The vocabulary to use to interpret the vector. If an integer is given,
+the default vocabulary of that dimensionality will be used.</p></li>
+<li><p><strong>neurons_per_dimension</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 200</em><em>)</em>) – Number of neurons to use in each dimension.</p></li>
+<li><p><strong>unbind_left</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to unbind the left input.</p></li>
+<li><p><strong>unbind_right</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to unbind the right input.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Bind.input_left">
+<code class="sig-name descname"><span class="pre">input_left</span></code><a class="headerlink" href="#nengo_spa.modules.Bind.input_left" title="Permalink to this definition">¶</a></dt>
+<dd><p>Left input vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Bind.input_right">
+<code class="sig-name descname"><span class="pre">input_right</span></code><a class="headerlink" href="#nengo_spa.modules.Bind.input_right" title="Permalink to this definition">¶</a></dt>
+<dd><p>Right input vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Bind.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Bind.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Compare">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Compare</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_per_dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/compare.html#Compare"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Compare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the dot product of two inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em> or </em><em>int</em>) – The vocabulary to use to interpret the vector. If an integer is given,
+the default vocabulary of that dimensionality will be used.</p></li>
+<li><p><strong>neurons_per_dimension</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 200</em><em>)</em>) – Number of neurons to use in each product computation.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Compare.input_a">
+<code class="sig-name descname"><span class="pre">input_a</span></code><a class="headerlink" href="#nengo_spa.modules.Compare.input_a" title="Permalink to this definition">¶</a></dt>
+<dd><p>First input vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Compare.input_b">
+<code class="sig-name descname"><span class="pre">input_b</span></code><a class="headerlink" href="#nengo_spa.modules.Compare.input_b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Second input vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Compare.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Compare.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Product">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Product</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/product.html#Product"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Product" title="Permalink to this definition">¶</a></dt>
+<dd><p>Multiplies two scalars.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_neurons</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 200</em><em>)</em>) – Number of neurons to use in product computation.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Product.input_a">
+<code class="sig-name descname"><span class="pre">input_a</span></code><a class="headerlink" href="#nengo_spa.modules.Product.input_a" title="Permalink to this definition">¶</a></dt>
+<dd><p>First input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Product.input_b">
+<code class="sig-name descname"><span class="pre">input_b</span></code><a class="headerlink" href="#nengo_spa.modules.Product.input_b" title="Permalink to this definition">¶</a></dt>
+<dd><p>Second input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Product.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Product.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Scalar">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Scalar</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_neurons</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/scalar.html#Scalar"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Scalar" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a single scalar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_neurons</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 50</em><em>)</em>) – Number of neurons to represent the scalar.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Scalar.input">
+<code class="sig-name descname"><span class="pre">input</span></code><a class="headerlink" href="#nengo_spa.modules.Scalar.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Scalar.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Scalar.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.State">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">State</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subdimensions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_per_dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">represent_cc_identity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback_synapse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/state.html#State"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.State" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a single vector, with optional memory.</p>
+<p>This is a minimal SPA network, useful for passing data along (for example,
+visual input).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em> or </em><em>int</em>) – The vocabulary to use to interpret the vector. If an integer is given,
+the default vocabulary of that dimensionality will be used.</p></li>
+<li><p><strong>subdimensions</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 16</em><em>)</em>) – The dimension of the individual ensembles making up the vector.
+Must divide <em>dimensions</em> evenly. The number of sub-ensembles
+will be <code class="docutils literal notranslate"><span class="pre">dimensions</span> <span class="pre">//</span> <span class="pre">subdimensions</span></code>.</p></li>
+<li><p><strong>neurons_per_dimension</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 50</em><em>)</em>) – Number of neurons per dimension. Each ensemble will have
+<code class="docutils literal notranslate"><span class="pre">neurons_per_dimension</span> <span class="pre">*</span> <span class="pre">subdimensions</span></code> neurons, for a total of
+<code class="docutils literal notranslate"><span class="pre">neurons_per_dimension</span> <span class="pre">*</span> <span class="pre">dimensions</span></code> neurons.</p></li>
+<li><p><strong>feedback</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.0</em><em>)</em>) – Gain of feedback connection. Set to 1.0 for perfect memory,
+or 0.0 for no memory. Values in between will create a decaying memory.</p></li>
+<li><p><strong>represent_cc_identity</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to use optimizations to better represent the circular
+convolution identity vector. If activated, the <a class="reference internal" href="nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray" title="nengo_spa.networks.IdentityEnsembleArray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">IdentityEnsembleArray</span></code></a>
+will be used internally, otherwise a normal
+<a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.networks.EnsembleArray</span></code></a> split up regularly according to
+<em>subdimensions</em>.</p></li>
+<li><p><strong>feedback_synapse</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.1</em><em>)</em>) – The synapse on the feedback connection.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.State.input">
+<code class="sig-name descname"><span class="pre">input</span></code><a class="headerlink" href="#nengo_spa.modules.State.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.State.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.State.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Superposition">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Superposition</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_per_dimension</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/superposition.html#Superposition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Superposition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Network for superposing multiple inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_inputs</strong> (<em>int</em>) – Number of inputs.</p></li>
+<li><p><strong>vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em> or </em><em>int</em>) – The vocabulary to use to interpret the vector. If an integer is given,
+the default vocabulary of that dimensionality will be used.</p></li>
+<li><p><strong>neurons_per_dimension</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 200</em><em>)</em>) – Number of neurons to use in each dimension.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Superposition.inputs">
+<code class="sig-name descname"><span class="pre">inputs</span></code><a class="headerlink" href="#nengo_spa.modules.Superposition.inputs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inputs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sequence</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Superposition.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Superposition.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Thalamus">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Thalamus</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">action_count</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mutual_inhibit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">route_inhibit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synapse_inhibit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synapse_bg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_channel_dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synapse_channel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neurons_gate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold_gate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">synapse_to_gate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inhibits non-selected actions.</p>
+<p>The thalamus is intended to work in tandem with a <a class="reference internal" href="#nengo_spa.modules.BasalGanglia" title="nengo_spa.modules.BasalGanglia"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BasalGanglia</span></code></a> module.
+It converts basal ganglia output into a signal with (approximately) 1 for
+the selected action and 0 elsewhere.</p>
+<p>In order to suppress low responses and strengthen high responses,
+a constant bias is added to each dimension (i.e., action), and dimensions
+mutually inhibit each other. Additionally, the ensemble representing
+each dimension is created with positive encoders and can be assigned
+positive x-intercepts to threshold low responses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>neurons_action</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 50</em><em>)</em>) – Number of neurons per action to represent the selection.</p></li>
+<li><p><strong>threshold_action</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.2</em><em>)</em>) – Minimum value for action representation.</p></li>
+<li><p><strong>mutual_inhibit</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 1.0</em><em>)</em>) – Strength of inhibition between actions.</p></li>
+<li><p><strong>route_inhibit</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 3.0</em><em>)</em>) – Strength of inhibition for unchosen actions.</p></li>
+<li><p><strong>synapse_inhibit</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.008</em><em>)</em>) – Synaptic filter to apply for inhibition between actions.</p></li>
+<li><p><strong>synapse_bg</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.008</em><em>)</em>) – Synaptic filter for connection between basal ganglia and thalamus.</p></li>
+<li><p><strong>synapse_direct</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.01</em><em>)</em>) – Synaptic filter for direct outputs.</p></li>
+<li><p><strong>neurons_channel_dim</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 50</em><em>)</em>) – Number of neurons per routing channel dimension.</p></li>
+<li><p><strong>synapse_channel</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.01</em><em>)</em>) – Synaptic filter for channel inputs and outputs.</p></li>
+<li><p><strong>neurons_gate</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: 40</em><em>)</em>) – Number of neurons per gate.</p></li>
+<li><p><strong>threshold_gate</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.3</em><em>)</em>) – Minimum value for gating neurons.</p></li>
+<li><p><strong>synapse_to-gate</strong> (<em>float</em><em>, </em><em>optional</em><em> (</em><em>Default: 0.002</em><em>)</em>) – Synaptic filter for controlling a gate.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Keyword arguments passed through to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Thalamus.actions">
+<code class="sig-name descname"><span class="pre">actions</span></code><a class="headerlink" href="#nengo_spa.modules.Thalamus.actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Each ensemble represents one dimension (action).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)">nengo.networks.EnsembleArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Thalamus.bias">
+<code class="sig-name descname"><span class="pre">bias</span></code><a class="headerlink" href="#nengo_spa.modules.Thalamus.bias" title="Permalink to this definition">¶</a></dt>
+<dd><p>The constant bias injected in each <em>actions</em> ensemble.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Thalamus.input">
+<code class="sig-name descname"><span class="pre">input</span></code><a class="headerlink" href="#nengo_spa.modules.Thalamus.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input to the <em>actions</em> ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Thalamus.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Thalamus.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output from the <em>actions</em> ensembles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.modules.Thalamus.construct_gate">
+<code class="sig-name descname"><span class="pre">construct_gate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bias</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus.construct_gate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus.construct_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a gate ensemble.</p>
+<p>The gate neurons have no activity when the action is selected, but are
+active when the action is not selected. This makes the gate useful for
+inhibiting ensembles that should only be active when this action is
+active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Index to identify the gate.</p></li>
+<li><p><strong>bias</strong> (<a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Network" title="(in Nengo v3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">nengo.Network</span></code></a>) – Node providing a bias input of 1.</p></li>
+<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the gate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The constructed gate.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Ensemble" title="(in Nengo v3.2)">nengo.Ensemble</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.modules.Thalamus.construct_channel">
+<code class="sig-name descname"><span class="pre">construct_channel</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sink</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type_</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus.construct_channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus.construct_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a channel.</p>
+<p>Channels are an additional neural population in-between a source
+population and a target population. This allows inhibiting the channel
+without affecting the source and thus is useful in routing information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sink</strong> (<em>nengo.base.NengoObject</em>) – Sink/target that the channel feeds into.</p></li>
+<li><p><strong>type</strong> (<em>nengo_spa.types.Type</em>) – Type of the data transmitted through the channel.</p></li>
+<li><p><strong>label</strong> (<em>str</em><em>, </em><em>optional</em>) – Label for the channel.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The constructed channel.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">nengo.networks.EnsembleArray</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.modules.Thalamus.connect_bg">
+<code class="sig-name descname"><span class="pre">connect_bg</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus.connect_bg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus.connect_bg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect a basal ganglia network to this thalamus.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.modules.Thalamus.connect_gate">
+<code class="sig-name descname"><span class="pre">connect_gate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus.connect_gate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus.connect_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect a gate to a channel for information routing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Index of the gate to connect.</p></li>
+<li><p><strong>channel</strong> (<a class="reference external" href="https://www.nengo.ai/nengo/networks.html#nengo.networks.EnsembleArray" title="(in Nengo v3.2)"><em>nengo.networks.EnsembleArray</em></a>) – Channel to inhibit with the gate.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.modules.Thalamus.connect_fixed">
+<code class="sig-name descname"><span class="pre">connect_fixed</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus.connect_fixed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus.connect_fixed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create connection to route fixed value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> (<em>int</em>) – Index of the action to connect.</p></li>
+<li><p><strong>target</strong> (<em>nengo.base.NengoObject</em>) – Target of the connection.</p></li>
+<li><p><strong>transform</strong> (<em>array-like</em>) – Transform to apply to apply to the connection.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.modules.Thalamus.connect">
+<code class="sig-name descname"><span class="pre">connect</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/thalamus.html#Thalamus.connect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Thalamus.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create connection.</p>
+<p>The connection will use the thalamus’s <em>synapse_channel</em>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source</strong> (<em>nengo.base.NengoObject</em>) – Source object.</p></li>
+<li><p><strong>target</strong> (<em>nengo.base.NengoObject</em>) – Target object.</p></li>
+<li><p><strong>transform</strong> (<em>array-like</em>) – Transform to apply to the connection.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.modules.Transcode">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.modules.</span></code><code class="sig-name descname"><span class="pre">Transcode</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_vocab</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_in</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size_out</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Default</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/modules/transcode.html#Transcode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.modules.Transcode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transcode from, to, and between Semantic Pointers.</p>
+<p>This can thought of the equivalent of a <a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.Node</span></code></a> for Semantic Pointers.</p>
+<p>Either the <em>input_vocab</em> or the <em>output_vocab</em> argument must not be <em>None</em>.
+(If you want both arguments to be <em>None</em>, use a normal <a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.Node</span></code></a>.)
+Which one of the parameters in the pairs <em>input_vocab/size_in</em> and
+<em>output_vocab/size_out</em> is not set to <em>None</em>, determines whether a Semantic
+Pointer input/output or a normal vector input/output is expected.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>function</strong> (<em>func</em><em>, </em><em>optional</em><em> (</em><em>Default: None</em><em>)</em>) – <p>Function that transforms the input Semantic Pointer to an output
+Semantic Pointer. The function signature depends on <em>input_vocab</em>:</p>
+<ul>
+<li><p>If <em>input_vocab</em> is <em>None</em>, the allowed signatures are the same as
+for a <a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo.Node</span></code></a>. Either <code class="docutils literal notranslate"><span class="pre">function(t)</span></code> or <code class="docutils literal notranslate"><span class="pre">function(t,</span> <span class="pre">x)</span></code>
+where <em>t</em> (float) is the current simulation time and <em>x</em> (NumPy
+array) is the current input to transcode with size <em>size_in</em>.</p></li>
+<li><p>If <em>input_vocab</em> is not <em>None</em>, the signature has to be
+<code class="docutils literal notranslate"><span class="pre">function(t,</span> <span class="pre">sp)</span></code> where <em>t</em> (float) is the current simulation time
+and <em>sp</em> (<a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SemanticPointer</span></code></a>) is the current Semantic Pointer input.
+The associated vocabulary can be obtained via <code class="docutils literal notranslate"><span class="pre">sp.vocab</span></code>.</p></li>
+</ul>
+<p>The allowed function return value depends on <em>output_vocab</em>:</p>
+<ul>
+<li><p>If <em>output_vocab</em> is <em>None</em>, the return value must be a NumPy array
+(or equivalent) of size <em>size_out</em> or <em>None</em> (i.e. no return value)
+if <em>size_out</em> is <em>None</em>.</p></li>
+<li><p>If <em>output_vocab</em> is not <em>None</em>, the return value can be either of:
+NumPy array, <a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SemanticPointer</span></code></a> instance, or an SemanticPointer
+expression or symbolic expression as string that gets parsed with
+the <em>output_vocab</em>.</p></li>
+</ul>
+</p></li>
+<li><p><strong>input_vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em>, </em><em>optional</em><em> (</em><em>Default: None</em><em>)</em>) – Input vocabulary. Mutually exclusive with <em>size_in</em>.</p></li>
+<li><p><strong>output_vocab</strong> (<a class="reference internal" href="nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a><em>, </em><em>optional</em><em> (</em><em>Default: None</em><em>)</em>) – Output vocabulary. Mutually exclusive with <em>size_out</em>.</p></li>
+<li><p><strong>size_in</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: None</em><em>)</em>) – Input size. Mutually exclusive with <em>input_vocab</em>.</p></li>
+<li><p><strong>size_out</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>Default: None</em><em>)</em>) – Output size. Mutually exclusive with <em>output_vocab</em>.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – Additional keyword arguments passed to <a class="reference internal" href="nengo_spa.html#nengo_spa.Network" title="nengo_spa.Network"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.Network</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Transcode.input">
+<code class="sig-name descname"><span class="pre">input</span></code><a class="headerlink" href="#nengo_spa.modules.Transcode.input" title="Permalink to this definition">¶</a></dt>
+<dd><p>Input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.modules.Transcode.output">
+<code class="sig-name descname"><span class="pre">output</span></code><a class="headerlink" href="#nengo_spa.modules.Transcode.output" title="Permalink to this definition">¶</a></dt>
+<dd><p>Output.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.nengo.ai/nengo/frontend-api.html#nengo.Node" title="(in Nengo v3.2)">nengo.Node</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

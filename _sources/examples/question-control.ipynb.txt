@@ -1,0 +1,215 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Controlled question answering\n",
+    "\n",
+    "This demo implements a simple form of question answering by using the basal ganglia to\n",
+    "store and retrieve information from working memory in response to visual input. More\n",
+    "specifically, the basal ganglia decides what to do with the information in the visual\n",
+    "channel based on its content (i.e. whether it is a statement or a question)\n",
+    "\n",
+    "When you run the network, it will start by binding `RED` and `CIRCLE` and then binding\n",
+    "`BLUE` and `SQUARE` so the memory essentially has `RED * CIRCLE + BLUE * SQUARE`. It\n",
+    "does this because it is told that `RED * CIRCLE` is a STATEMENT (i.e. `RED * CIRCLE +\n",
+    "STATEMENT` in the code) as is `BLUE * SQUARE`. Then it is presented with something like\n",
+    "`QUESTION + RED` (i.e., \"What is red?\"). The basal ganglia then reroutes that input to\n",
+    "be compared to what is in working memory and the result shows up in the motor channel."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "\n",
+    "import matplotlib.pyplot as plt\n",
+    "import nengo\n",
+    "\n",
+    "import nengo_spa as spa\n",
+    "\n",
+    "seed = 0"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Create the model\n",
+    "\n",
+    "Notice that when you specify actions, you're determining which modules are connected to\n",
+    "which. For example, by having a mapping that depends on the state of cortex, you are\n",
+    "determining that the cortex and basal ganglia must be connected. As well, when you\n",
+    "specify that the result of the action changes the state of cortex, then you are\n",
+    "determining that thalamus must be connected to cortex."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def input_fn(t):\n",
+    "    if 0.1 < t < 0.3:\n",
+    "        return \"STATEMENT+RED*CIRCLE\"\n",
+    "    elif 0.35 < t < 0.5:\n",
+    "        return \"STATEMENT+BLUE*SQUARE\"\n",
+    "    elif 0.55 < t < 0.7:\n",
+    "        return \"QUESTION+RED\"\n",
+    "    elif 0.75 < t < 0.9:\n",
+    "        return \"QUESTION+BLUE\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "# Number of dimensions for the Semantic Pointers\n",
+    "dimensions = 128\n",
+    "\n",
+    "# Number of neurons to represent each dimension\n",
+    "# Higher number for more accurate representation\n",
+    "n_per_dim = 100\n",
+    "\n",
+    "# Make a model object with the SPA network\n",
+    "model = spa.Network(label=\"Controlled Question Answering\", seed=seed)\n",
+    "\n",
+    "with model:\n",
+    "    # Specify the modules to be used\n",
+    "    vision = spa.Transcode(input_fn, output_vocab=dimensions)\n",
+    "    motor = spa.State(dimensions, neurons_per_dimension=n_per_dim)\n",
+    "    memory = spa.State(\n",
+    "        dimensions, neurons_per_dimension=n_per_dim, feedback=1.0, feedback_synapse=0.1\n",
+    "    )\n",
+    "\n",
+    "    # Transcode modules to show intermediate results\n",
+    "    statement = spa.Transcode(input_vocab=dimensions, output_vocab=dimensions)\n",
+    "    question = spa.Transcode(input_vocab=dimensions, output_vocab=dimensions)\n",
+    "\n",
+    "    # Specify the action mapping\n",
+    "    with spa.ActionSelection() as action_sel:\n",
+    "        spa.ifmax(\n",
+    "            spa.dot(vision, spa.sym.STATEMENT),\n",
+    "            vision - spa.sym.STATEMENT >> statement,\n",
+    "            statement >> memory,\n",
+    "        )\n",
+    "        spa.ifmax(\n",
+    "            spa.dot(vision, spa.sym.QUESTION),\n",
+    "            vision - spa.sym.QUESTION >> question,\n",
+    "            ~(question) * memory >> motor,\n",
+    "        )"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Probe the output"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with model:\n",
+    "    p_vision = nengo.Probe(vision.output, synapse=0.03)\n",
+    "\n",
+    "    p_statement = nengo.Probe(statement.input, synapse=0.03)\n",
+    "    p_question = nengo.Probe(question.input, synapse=0.03)\n",
+    "\n",
+    "    p_motor = nengo.Probe(motor.output, synapse=0.03)\n",
+    "    p_memory = nengo.Probe(memory.output, synapse=0.03)\n",
+    "\n",
+    "    p_selected_actions = nengo.Probe(action_sel.thalamus.output, synapse=0.01)\n",
+    "    p_utility = nengo.Probe(action_sel.bg.input, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Run the model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(1.0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Plot the results"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = model.vocabs[dimensions]\n",
+    "\n",
+    "fig, axes = plt.subplots(7, sharex=True, figsize=(12, 16))\n",
+    "\n",
+    "axes[0].plot(sim.trange(), spa.similarity(sim.data[p_vision], vocab))\n",
+    "axes[0].legend(vocab.keys(), fontsize=\"x-small\", loc=\"upper left\")\n",
+    "axes[0].set_ylabel(\"vision\")\n",
+    "\n",
+    "attrs = (\"RED\", \"BLUE\", \"SQUARE\", \"CIRCLE\")\n",
+    "attr_vecs = vocab.create_subset(attrs)\n",
+    "attr_pairs = spa.pairs(attr_vecs)\n",
+    "attr_pair_vecs = [vocab.parse(p).v for p in attr_pairs]\n",
+    "\n",
+    "axes[1].plot(sim.trange(), spa.similarity(sim.data[p_statement], attr_pair_vecs))\n",
+    "axes[1].legend(attr_pairs, fontsize=\"x-small\", loc=\"upper left\")\n",
+    "axes[1].set_ylabel(\"statement\")\n",
+    "\n",
+    "axes[2].plot(sim.trange(), spa.similarity(sim.data[p_memory], attr_pair_vecs))\n",
+    "axes[2].legend(attr_pairs, fontsize=\"x-small\", loc=\"upper left\")\n",
+    "axes[2].set_ylabel(\"memory\")\n",
+    "\n",
+    "axes[3].plot(sim.trange(), spa.similarity(sim.data[p_question], vocab))\n",
+    "axes[3].legend(vocab.keys(), fontsize=\"x-small\", loc=\"upper left\")\n",
+    "axes[3].set_ylabel(\"question\")\n",
+    "\n",
+    "axes[4].plot(sim.trange(), spa.similarity(sim.data[p_motor], vocab))\n",
+    "axes[4].legend(vocab.keys(), fontsize=\"x-small\", loc=\"upper left\")\n",
+    "axes[4].set_ylabel(\"motor\")\n",
+    "\n",
+    "axes[5].plot(sim.trange(), sim.data[p_utility])\n",
+    "axes[5].legend(\n",
+    "    (\"Statement detected\", \"Question detected\"), fontsize=\"x-small\", loc=\"upper left\"\n",
+    ")\n",
+    "axes[5].set_ylabel(\"utility\")\n",
+    "\n",
+    "axes[6].plot(sim.trange(), sim.data[p_selected_actions])\n",
+    "axes[6].legend(\n",
+    "    (\"Route statement\", \"Route question\"), fontsize=\"x-small\", loc=\"upper left\"\n",
+    ")\n",
+    "axes[6].set_ylabel(\"action\")\n",
+    "axes[6].set_xlabel(\"time [s]\")\n",
+    "axes[6].set_xlim((0, 1.0))"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

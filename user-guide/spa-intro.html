@@ -1,0 +1,503 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Introduction to the Semantic Pointer Architecture &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+  
+<script src="../_static/underscore.js"></script>
+  
+  
+<script src="../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+  
+<script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  
+<script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to NengoSPA" href="../examples/intro.html" />
+    <link rel="prev" title="User Guide" href="../user-guide.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Introduction to the Semantic Pointer Architecture</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#structured-representations">Structured representations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#an-example-spaun">An example: Spaun</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/intro.html">Introduction to NengoSPA</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/intro-coming-from-legacy-spa.html">Transitioning to <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code> coming from the core Nengo legacy SPA implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/custom-module.html">Implementing a custom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algebras.html">Algebras</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../v1.2.0/user-guide/spa-intro.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../v1.1.1/user-guide/spa-intro.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../v1.1.0/user-guide/spa-intro.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../v1.2.0/user-guide/spa-intro.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <div class="section" id="introduction-to-the-semantic-pointer-architecture">
+<h1>Introduction to the Semantic Pointer Architecture<a class="headerlink" href="#introduction-to-the-semantic-pointer-architecture" title="Permalink to this headline">¶</a></h1>
+<p>Briefly, the Semantic Pointer hypothesis states:</p>
+<blockquote>
+<div><p>Higher-level cognitive functions in biological systems are made possible by
+Semantic Pointers. Semantic Pointers are neural representations that carry
+partial semantic content and are composable into the representational
+structures necessary to support complex cognition.</p>
+</div></blockquote>
+<p>The term ‘Semantic Pointer’ was chosen because the representations in the
+architecture are like ‘pointers’ in computer science (insofar as they can be
+‘dereferenced’ to access large amounts of information which they do not
+directly carry). However, they are ‘semantic’ (unlike pointers in computer
+science) because these representations capture relations in a semantic vector
+space in virtue of their distances to one another, as typically envisaged by
+connectionists.</p>
+<p>The book <a class="reference external" href="https://www.amazon.com/How-Build-Brain-Architecture-Architectures/dp/0199794545">How to build a brain</a>
+from Oxford University Press gives a broader introduction into the Semantic
+Pointer Architecture (SPA) and its use in cognitive modeling. To describe the
+architecture, the book covers four main topics that are semantics, syntax,
+control, and learning and memory. The discussion of semantics considers how
+Semantic Pointers are generated from information that impinges on the senses,
+reproducing details of the spiking tuning curves in the visual system. Syntax is
+captured by demonstrating how very large structures can be encoded, by binding
+Semantic Pointers to one another. The section on control considers the role of
+the basal ganglia and other structures in routing information throughout the
+brain to control cognitive tasks. The section on learning and memory describes
+how the SPA includes adaptability (despite this not being a focus of the <a class="reference external" href="http://compneuro.uwaterloo.ca/research/nef.html">Neural
+Engineering Framework</a> used
+in Nengo) showing how detailed spiking timing during learning can be
+incorporated into the basal ganglia model using a biologically plausible
+STDP-like rule.</p>
+<div class="section" id="structured-representations">
+<h2>Structured representations<a class="headerlink" href="#structured-representations" title="Permalink to this headline">¶</a></h2>
+<p>The Semantic Pointer Architecture (SPA) uses a specific type of a Vector
+Symbolic Architecture. That means it uses (high-dimensional) vectors to
+represent concepts. These can be combined with certain linear and non-linear
+operations to bind the concept vectors and build structured representations.</p>
+<p>The specific operations used by the SPA where first suggested by Tony A. Plate
+in <a class="reference external" href="https://www.amazon.ca/Holographic-Reduced-Representation-Distributed-Structures-ebook/dp/B0188Y14VS/ref=sr_1_1?ie=UTF8&amp;qid=1502311400&amp;sr=8-1">Holographic Reduced Representation: Distributed Representation for Cognitive
+Structures</a>
+In particular, we usually use random vectors of unit-length and three basic
+operations.</p>
+<ol class="arabic">
+<li><p><em>Superposition</em>: Two vectors <span class="math notranslate nohighlight">\(\vec{v}\)</span> and <span class="math notranslate nohighlight">\(\vec{w}\)</span> can be
+combined in a union-like operation by simple addition as
+<span class="math notranslate nohighlight">\(\vec{u} = \vec{v} + \vec{w}\)</span>. The resulting vector will be similar to
+both of the original vectors.</p></li>
+<li><p><em>Binding</em>: The binding has to produce a vector that is dissimilar to both of
+the original vectors and allows to recover one of the original vectors given
+the other one. In the SPA, we employ circular convolution for this purpose
+defined as</p>
+<div class="math notranslate nohighlight">
+\[\vec{u} = \vec{v} \circledast \vec{w}\ :\quad u_i = \sum_{j=1}^D v_j
+w_{(i-j)\ \mathrm{mod}\ D}\]</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> is the dimensionality of the vectors.</p>
+</li>
+<li><p><em>Unbinding</em>: To unbind a vector from a circular convolution, another circular
+convolution with the approximate inverse of one of the vectors can be used:
+<span class="math notranslate nohighlight">\(\vec{v} \approx \vec{u} \circledast \vec{w}^+\)</span>. The approximate
+inverse is given by reordering the vector components:
+<span class="math notranslate nohighlight">\(\vec{w}^+ = (w_1, w_D, w_{D-1}, \dots, w_2)^T\)</span>.</p></li>
+</ol>
+<p>Note that circular convolution is associative, commutative, and distributive:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((\vec{u} \circledast \vec{v}) \circledast \vec{w} = \vec{u} \circledast (\vec{v} \circledast \vec{w})\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{v} \circledast \vec{w} = \vec{w} \circledast \vec{v}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\vec{u} \circledast (\vec{v} + \vec{w}) = \vec{u} \circledast \vec{v} + \vec{u} \circledast \vec{w}\)</span>.</p></li>
+</ul>
+<p>Let us consider a simple example: Given vectors for <em>red</em>, <em>blue</em>,
+<em>square</em>, and <em>circle</em>, we can represent a scene with a <em>red square</em> and <em>blue
+circle</em> as</p>
+<div class="math notranslate nohighlight">
+\[\vec{v} = \mathrm{Red} \circledast \mathrm{Square} + \mathrm{Blue}
+\circledast \mathrm{Circle}\]</div>
+<p>If we want to know the color of the square, we can unbind the <em>square</em> vector:</p>
+<div class="math notranslate nohighlight">
+\[\vec{v} \circledast \mathrm{Square}^+ = \mathrm{Red} \circledast
+\mathrm{Square} \circledast \mathrm{Square}^+ + \mathrm{Blue} \circledast
+\mathrm{Circle} \circledast \mathrm{Square}^+ \approx \mathrm{Red}
++ \mathit{noise}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While circular convolution is the default binding operation in NengoSPA and
+has been used widely, other choices are possible. Other choices supported by
+NengoSPA are potentially better suited for certain tasks. The
+<a class="reference internal" href="algebras.html"><span class="doc">Algebras</span></a> section explains how to use other binding operations. Choices
+included in NengoSPA are documented in the API documentation of
+<code class="xref py py-obj docutils literal notranslate"><span class="pre">nengo_spa.algebras</span></code>.</p>
+</div>
+</div>
+<div class="section" id="an-example-spaun">
+<h2>An example: Spaun<a class="headerlink" href="#an-example-spaun" title="Permalink to this headline">¶</a></h2>
+<p>In chapter 7 of How to build a brain, the SPA Unified Network (Spaun) model is
+presented that demonstrates how a wide variety of (about 8) cognitive tasks can
+be integrated in a single large-scale, spiking neuron model. Spaun switches
+tasks and provides all responses without any manual change in parameters from
+a programmer. Essentially, it is a fixed model that integrates perception,
+cognition, and action across several different tasks. Spaun is the most complex
+example of an SPA to date.</p>
+<div class="figure align-default" id="id1">
+<img alt="High-level depiction of the Spaun model." src="../_images/spa-1.png" />
+<p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">A high-level depiction of the Spaun model, with all of the central features
+of a general Semantic Pointer Architecture. Visual and motor hierarchies
+provide semantics via connections to natural input (images) and output (a
+nonlinear dynamical arm model). Central information manipulation depends on
+syntaictic structure for several tasks. Control is largely captured by the
+basal ganglia action selection elements. Memory and learning take place in
+both basal ganglia and cortex. The model itself consists of just under
+a million spiking neurons.</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+</div>
+<p>Let us consider how the model would perform a single run of one of the cognitive
+tasks (<a class="reference external" href="https://xchoo.github.io/spaun2.0/">see a video of Spaun running this task</a>). This is analogous to the <a class="reference external" href="https://en.wikipedia.org/wiki/Raven's_Progressive_Matrices">Raven’s
+Matrix</a> task,
+which requires people to figure out a pattern in the input, and apply that
+pattern to new input to produce novel output. For instance given the following
+input <code class="docutils literal notranslate"><span class="pre">[1]</span> <span class="pre">[11]</span> <span class="pre">[111]</span> <span class="pre">[2]</span> <span class="pre">[22]</span> <span class="pre">[222]</span> <span class="pre">[3]</span> <span class="pre">[33]</span> <span class="pre">?</span></code> the expected answer is
+<code class="docutils literal notranslate"><span class="pre">333</span></code>. The input to the model first indicates which task it will
+perform by presenting it with an <code class="docutils literal notranslate"><span class="pre">A</span></code> followed by the task number (e.g. <code class="docutils literal notranslate"><span class="pre">A</span> <span class="pre">7</span></code>
+for this task). Then it is shown a series of letters and brackets and it has to
+draw the correct answer with its arm. The processing for such a task goes
+something like this:</p>
+<ol class="arabic simple">
+<li><p>The image impacts the visual system, and the neurons transform the raw image
+input (784 dimensions) to a lower dimensional (50 dimensions) Semantic
+Pointer that preserves central visual features. This is done using a visual
+hierarchy model (i.e., V1-V2-V4-IT) that implements a learned statistical
+compression.</p></li>
+<li><p>The visual Semantic Pointer is mapped to a conceptual Semantic Pointer by an
+associative memory, and stored in a working memory. Storing Semantic
+Pointers is performed by binding them to other Semantic Pointers that are
+used to encode the order the information is presented in (e.g. to
+distinguish <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">2</span></code> from <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">1</span></code>).</p></li>
+<li><p>In this task, the Semantic Pointers generated by consecutive sets of inputs
+are compared with each other to infer what relationship there exists (e.g.
+between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">11</span></code>; or <code class="docutils literal notranslate"><span class="pre">22</span></code> and <code class="docutils literal notranslate"><span class="pre">222</span></code>).</p></li>
+<li><p>The shared transofmation across all the input is determined by averaging the
+previously inferred relationships across all sets of inputs (so the inferred
+relationship between <code class="docutils literal notranslate"><span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">11</span></code> is averaged with that between <code class="docutils literal notranslate"><span class="pre">22</span></code>
+and <code class="docutils literal notranslate"><span class="pre">222</span></code>, etc.).</p></li>
+<li><p>When the <code class="docutils literal notranslate"><span class="pre">?</span></code> is encountered, Spaun determines its answer by taking the
+average relationship and applying it to the last input (i.e., <code class="docutils literal notranslate"><span class="pre">33</span></code>) to
+generate an internal representation of the answer.</p></li>
+<li><p>This representation is then used to drive the motor system to write out the
+correct answer (see <a class="reference internal" href="#spa-2"><span class="std std-numref">Fig. 2</span></a>), by sending the relevant Semantic
+Pointers to the motor system.</p></li>
+<li><p>The motor system “dereferences” the semantic pointer by going down the motor
+hierarchy to generate appropriate control signals for a high-degree of
+freedom physical arm model.</p></li>
+</ol>
+<div class="figure align-default" id="id2">
+<span id="spa-2"></span><img alt="Example input and output from Spaun." src="../_images/spa-2.png" />
+<p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">Example input and output from Spaun. a) Handwritten numbers used as input.
+b) Numbers drawn by Spaun using its arm.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+</div>
+<p>All of the control-like steps (e.g. “compared with”, “inferred”, and routing
+information through the system), are implemented by a biologically plausible
+basal ganglia model. This is one example of the 8 different tasks that Spaun is
+able to perform. Videos for all tasks can be found <a class="reference external" href="https://xchoo.github.io/spaun2.0/videos.html">here</a>.</p>
+</div>
+</div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

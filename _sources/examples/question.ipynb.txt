@@ -1,0 +1,222 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Simple question answering\n",
+    "\n",
+    "This demo implements a simple form of question answering. Two features (color and shape)\n",
+    "will be bound by circular convolution. A cue will be used to determine either one of the\n",
+    "features by deconvolution.\n",
+    "\n",
+    "When you run the network, it will start by binding `RED` and `CIRCLE` for 0.5 seconds\n",
+    "and then binding `BLUE` and `SQUARE` for 0.5 seconds. In parallel the network is asked\n",
+    "with the cue. For example, when the cue is `CIRCLE` the network will respond with `RED`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "\n",
+    "import nengo\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "import nengo_spa as spa\n",
+    "\n",
+    "seed = 0"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 1: Define the vocabulary dimension and network"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Number of dimensions for the Semantic Pointers\n",
+    "dimensions = 32\n",
+    "\n",
+    "model = spa.Network(label=\"Simple question answering\", seed=seed)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 2: Define the input\n",
+    "\n",
+    "The color input will switch every 0.5 seconds between `RED` and `BLUE`. In the same way\n",
+    "the shape input switches between `CIRCLE` and `SQUARE`. Thus, the network will bind\n",
+    "alternatingly `RED * CIRCLE` and `BLUE * SQUARE` for 0.5 seconds each.\n",
+    "\n",
+    "The cue for deconvolving bound semantic pointers cycles through `CIRCLE`, `RED`,\n",
+    "`SQUARE`, and `BLUE` within one second."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def color_input(t):\n",
+    "    if (t // 0.5) % 2 == 0:\n",
+    "        return \"RED\"\n",
+    "    else:\n",
+    "        return \"BLUE\"\n",
+    "\n",
+    "\n",
+    "def shape_input(t):\n",
+    "    if (t // 0.5) % 2 == 0:\n",
+    "        return \"CIRCLE\"\n",
+    "    else:\n",
+    "        return \"SQUARE\"\n",
+    "\n",
+    "\n",
+    "def cue_input(t):\n",
+    "    sequence = [\"0\", \"CIRCLE\", \"RED\", \"0\", \"SQUARE\", \"BLUE\"]\n",
+    "    idx = int((t // (1.0 / len(sequence))) % len(sequence))\n",
+    "    return sequence[idx]\n",
+    "\n",
+    "\n",
+    "with model:\n",
+    "    color_in = spa.Transcode(color_input, output_vocab=dimensions)\n",
+    "    shape_in = spa.Transcode(shape_input, output_vocab=dimensions)\n",
+    "    cue = spa.Transcode(cue_input, output_vocab=dimensions)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 3: Create the model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with model:\n",
+    "    conv = spa.State(dimensions)\n",
+    "    out = spa.State(dimensions)\n",
+    "\n",
+    "    # Connect the buffers\n",
+    "    color_in * shape_in >> conv\n",
+    "    conv * ~cue >> out"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 4: Probe the output"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with model:\n",
+    "    model.config[nengo.Probe].synapse = nengo.Lowpass(0.03)\n",
+    "    p_color_in = nengo.Probe(color_in.output)\n",
+    "    p_shape_in = nengo.Probe(shape_in.output)\n",
+    "    p_cue = nengo.Probe(cue.output)\n",
+    "    p_conv = nengo.Probe(conv.output)\n",
+    "    p_out = nengo.Probe(out.output)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 4: Run the model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(3.0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 5: Plot the results"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.figure(figsize=(10, 10))\n",
+    "vocab = model.vocabs[dimensions]\n",
+    "\n",
+    "plt.subplot(5, 1, 1)\n",
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p_color_in], vocab))\n",
+    "plt.legend(vocab.keys(), fontsize=\"x-small\")\n",
+    "plt.ylabel(\"color\")\n",
+    "\n",
+    "plt.subplot(5, 1, 2)\n",
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p_shape_in], vocab))\n",
+    "plt.legend(vocab.keys(), fontsize=\"x-small\")\n",
+    "plt.ylabel(\"shape\")\n",
+    "\n",
+    "plt.subplot(5, 1, 3)\n",
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p_cue], vocab))\n",
+    "plt.legend(vocab.keys(), fontsize=\"x-small\")\n",
+    "plt.ylabel(\"cue\")\n",
+    "\n",
+    "plt.subplot(5, 1, 4)\n",
+    "for pointer in [\"RED * CIRCLE\", \"BLUE * SQUARE\"]:\n",
+    "    plt.plot(sim.trange(), vocab.parse(pointer).dot(sim.data[p_conv].T), label=pointer)\n",
+    "plt.legend(fontsize=\"x-small\")\n",
+    "plt.ylabel(\"convolved\")\n",
+    "\n",
+    "plt.subplot(5, 1, 5)\n",
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p_out], vocab))\n",
+    "plt.legend(vocab.keys(), fontsize=\"x-small\")\n",
+    "plt.ylabel(\"output\")\n",
+    "plt.xlabel(\"time [s]\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The last plot shows that the output is most similar to the semantic pointer bound to the\n",
+    "current cue. For example, when `RED` and `CIRCLE` are being convolved and the cue is\n",
+    "`CIRCLE`, the output is most similar to `RED`."
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

@@ -1,0 +1,1035 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Transitioning to `nengo_spa` coming from the core Nengo legacy SPA implementation\n",
+    "\n",
+    "This tutorial is intended for persons who are already familiar with the legacy Semantic\n",
+    "Pointer Architecture (SPA) implementation that was shipped with core Nengo until at\n",
+    "least version 2.7. Thus, it will not explain any of the background behind the SPA and\n",
+    "will reference concepts used in the legacy implementation. If you are completely new to\n",
+    "the SPA, you might want to start with [this tutorial that assumes no knowledge of the\n",
+    "legacy SPA implementation](intro.ipynb).\n",
+    "\n",
+    "## Why switch to `nengo_spa`?\n",
+    "\n",
+    "You might wonder why you should switch to `nengo_spa`, if you have been using the legacy\n",
+    "SPA and it was working well for you. Here is a number of reasons to prefer `nengo_spa`:\n",
+    "\n",
+    "### Support for action rules of arbitrary complexity\n",
+    "\n",
+    "A rule as complex as `dot((role * filler + BiasVector) * tag, cmp) >> ...`, which\n",
+    "includes two circular convolutions and a dot product of two non-fixed values, is\n",
+    "possible with nengo_spa. This was not possible with the legacy SPA implementation.\n",
+    "\n",
+    "### “Type safety” in action rules\n",
+    "\n",
+    "If different vocabularies are combined an explicit conversion is required. This prevents\n",
+    "hard-to-track-down bugs. This conversion is also explicit about *how* the conversion is\n",
+    "done, instead of just applying a fixed method that is not always appropriate.\n",
+    "\n",
+    "\n",
+    "### The neural representations optimized for better accuracy\n",
+    "\n",
+    "That means less neurons are needed to achieve the same performance. This can make\n",
+    "simulations run faster. This improvement of accuracy is comparable to the results\n",
+    "presented in [“Optimizing Semantic Pointer Representations for Symbol-Like Processing in\n",
+    "Spiking Neural\n",
+    "Networks”](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0149928)\n",
+    "which achieved improvements of up to 25 times. In contrast to that paper, the\n",
+    "implementation used in `nengo_spa` is purely based on setting appropriate radii and\n",
+    "distributions for evaluation points as well as intercepts. This implementation is much\n",
+    "faster.\n",
+    "\n",
+    "### New Python-based syntax\n",
+    "\n",
+    "A new Python-based syntax gives syntax highlighting and can make use of static checking\n",
+    "tools like pylint to catch misspelled names and similar errors early.\n",
+    "\n",
+    "### Support for algebras\n",
+    "The SPA uses circular convolution for binding by default, but other binding operations\n",
+    "are also viable. Different [algebras](../user-guide/algebras.rst) can be implemented\n",
+    "with `nengo_spa`. In particular, an implementation of the [vector-derived transformation\n",
+    "binding\n",
+    "(VTB)](../modules/nengo_spa.algebras.rst#nengo_spa.algebras.vtb_algebra.VtbAlgebra) is\n",
+    "provided, which is especially suited for deep structures.\n",
+    "\n",
+    "### Other features\n",
+    "\n",
+    "* The neural representation has been optimized to allow the representation of the\n",
+    "identity vector (with the option to turn this optimization off).\n",
+    "* SPA networks can be used as and within normal Nengo networks. For example, instead of\n",
+    "a basic and an SPA associative memory network, there is only one type of network that\n",
+    "can be used in either case.\n",
+    "* SPA networks can be nested.\n",
+    "* Support for the Nengo config system.\n",
+    "* Scalars can now be routed and used as inputs/outputs using `spa.Scalar`.\n",
+    "* Lots of fixed issues and in general less possibilities to do things wrong.\n",
+    "\n",
+    "## Importing nengo_spa\n",
+    "\n",
+    "To save typing it is recommended to `import nengo_spa as spa`. Note that this is only a\n",
+    "very small difference to `import nengo.spa as spa` which imports the legacy SPA. In the\n",
+    "following, it is assumed that you imported `nengo_spa` as `spa`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "\n",
+    "import nengo\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "import nengo_spa as spa\n",
+    "from nengo_spa.examine import pairs\n",
+    "from nengo_spa.exceptions import SpaParseError, SpaTypeError\n",
+    "\n",
+    "rng = np.random.RandomState(1)  # change this to change vocabularies"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "d = 32  # Default dimensionality to use in the examples"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Rule 1 of using nengo_spa\n",
+    "\n",
+    "When using `nengo_spa`, use `spa.Network()` in any place where you would use a\n",
+    "`nengo.Network()`. There isn't any downside to using `spa.Network()` and in this way you\n",
+    "will not run into problems of using `nengo.Network()` where `spa.Network()` is required.\n",
+    "That being said, if you have existing `nengo.Network`s (that do not use any SPA\n",
+    "features), these can stay `nengo.Network`s. In other words, you will only have to touch\n",
+    "code using the SPA to upgrade to nengo_spa; networks not using the SPA system may stay\n",
+    "as they are.\n",
+    "\n",
+    "If you want to know when exactly `spa.Network()` is required, here are the conditions:\n",
+    "\n",
+    "1. If you build action rules, they have to be build in a `spa.Network()`.\n",
+    "2. Each network referenced in an action rule has to be a  `spa.Network()`."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## A basic model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(seed=0) as model:\n",
+    "    state = spa.State(d)\n",
+    "    bind = spa.Bind(d)\n",
+    "\n",
+    "    spa.sym.A * spa.sym.B >> state\n",
+    "    state >> bind.input_left\n",
+    "    ~spa.sym.B >> bind.input_right\n",
+    "\n",
+    "    p = nengo.Probe(bind.output, synapse=0.03)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This defines a basic SPA model. It is conceptually similar to what you were to write in\n",
+    "legacy SPA, but the syntax has changed considerably and there are some other fine\n",
+    "differences.\n",
+    "\n",
+    "The first difference is that instead of `with spa.SPA() ...`, we are using `with\n",
+    "spa.Network() ...`. There is no difference between the top-level `spa.SPA` and\n",
+    "`spa.Module` anymore. Everything is just a `spa.Network`.\n",
+    "\n",
+    "The next two lines are almost the same as for the legacy SPA. You define the modules\n",
+    "with the vocabulary dimension as before. There is, however, no need anymore to assign\n",
+    "them as attributes to `model`. But you are free to do so, if you prefer.\n",
+    "\n",
+    "The next lines are what previously was implemented with `nengo.spa.Cortical`. Now these\n",
+    "rules can be written down directly in Python code without a special object. Each `>>`\n",
+    "means, take the left side and route it to the input an the right side. (Previously this\n",
+    "was done with the assignment operator `=` and the other way around.) When accessing\n",
+    "specific inputs of a module, standard dot notation is used (instead of an underscore).\n",
+    "Also note that the names of some of the inputs have changed. They follow a consistent\n",
+    "naming scheme now: always starting with `input_` and you use the same name in action\n",
+    "rules as in manually created Nengo connections. Because everything is stated in pure\n",
+    "Python code now, you have to be explicit about when you are using a symbolic reference\n",
+    "to a semantic pointer. That is done with the `spa.sym.` prefix. The vocabulary from\n",
+    "which the specified semantic pointer is taken will be inferred from the context."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(1.0)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Let us plot the result. Note that we can access the *d*-dimensional default vocabulary\n",
+    "with `model.vocabs[d]`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], model.vocabs[d]))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(model.vocabs[d].keys(), loc=\"best\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "There is another detail you might notice here: the `keys` attribute on the vocabularies\n",
+    "is now a function. This is to have `Vocabulary` adhere to the usual Python API of\n",
+    "dictionaries and mapping types."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Transcode\n",
+    "\n",
+    "In the previous example, input was provided directly in the action rules. But this does\n",
+    "not allow for time-varying inputs. The legacy SPA `Input` has been replaced with\n",
+    "`spa.Transcode` which has an API more similar to classic `nengo.Nodes`. It takes either\n",
+    "a constant value or a function which may return any of the following:\n",
+    "\n",
+    "* A string that is parsed as a semantic pointer.\n",
+    "* A symbolic Semantic Pointer expression.\n",
+    "* A `SemanticPointer` instance.\n",
+    "* A NumPy array.\n",
+    "\n",
+    "The next examples demonstrates this. It also manually specifies a vocabulary, but ignore\n",
+    "this for now as the changes to `Vocabulay` will be discussed later."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = spa.Vocabulary(d, strict=False, pointer_gen=rng)\n",
+    "\n",
+    "\n",
+    "def stimulus_fn(t):\n",
+    "    if t < 0.5:\n",
+    "        return \"A * B\"  # Return string to be parsed\n",
+    "    elif t < 1.0:\n",
+    "        return vocab.parse(\"C * B\")  # Return SemanticPointer instance\n",
+    "    else:\n",
+    "        return np.zeros(d)  # Return a numpy array\n",
+    "\n",
+    "\n",
+    "with spa.Network(seed=0) as model:\n",
+    "    state = spa.State(vocab)\n",
+    "    bind = spa.Bind(vocab)\n",
+    "    spa_input = spa.Transcode(stimulus_fn, output_vocab=vocab)\n",
+    "\n",
+    "    spa_input >> state\n",
+    "    state >> bind.input_left\n",
+    "    ~spa.sym.B >> bind.input_right\n",
+    "\n",
+    "    p = nengo.Probe(bind.output, synapse=0.03)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(1.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], vocab))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(vocab.keys(), loc=\"best\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    " In addition to providing output, you can now use the `spa.Transcode` module to provide\n",
+    "an input from the network. Its output function gets three inputs: the current simulation\n",
+    "time, a `SemanticPointer` instance of the input, and the input vocabulary. To create a\n",
+    "`Transcode` instance, the dimensionality (or vocabulary) has to be passed in twice. The\n",
+    "first specifies the input vocabulary (the one passed to the output function), the second\n",
+    "one specifies the output vocabulary that will be used to pares the function's output.\n",
+    "\n",
+    "In the following example we compute the circular convolution with `~B` in math instead\n",
+    "of a neural network."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def cconv(t, p):\n",
+    "    return p.vocab.parse(\"~B\") * p\n",
+    "\n",
+    "\n",
+    "with spa.Network(seed=0) as model:\n",
+    "    state = spa.State(d)\n",
+    "    bind = spa.Transcode(cconv, d, d)\n",
+    "    spa_input = spa.Transcode(\"A * B\", output_vocab=d)\n",
+    "\n",
+    "    spa_input >> state\n",
+    "    state >> bind\n",
+    "\n",
+    "    p = nengo.Probe(bind.output, synapse=0.03)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(1.0)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], model.vocabs[d]))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(model.vocabs[d].keys(), loc=\"best\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Action rules"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We have already seen how to create cortical action rules with nengo_spa. The next\n",
+    "example shows how to add action rules implemented through the basal ganglia-thalamus\n",
+    "loop. It is the classical routing through a sequence example.\n",
+    "\n",
+    "The action rules have to be defined in the context of a `spa.ActionSelection` object\n",
+    "(you are allowed to have multiple independent `ActionSelection` objects). Each rule is\n",
+    "defined with the `spa.ifmax` function. The first argument is an expression that provides\n",
+    "the utility value, and all remaining arguments are routings to do when that rules\n",
+    "utility value is the largest."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def start(t):\n",
+    "    if t < 0.05:\n",
+    "        return \"A\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "with spa.Network(seed=0) as model:\n",
+    "    state = spa.State(d)\n",
+    "    spa_input = spa.Transcode(start, output_vocab=d)\n",
+    "\n",
+    "    spa_input >> state\n",
+    "    with spa.ActionSelection():\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.A), spa.sym.B >> state)\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.B), spa.sym.C >> state)\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.C), spa.sym.D >> state)\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.D), spa.sym.E >> state)\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.E), spa.sym.A >> state)\n",
+    "\n",
+    "    p = nengo.Probe(state.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], model.vocabs[d]))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "There is no need to manually create the basal ganglia and thalamus anymore. This happens\n",
+    "automatically. You can access these objects as the `bg` and `thalamus` attributes of the\n",
+    "`ActionSelection` object. This example also demonstrates how to name actions by using a\n",
+    "optional first (!) argument to `ifmax`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def start2(t):\n",
+    "    if t < 0.05:\n",
+    "        return \"A\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "with spa.Network(seed=0) as model:\n",
+    "    state = spa.State(d)\n",
+    "    spa_input = spa.Transcode(start2, output_vocab=d)\n",
+    "\n",
+    "    spa_input >> state\n",
+    "    with spa.ActionSelection() as action_sel:\n",
+    "        spa.ifmax(\"state == A\", spa.dot(state, spa.sym.A), spa.sym.B >> state)\n",
+    "        spa.ifmax(\"state == B\", spa.dot(state, spa.sym.B), spa.sym.C >> state)\n",
+    "        spa.ifmax(\"state == C\", spa.dot(state, spa.sym.C), spa.sym.D >> state)\n",
+    "        spa.ifmax(\"state == D\", spa.dot(state, spa.sym.D), spa.sym.E >> state)\n",
+    "        spa.ifmax(\"state == E\", spa.dot(state, spa.sym.E), spa.sym.A >> state)\n",
+    "\n",
+    "    p_thalamus = nengo.Probe(action_sel.thalamus.output, synapse=0.01)\n",
+    "    p_utility = nengo.Probe(action_sel.bg.input, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.subplot(2, 1, 1)\n",
+    "plt.plot(sim.trange(), sim.data[p_thalamus])\n",
+    "plt.legend(action_sel.keys(), fontsize=\"x-small\")\n",
+    "plt.ylabel(\"Thalamus output\")\n",
+    "\n",
+    "plt.subplot(2, 1, 2)\n",
+    "plt.plot(sim.trange(), sim.data[p_utility])\n",
+    "plt.legend(action_sel.keys(), fontsize=\"x-small\")\n",
+    "plt.ylabel(\"Utility\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Opposed to the legacy SPA, nengo_spa allows arbitrarily complex actions rules. In the\n",
+    "following example we define dot products between two states and dynamic circular\n",
+    "convolutions. All required networks will be created automatically."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(seed=0) as model:\n",
+    "    state_ab = spa.State(d)\n",
+    "    state_a = spa.State(d)\n",
+    "    state_b = spa.State(d)\n",
+    "    out = spa.State(d)\n",
+    "\n",
+    "    spa.sym.A * spa.sym.B >> state_ab\n",
+    "    spa.sym.A >> state_a\n",
+    "    state_ab * ~state_a >> state_b\n",
+    "\n",
+    "    with spa.ActionSelection():\n",
+    "        spa.ifmax(spa.dot(state_ab, state_a * state_b), state_ab * ~spa.sym.B >> out)\n",
+    "        spa.ifmax(0.5, spa.sym.C >> out)\n",
+    "\n",
+    "    p = nengo.Probe(out.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], model.vocabs[d]))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(model.vocabs[d].keys())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note that there is no automatic sharing of networks in the action rules. If, for\n",
+    "example, you define the same circular convolution in there, two such networks will be\n",
+    "created. But you can define a single circular convolution, assign it to a variable, and\n",
+    "reuse that variable to reuse the circular convolution network like so:\n",
+    "\n",
+    "```python\n",
+    "cconv = state1 * state2\n",
+    "cconv * ~POINTER1 >> state3\n",
+    "cconv * ~POINTER2 >> state4\n",
+    "```\n",
+    "\n",
+    "If you have nengo_gui installed, it can be used to take a look at all the things that\n",
+    "get created."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "try:\n",
+    "    from nengo_gui.ipython import IPythonViz\n",
+    "\n",
+    "    vis = IPythonViz(model)\n",
+    "except (ImportError, AttributeError):\n",
+    "    print(\"GUI not installed or code not executed in Jupyter notebook.\")\n",
+    "    vis = None\n",
+    "vis"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Vocabularies\n",
+    "\n",
+    "Nengo_spa behaves a lot like legacy SPA when providing dimensionalities only.\n",
+    "Vocabularies will implicitly be created according to the specified dimensions and\n",
+    "Semantic Pointers will be automatically added. When creating a vocabulary explicitly,\n",
+    "things are a little bit different. In that case the vocabulary will be in strict-mode by\n",
+    "default. That means an exception will be raised when trying to parse a Semantic Pointer\n",
+    "that is not in the vocabulary. This is to prevent accidentally adding new Semantic\n",
+    "Pointers (something that tended to happen with the associative memory in legacy SPA) and\n",
+    "can make it easier to notice typing errors."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "try:\n",
+    "    vocab.parse(\"A\")\n",
+    "except SpaParseError as err:\n",
+    "    print(err)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "All Semantic Pointers have to be added to the vocabulary with either `add` or the new\n",
+    "`populate` method before they are recognized by `parse`. You can add multiple pointers\n",
+    "add once by separating them with a semicolon in `populate`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "vocab.add(\"A\", vocab.create_pointer())\n",
+    "vocab.populate(\"B; C\")\n",
+    "vocab.parse(\"A + B + C\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "If you prefer to automatically add unknown vectors, you can disable strict mode. This\n",
+    "can be especially useful when experimenting with initial ideas in the GUI."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = spa.Vocabulary(d, strict=False, pointer_gen=rng)\n",
+    "vocab.parse(\"A\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The new `populate` method is much more powerful than adding pointers with `parse`. For\n",
+    "example you can use existing Semantic pointers to construct new ones and you can use\n",
+    "transforms as `normalized()` and `unitary()` to make vectors unit length or normalized.\n",
+    "Note that a simple Semantic Pointer will be normalized, but you need to explicitly do\n",
+    "this when constructing a pointer out of others.\n",
+    "\n",
+    "In the following example we create a vocabulary with four pointers *A*, *B*, *C*, and\n",
+    "*D*. *A* is made unitary, D is constructed from other vectors and normalized."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = spa.Vocabulary(d)\n",
+    "vocab.populate(\"A.unitary(); B; C; D = (A * B + C).normalized()\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Another new and sometimes useful method is `parse_n` which allows to parse multiple\n",
+    "Semantic Pointer expressions at once. This can be useful for programmatically\n",
+    "constructing a list of pointers for plotting. The following example demonstrates that\n",
+    "for all convolution pairs. It also shows that when using a predefined vocabulary, the\n",
+    "modules will obtain their dimensionality from that vocabulary. No need to pass\n",
+    "dimensionality and vocabulary anymore!"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "vocab.populate(\"A; B; C\")\n",
+    "\n",
+    "with spa.Network() as model:\n",
+    "    state = spa.State(vocab)\n",
+    "    spa.sym.A * spa.sym.B >> state\n",
+    "    p = nengo.Probe(state.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot_keys = pairs(vocab)\n",
+    "plot_vectors = vocab.parse_n(*plot_keys)\n",
+    "\n",
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], plot_vectors))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(plot_keys)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Another feature of nengo_spa is “type-safety” in the sense that you cannot just connect\n",
+    "things with different vocabularies in action rules."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "v1 = spa.Vocabulary(d)\n",
+    "v1.populate(\"A; B\")\n",
+    "v2 = spa.Vocabulary(d)\n",
+    "v2.populate(\"B; C\")\n",
+    "\n",
+    "try:\n",
+    "    with spa.Network() as model:\n",
+    "        state1 = spa.State(v1)\n",
+    "        state2 = spa.State(v2)\n",
+    "        state2 >> state1\n",
+    "except SpaTypeError as err:\n",
+    "    print(err)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "If we want to do this, we have to be explicit about how the conversion between the\n",
+    "vocabularies is supposed to be happen. The first option (if both vocabularies have the\n",
+    "same dimensionality) is to just reinterpret the Semantic Pointer in the other\n",
+    "vocabulary. Because the vectors in both vocabularies are independent (by default) the\n",
+    "*A* from `v2` will be different from *A* in `v1`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "v1 = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "v1.populate(\"A; B\")\n",
+    "v2 = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "v2.populate(\"A; B\")\n",
+    "\n",
+    "with spa.Network() as model:\n",
+    "    state1 = spa.State(v1)\n",
+    "    state2 = spa.State(v2)\n",
+    "\n",
+    "    spa.reinterpret(state2) >> state1\n",
+    "    spa.sym.A >> state2\n",
+    "\n",
+    "    p = nengo.Probe(state1.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), v1[\"A\"].dot(sim.data[p].T))\n",
+    "plt.plot(sim.trange(), v2[\"A\"].dot(sim.data[p].T))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend([\"v1['A']\", \"v2['A']\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We see that the value in `state2` is still similar to `v2`'s *A* even though `state2`\n",
+    "uses `v1` as vocabulary.\n",
+    "\n",
+    "The second choice to convert between vocabularies is `translate` which will construct a\n",
+    "transformation matrix to convert from one vocabulary to the other based on the Semantic\n",
+    "Pointer names. This also works with vocabularies that do not match in dimensionality,\n",
+    "but the target vocabulary should contain all keys of the source vocabulary. If this is\n",
+    "not the case, you will get either a warning or an exception depending on whether you are\n",
+    "using strict-mode vocabularies. You can also use the `populate=True` argument to\n",
+    "`translate` to have all missing keys added to the target vocabulary."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "v1 = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "v1.populate(\"A; B\")\n",
+    "v2 = spa.Vocabulary(d, pointer_gen=rng)\n",
+    "v2.populate(\"A; B\")\n",
+    "\n",
+    "with spa.Network() as model:\n",
+    "    state1 = spa.State(v1)\n",
+    "    state2 = spa.State(v2)\n",
+    "\n",
+    "    spa.translate(state2, v1) >> state1\n",
+    "    spa.sym.A >> state2\n",
+    "\n",
+    "    p = nengo.Probe(state1.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), v1[\"A\"].dot(sim.data[p].T))\n",
+    "plt.plot(sim.trange(), v2[\"A\"].dot(sim.data[p].T))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend([\"v1['A']\", \"v2['A']\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## nengo_spa and the config system\n",
+    "\n",
+    "One of the major improvements in nengo_spa is the extensive use of Nengo's config\n",
+    "system. For example it allows to set the vocab for all states globally."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network() as model:\n",
+    "    model.config[spa.State].vocab = d\n",
+    "\n",
+    "    state1 = spa.State()\n",
+    "    state2 = spa.State()\n",
+    "\n",
+    "    state1 >> state2\n",
+    "    spa.sym.A >> state1\n",
+    "\n",
+    "    p = nengo.Probe(state2.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], model.vocabs[d]))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(model.vocabs[d].keys())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The config system can also be used to set neuron numbers, subdimensions, and various\n",
+    "other parameters, in particular of objects created when building action rules."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def start3(t):\n",
+    "    if t < 0.1:\n",
+    "        return \"A\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "with spa.Network(seed=0) as model:\n",
+    "    model.config[spa.State].neurons_per_dimension = 10\n",
+    "    model.config[spa.State].subdimensions = 1\n",
+    "    model.config[spa.Thalamus].synapse_channel = nengo.Lowpass(0.1)\n",
+    "\n",
+    "    state = spa.State(d)\n",
+    "    spa_input = spa.Transcode(start3, output_vocab=d)\n",
+    "\n",
+    "    spa_input >> state\n",
+    "    with spa.ActionSelection():\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.A), 2 * spa.sym.B >> state)\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.B), 2 * spa.sym.C >> state)\n",
+    "        spa.ifmax(spa.dot(state, spa.sym.C), 2 * spa.sym.A >> state)\n",
+    "\n",
+    "    p = nengo.Probe(state.output, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.plot(sim.trange(), spa.similarity(sim.data[p], model.vocabs[d]))\n",
+    "plt.xlabel(\"Time [s]\")\n",
+    "plt.ylabel(\"Similarity\")\n",
+    "plt.legend(model.vocabs[d].keys())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Semantic Pointers\n",
+    "\n",
+    "The `SemanticPointer` class has become immutable in nengo_spa to avoid accidental\n",
+    "modifiction of Semantic Pointers. Whenever an operation is applied to a\n",
+    "`SemanticPointer` (for example `SemanticPointer(d) + SemanticPointer(d)` or\n",
+    "`SemanticPointer(d).normalized()` a new instance will be created.\n",
+    "\n",
+    "To facilitate mathematical analysis of encoding schemes some special vectors are\n",
+    "predefined:\n",
+    "\n",
+    "* `nengo_spa.pointer.Identity(d)` gives the identity vector for circular convolution.\n",
+    "* `nengo_spa.pointer.Zero(d)` gives the vector of all zeros (absorbing element for\n",
+    "circular convolution).\n",
+    "* `nengo_spa.pointer.AbsorbingElement(d)` gives a vector that destroys all information\n",
+    "under circluar convolution except for a DC offset."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Representing identity\n",
+    "\n",
+    "In nengo_spa `spa.State()` is optimized to allow the representation of the identity\n",
+    "vector. This is not always necessary as in many models the identity never needs to\n",
+    "represented. With `represent_identity=False` this optimization can be disabled. This can\n",
+    "make the representation for non-identity vectors slightly better. It also simplifies the\n",
+    "internal structure of `spa.State()` which can be helpful for applying learning rules."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true
+   },
+   "source": [
+    "## New associative memory classes\n",
+    "\n",
+    "To reduce the number of arguments of the associative memory class it has been split into\n",
+    "two classes. `spa.ThresholdingAssocMem` is the applying a simple threshold,\n",
+    "`spa.WTAAssocMem` performs a winner-take-all clean-up with lateral inhibitory\n",
+    "connections. There is also a new type of associative memory `spa.IAAssocMem` based on\n",
+    "independent accumulators, that also exhibits winner-take-all behaviour, but with\n",
+    "different dynamics. For more information see the paper \"[A Spiking Independent\n",
+    "Accumulator Model for Winner-Take-All\n",
+    "Computation](http://compneuro.uwaterloo.ca/publications/gosmann2017a.html)\".\n",
+    "\n",
+    "To implement auto-associative memories, the `input_keys` and `output_keys` arguments\n",
+    "have been replaced by a single `mapping` arguments."
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

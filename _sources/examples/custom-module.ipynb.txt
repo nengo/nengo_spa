@@ -1,0 +1,132 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Implementing a custom module\n",
+    "\n",
+    "This example demonstrates how custom SPA modules can be created that can take advantage\n",
+    "of all the features of the SPA syntax. We will adapt the `InputGatedMemory` from\n",
+    "`nengo`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import nengo\n",
+    "import nengo_spa as spa"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Implementing a SPA module requires a few steps:\n",
+    "\n",
+    "1. Implement a class inheriting from `spa.Network`.\n",
+    "2. Use `VocabularyOrDimParam` to declare class variables for storing vocublary\n",
+    "parameters. This will allow the usage of integer dimensions instead of vocabularies\n",
+    "without any further additions.\n",
+    "3. Declare inputs and outputs with their respective vocabularies.\n",
+    "\n",
+    "Not that parameters in SPA modules should usually be defined as readonly because\n",
+    "changing them will usually not update the network accordingly."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class GatedMemory(spa.Network):\n",
+    "\n",
+    "    # The vocabulary parameter.\n",
+    "    vocab = spa.vocabulary.VocabularyOrDimParam(\"vocab\", default=None, readonly=True)\n",
+    "    # The number of neurons per dimensions.\n",
+    "    neurons_per_dimension = nengo.params.IntParam(\n",
+    "        \"neurons_per_dimension\", default=200, low=1, readonly=True\n",
+    "    )\n",
+    "\n",
+    "    # Arguments assigned to parameters should be assigned\n",
+    "    # nengo.params.Default as default value. This makes sure they work\n",
+    "    # properly with nengo.Config. It is a good idea to pass on the keyword\n",
+    "    # arguments **kwargs to the spa.Network constructor to allow the user to\n",
+    "    # set the network label etc.\n",
+    "    def __init__(\n",
+    "        self,\n",
+    "        vocab=nengo.params.Default,\n",
+    "        neurons_per_dimension=nengo.params.Default,\n",
+    "        **kwargs\n",
+    "    ):\n",
+    "        super(GatedMemory, self).__init__(**kwargs)\n",
+    "\n",
+    "        # Assign parameter values\n",
+    "        # If vocab is an integer dimension, the appropriate Vocabulary\n",
+    "        # instance will assigned to self.vocab.\n",
+    "        self.vocab = vocab\n",
+    "        self.neurons_per_dimension = neurons_per_dimension\n",
+    "\n",
+    "        # Construct the network\n",
+    "        with self:\n",
+    "            self.mem = nengo.networks.InputGatedMemory(\n",
+    "                self.neurons_per_dimension, self.vocab.dimensions\n",
+    "            )\n",
+    "\n",
+    "        # Assign inputs to root object for easier referencing\n",
+    "        self.input = self.mem.input\n",
+    "        self.input_gate = self.mem.gate\n",
+    "        self.input_reset = self.mem.reset\n",
+    "        self.output = self.mem.output\n",
+    "\n",
+    "        # Declare inputs and outputs\n",
+    "        # Use None as vocabulary for scalar inputs/outputs\n",
+    "        self.declare_input(self.input, self.vocab)\n",
+    "        self.declare_input(self.input_gate, None)\n",
+    "        self.declare_input(self.input_reset, None)\n",
+    "        self.declare_output(self.output, self.vocab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We can then use our new module as we would any other module."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dimensions = 32\n",
+    "\n",
+    "with spa.Network() as model:\n",
+    "    # The module can be configured\n",
+    "    model.config[GatedMemory].neurons_per_dimension = 150\n",
+    "\n",
+    "    spa_in = spa.Transcode(\"OKAY\", output_vocab=dimensions)\n",
+    "    gate_in = nengo.Node(lambda t: 1 if t < 0.1 else 0)\n",
+    "\n",
+    "    g_mem = GatedMemory(dimensions)\n",
+    "\n",
+    "    # It can be in routing rules\n",
+    "    spa_in >> g_mem\n",
+    "    gate_in >> g_mem.input_gate"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

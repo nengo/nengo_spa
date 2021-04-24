@@ -1,0 +1,583 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Associative Memory\n",
+    "\n",
+    "This tutorial introduces the Associative Memory (AM) module in the SPA.\n",
+    "\n",
+    "An associative memory is a neural network used to store and recall patterns.\n",
+    "When the network receives a partial or noisy pattern at the input, it can either recover\n",
+    "the same pattern or recall another stored pattern.\n",
+    "If the recovered pattern is the same as the input pattern, the memory is said to be\n",
+    "autoassociative or a *clean-up* memory. Otherwise, if the recovered pattern is different\n",
+    "from the presented one, the network is heteroassociative.\n",
+    "\n",
+    "Patterns stored by the AM module in the SPA are semantic pointers organised in a SPA\n",
+    "vocabulary.\n",
+    "The examples in this tutorial demonstrate how to use the AM module to store and recall\n",
+    "patterns.\n",
+    "Advanced functionality of the module, such as the recall of multiple memories similar to\n",
+    "the input, is also presented.\n",
+    "\n",
+    "A theoretical explanation on how the associative memory is implemented in NEF is\n",
+    "available in [Stewart et al.\n",
+    "2011](http://compneuro.uwaterloo.ca/publications/stewart2011.html)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "\n",
+    "import nengo\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "import nengo_spa as spa\n",
+    "\n",
+    "seed = 0\n",
+    "rng = np.random.RandomState(seed + 1)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 1: Creating an Associative Memory\n",
+    "\n",
+    "We start by creating a set of patterns the AM will store.\n",
+    "The vocabulary in this example contains five words: `ORANGE, APRICOT, CHERRY,\n",
+    "STRAWBERRY` and `APPLE`.\n",
+    "Each word is represented as a semantic pointer, an $n$-dimensional vector.\n",
+    "When creating a vocabulary, we specify the number of dimensions for all semantic\n",
+    "pointers.\n",
+    "Then, we add the words to the vocabulary with `populate`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dim = 64\n",
+    "vocab = spa.Vocabulary(dimensions=dim, pointer_gen=rng)\n",
+    "\n",
+    "words = [\"ORANGE\", \"APRICOT\", \"CHERRY\", \"STRAWBERRY\", \"APPLE\"]\n",
+    "vocab.populate(\";\".join(words))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Next, we create an autoassociative memory with a corresponding set of stored patterns.\n",
+    "To check the functionality of the memory module, we want to test whether the pattern at\n",
+    "the input has been successfully retrieved at the output.\n",
+    "\n",
+    "The memory is created within a `spa.Network` module.\n",
+    "We set the Semantic Pointer `APPLE` as the input to the associative memory.\n",
+    "`nengo.Probe`s have been added to record inputs and outputs of the module, which we plot\n",
+    "for visual inspection.\n",
+    "Finally, we run the simulation for the 0.2 seconds simulation time."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(\"AssociativeMemory\", seed=seed) as model:\n",
+    "    # create the AM module\n",
+    "    model.assoc_mem = spa.ThresholdingAssocMem(\n",
+    "        threshold=0.3, input_vocab=vocab, mapping=vocab.keys()\n",
+    "    )\n",
+    "\n",
+    "    # present input to the AM\n",
+    "    spa.sym.APPLE >> model.assoc_mem\n",
+    "\n",
+    "    # record the inputs and outputs during the simulation\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.2)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We gather the simulation data:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "print(f\"Input dimensions: {tuple(input_data.shape)}\")\n",
+    "print(f\"Output dimensions: {tuple(input_data.shape)}\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We use a dot product (implemented in `spa.similarity`) to compare the similarity of\n",
+    "inputs and outputs to all patterns in the vocabulary at every time step. Recall that the\n",
+    "first dimension corresponds to the number of time steps and the second dimension to the\n",
+    "32-dimensional pattern represented in the associative memory.\n",
+    "If the similarity between the output vector and the input vector is close to one, we can\n",
+    "say that the associative memory successfully retrieved the pattern (or cleaned up the\n",
+    "input)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def plot_similarities(\n",
+    "    t_range, input_data, output_data, vocab1, vocab2=None, autoscale=False\n",
+    "):\n",
+    "\n",
+    "    if vocab2 is None:\n",
+    "        vocab2 = vocab1\n",
+    "\n",
+    "    ymin, ymax = -1.2, 1.2\n",
+    "    plt.figure(figsize=(12, 4))\n",
+    "    plt.subplot(1, 2, 1)\n",
+    "    plt.ylim(ymin, ymax)\n",
+    "    if autoscale:\n",
+    "        plt.autoscale(autoscale, axis=\"y\")\n",
+    "    plt.grid(True)\n",
+    "    plt.plot(t_range, spa.similarity(input_data, vocab1))\n",
+    "    plt.title(\"Input similarity\")\n",
+    "    plt.xlabel(\"Time\")\n",
+    "    plt.xlim(right=t_range[-1])\n",
+    "    plt.legend(\n",
+    "        list(vocab1.keys()), loc=\"upper center\", bbox_to_anchor=(0.5, -0.13), ncol=3\n",
+    "    )\n",
+    "\n",
+    "    plt.subplot(1, 2, 2)\n",
+    "    plt.plot(t_range, spa.similarity(output_data, vocab2))\n",
+    "    plt.title(\"Output similarity\")\n",
+    "    plt.xlabel(\"Time\")\n",
+    "    plt.xlim(right=t_range[-1])\n",
+    "    plt.ylim(ymin, ymax)\n",
+    "    if autoscale:\n",
+    "        plt.autoscale(autoscale, axis=\"y\")\n",
+    "    plt.grid(True)\n",
+    "    plt.legend(\n",
+    "        list(vocab2.keys()), loc=\"upper center\", bbox_to_anchor=(0.5, -0.13), ncol=3\n",
+    "    )\n",
+    "    plt.tight_layout()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot_similarities(sim.trange(), input_data, output_data, vocab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {
+    "collapsed": true
+   },
+   "source": [
+    "We see that the network input has been constant throughout the simulation (`APPLE=1`).\n",
+    "Notice that there might be some small similarity between the pattern `APPLE` and some\n",
+    "other patterns. This is because the semantic pointers are not perfectly orthogonal and\n",
+    "the dot product will amount to some value different from zero. This can be improved by\n",
+    "increasing the dimensionality of vectors, yielding more orthogonal representations.\n",
+    "At the output, the similarity of the represented semantic pointer with the semantic\n",
+    "pointer `APPLE` increases until it reaches the maximal value (`=1`). This means that the\n",
+    "associative memory successfully retrieved the input pattern. The exponential increase is\n",
+    "due to the synaptic filtering in `nengo.Probe`. This is used to show how the input to\n",
+    "another group of neurons connected to the output of this particular AM module would look\n",
+    "like."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 2: Clean-up Memory\n",
+    "\n",
+    "\n",
+    "In the next example, we show the ability of the associative memory to retrieve a clean\n",
+    "pattern from a noisy input. This is a very common use of autoassociative memories, also\n",
+    "called *clean-up* as the AM removes the noise in the input.\n",
+    "\n",
+    "First, we construct a noisy semantic pointer to be cleaned up by using a combination of\n",
+    "several semantic pointers. This is done by passing the expression\n",
+    "`0.9*APPLE+0.5*CHERRY+0.4*APRICOT` as the input to the the network. The resulting input\n",
+    "vector will still be mostly similar to one semantic pointer (`APPLE`) but is also\n",
+    "somewhat similar to other semantic pointers in the vocabulary. Therefore, the task of\n",
+    "the network will be to clean up the vector `APPLE`.\n",
+    "\n",
+    "### Thresholding Memory\n",
+    "\n",
+    "One way to achieve this in SPA is by using the thresholding mechanism in the AM module.\n",
+    "By specifying the threshold, the output will be similar only to those inputs whose\n",
+    "similarity with a vocabulary item is above a certain value. In this example we will\n",
+    "increase the selectivity of the AM by setting the threshold to to a higher value."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(\"CleanupThreshold\", seed=seed) as model:\n",
+    "    model.assoc_mem = spa.ThresholdingAssocMem(\n",
+    "        threshold=0.7, input_vocab=vocab, mapping=vocab.keys()\n",
+    "    )\n",
+    "\n",
+    "    (\n",
+    "        0.9 * spa.sym.APPLE + 0.5 * spa.sym.CHERRY + 0.4 * spa.sym.APRICOT\n",
+    "        >> model.assoc_mem\n",
+    "    )\n",
+    "\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.2)\n",
+    "\n",
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "\n",
+    "plot_similarities(sim.trange(), input_data, output_data, vocab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We see that the vector at the input is mostly similar to the semantic pointer `APPLE`\n",
+    "and somewhat similar to the semantic pointer `CHERRY`. The vector at the output is very\n",
+    "similar to the `APPLE`, indicating that the memory successfully cleaned up the noisy\n",
+    "pattern.\n",
+    "\n",
+    "However, the output of `APPLE` isn't of similarity `1.0`. To achieve this, we can change\n",
+    "the output mapping of the memory, so any output maps to maximum similarity, by making it\n",
+    "computer the function `x > 0` on all outputs `x`. This will produce a vector at the\n",
+    "output which has similarity one with the semantic pointer `APPLE`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(\"CleanupThreshold\", seed=seed) as model:\n",
+    "    model.assoc_mem = spa.ThresholdingAssocMem(\n",
+    "        threshold=0.7,\n",
+    "        input_vocab=vocab,\n",
+    "        mapping=vocab.keys(),\n",
+    "        function=lambda x: x > 0.0,\n",
+    "    )\n",
+    "\n",
+    "    (\n",
+    "        0.9 * spa.sym.APPLE + 0.5 * spa.sym.CHERRY + 0.4 * spa.sym.APRICOT\n",
+    "        >> model.assoc_mem\n",
+    "    )\n",
+    "\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.2)\n",
+    "\n",
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "\n",
+    "plot_similarities(sim.trange(), input_data, output_data, vocab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## WTA Memory\n",
+    "\n",
+    "In some modelling scenarios we might have an input vector which is very similar to\n",
+    "several other vectors in the vocabulary:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(\"Cleanup\", seed=seed) as model:\n",
+    "    model.assoc_mem = spa.ThresholdingAssocMem(\n",
+    "        threshold=0.3, input_vocab=vocab, mapping=vocab.keys()\n",
+    "    )\n",
+    "\n",
+    "    (\n",
+    "        0.9 * spa.sym.APPLE + 0.85 * spa.sym.CHERRY + 0.7 * spa.sym.APRICOT\n",
+    "        >> model.assoc_mem\n",
+    "    )\n",
+    "\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.2)\n",
+    "\n",
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "\n",
+    "plot_similarities(sim.trange(), input_data, output_data, vocab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "We see that the input is very similar to semantic pointers `APPLE` and `CHERRY`, and\n",
+    "somewhat similar to `APRICOT`.\n",
+    "In this situation, it might be difficult to determine a fixed threshold which will clean\n",
+    "up the input and differentiate between the vectors `APPLE` and `CHERRY`. To ensure that\n",
+    "only one vector at the output is similar to the strongest input, we can use\n",
+    "`spa.WTAAssocMem` instead of `spa.ThresholdingAssocMem`. `WTA` is a computational\n",
+    "principle called winner-take-all, stating that one, mostly active element should be\n",
+    "regarded as the winner among possible, less similar alternatives."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with spa.Network(\"CleanupWTA\", seed=seed) as model:\n",
+    "    model.assoc_mem = spa.WTAAssocMem(\n",
+    "        threshold=0.3,\n",
+    "        input_vocab=vocab,\n",
+    "        mapping=vocab.keys(),\n",
+    "        function=lambda x: x > 0.0,\n",
+    "    )\n",
+    "\n",
+    "    (\n",
+    "        0.9 * spa.sym.APPLE + 0.85 * spa.sym.CHERRY + 0.7 * spa.sym.APRICOT\n",
+    "        >> model.assoc_mem\n",
+    "    )\n",
+    "\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.2)\n",
+    "\n",
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "\n",
+    "plot_similarities(sim.trange(), input_data, output_data, vocab)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Although the input vector is very similar to both `APPLE` and `CHERRY`, the memory\n",
+    "manages to recover the `APPLE` at the output."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 3: Heteroassociative relationships\n",
+    "\n",
+    "To model a variety of interesting memory phenomena, it is often useful to store\n",
+    "relationships between different sets of patterns.\n",
+    "For example, to simulate number counting from 1 to 5, the memory needs to store the\n",
+    "relationships between patterns representing numbers:\n",
+    "$1\\rightarrow2,\\ 2\\rightarrow3,\\ 3\\rightarrow4,\\ 4\\rightarrow5$\n",
+    "\n",
+    "In this example we show how to use `spa.WTAAssocMem` for this task. In order to achieve\n",
+    "the number counting, we will split the task into two parts:\n",
+    "\n",
+    "1. Present a number at the input and recall a number greater by one (e.g. for `1` recall\n",
+    "`2`, for `2` recall `3` etc.)\n",
+    "\n",
+    "2. Feed the output of the associative memory back to its input\n",
+    "\n",
+    "\n",
+    "As in the previous example, we start by defining a vocabulary that stores semantic\n",
+    "pointers representing five numbers. This will be used as the input and as the output\n",
+    "vocabulary. In case of hetero-associative memories the input and the output vocabulary\n",
+    "can differ."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dim = 16\n",
+    "vocab_numbers = spa.Vocabulary(dimensions=dim)\n",
+    "\n",
+    "vocab_numbers.populate(\"ONE; TWO; THREE; FOUR; FIVE\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Now, in function `input_fun` we define which semantic pointer is going to be present at\n",
+    "the input at certain simulation time. Because we want to achieve a heteroassociative\n",
+    "mapping, we need to specify which input patterns map to which output patterns. The\n",
+    "desired mapping is specified by providing the `mapping` argument when creating the AM\n",
+    "module:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def input_fun(t):\n",
+    "    if t < 0.2:\n",
+    "        return \"ONE\"\n",
+    "    elif t < 0.4:\n",
+    "        return \"TWO\"\n",
+    "    elif t < 0.6:\n",
+    "        return \"THREE\"\n",
+    "    elif t < 0.8:\n",
+    "        return \"FOUR\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "# from patterns\n",
+    "mapping = {\n",
+    "    \"ONE\": \"TWO\",\n",
+    "    \"TWO\": \"THREE\",\n",
+    "    \"THREE\": \"FOUR\",\n",
+    "    \"FOUR\": \"FIVE\",\n",
+    "}\n",
+    "\n",
+    "with spa.Network(\"Counting\", seed=seed) as model:\n",
+    "    model.assoc_mem = spa.WTAAssocMem(\n",
+    "        threshold=0.3,\n",
+    "        input_vocab=vocab_numbers,\n",
+    "        mapping=mapping,\n",
+    "        function=lambda x: x > 0.0,\n",
+    "    )\n",
+    "\n",
+    "    model.am_input = spa.Transcode(input_fun, output_vocab=vocab_numbers)\n",
+    "    model.am_input >> model.assoc_mem\n",
+    "\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(1.0)\n",
+    "\n",
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "\n",
+    "plot_similarities(sim.trange(), input_data, output_data, vocab_numbers, autoscale=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "So far we have created a model which realises increments by one. The next step is to\n",
+    "automatise this, so that when the model sees `ONE` it will produce `TWO, THREE, FOUR,\n",
+    "FIVE`.\n",
+    "To achieve counting, we need to introduce a feedback connection. That is, the network\n",
+    "output needs to be fed into its input at the next time step. This can be easily done in\n",
+    "Nengo by adding just one additional connection. Now, we initialise the simulation by\n",
+    "presenting the semantic pointer `ONE` at the input for the duration of 0.2 simulation\n",
+    "time."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def input_fun2(t):\n",
+    "    if 0 < t < 0.2:\n",
+    "        return \"ONE\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "with spa.Network(\"Counting\", seed=seed) as model:\n",
+    "    model.assoc_mem = spa.WTAAssocMem(\n",
+    "        threshold=0.3,\n",
+    "        input_vocab=vocab_numbers,\n",
+    "        output_vocab=vocab_numbers,\n",
+    "        mapping=mapping,\n",
+    "        function=lambda x: x > 0.0,\n",
+    "    )\n",
+    "\n",
+    "    model.am_input = spa.Transcode(input_fun2, output_vocab=vocab_numbers)\n",
+    "    model.am_input >> model.assoc_mem\n",
+    "\n",
+    "    # added feedback connection\n",
+    "    nengo.Connection(\n",
+    "        model.assoc_mem.output, model.assoc_mem.input, synapse=0.10, transform=3.5\n",
+    "    )\n",
+    "\n",
+    "    input_probe = nengo.Probe(model.assoc_mem.input)\n",
+    "    output_probe = nengo.Probe(model.assoc_mem.output, synapse=0.03)\n",
+    "\n",
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(1.0)\n",
+    "\n",
+    "input_data = sim.data[input_probe]\n",
+    "output_data = sim.data[output_probe]\n",
+    "\n",
+    "plot_similarities(sim.trange(), input_data, output_data, vocab_numbers, autoscale=True)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "The only input our model receives is `ONE` at the beginning of the simulation. After\n",
+    "that, it produces a sequence of consecutive numbers up to five. The connection\n",
+    "parameters `synapse` and `transform` have been set to arbitrary values which produce the\n",
+    "desired sequence. Try modifying them to see how they affect the behaviour."
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}
