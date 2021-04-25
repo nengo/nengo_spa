@@ -498,6 +498,40 @@ class Identity(SemanticPointer):
         )
 
 
+class NegativeIdentity(SemanticPointer):
+    """Negative identity element.
+
+    Parameters
+    ----------
+    n_dimensions : int
+        Dimensionality of the negative identity vector.
+    vocab : Vocabulary, optional
+        Vocabulary that the Semantic Pointer is considered to be part of.
+        Mutually exclusive with the *algebra* argument.
+    algebra : AbstractAlgebra, optional
+        Algebra used to perform vector symbolic operations on the Semantic
+        Pointer. Defaults to `.HrrAlgebra`. Mutually exclusive
+        with the *vocab* argument.
+    sidedness : ElementSidedness, optional
+        Side in the binding operation on which the element acts as identity.
+    """
+
+    def __init__(
+        self,
+        n_dimensions,
+        vocab=None,
+        algebra=None,
+        *,
+        sidedness=ElementSidedness.TWO_SIDED,
+    ):
+        data = self._get_algebra(vocab, algebra).negative_identity_element(
+            n_dimensions, sidedness=sidedness
+        )
+        super(NegativeIdentity, self).__init__(
+            data, vocab=vocab, algebra=algebra, name="NegativeIdentity"
+        )
+
+
 class AbsorbingElement(SemanticPointer):
     r"""Absorbing element.
 
