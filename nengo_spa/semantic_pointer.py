@@ -260,6 +260,29 @@ class SemanticPointer(Fixed):
         else:
             return NotImplemented
 
+    def __pow__(self, other):
+        """Binding power of the Semantic Pointer.
+
+        Integer exponents are supported for any algebra.
+        See the `~.AbstractAlgebra.binding_power` documentation of the respective
+        algebra for details about fractional exponents.
+
+        Parameters
+        ----------
+        other : float
+            Exponent of the binding power.
+
+        Returns
+        -------
+        SemanticPointer
+        """
+        return SemanticPointer(
+            data=self.algebra.binding_power(self.v, other),
+            vocab=self.vocab,
+            algebra=self.algebra,
+            name=self._get_binary_name(other, "**"),
+        )
+
     def __truediv__(self, other):
         if is_number(other):
             if other == 0:

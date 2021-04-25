@@ -5,14 +5,18 @@ from nengo.exceptions import NengoWarning, ValidationError
 from numpy.testing import assert_equal
 
 import nengo_spa as spa
-from nengo_spa.algebras.base import AbstractAlgebra, ElementSidedness
+from nengo_spa.algebras.base import AbstractAlgebra, CommonProperties, ElementSidedness
 from nengo_spa.algebras.hrr_algebra import HrrAlgebra
 from nengo_spa.ast.symbolic import PointerSymbol
 from nengo_spa.exceptions import SpaTypeError
 from nengo_spa.semantic_pointer import AbsorbingElement, Identity, SemanticPointer, Zero
 from nengo_spa.testing import assert_sp_close
 from nengo_spa.types import TVocabulary
-from nengo_spa.vector_generation import UnitLengthVectors
+from nengo_spa.vector_generation import (
+    UnitaryVectors,
+    UnitLengthVectors,
+    VectorsWithProperties,
+)
 from nengo_spa.vocabulary import Vocabulary
 
 
@@ -117,6 +121,34 @@ def test_binding(algebra, d, rng):
         assert np.allclose((identity * a).v, a.v)
     except NotImplementedError:
         pass
+
+
+@pytest.mark.parametrize("d", [64, 65])
+def test_integer_binding_power(algebra, d, rng):
+    if not algebra.is_valid_dimensionality(d):
+        return
+
+    gen = UnitaryVectors(d, algebra, rng=rng)
+    a = SemanticPointer(next(gen), algebra=algebra)
+
+    assert np.allclose((a * a * a).v, (a ** 3).v)
+    assert np.allclose((a * a * a).v, pow(a, 3).v)
+
+
+@pytest.mark.parametrize("d", [64, 65])
+def test_fractional_binding_power(algebra, d, rng):
+    pytest.importorskip("scipy")
+
+    if not algebra.is_valid_dimensionality(d):
+        return
+
+    gen = VectorsWithProperties(
+        d, {CommonProperties.POSITIVE, CommonProperties.UNITARY}, algebra, rng=rng
+    )
+    a = SemanticPointer(next(gen), algebra=algebra)
+
+    assert np.allclose(a.v, (((a ** 0.5) ** 2).v))
+    assert np.allclose(a.v, (pow(a, 0.5) ** 2).v)
 
 
 @pytest.mark.filterwarnings("ignore:.*sidedness:DeprecationWarning")
@@ -392,6 +424,7 @@ def test_name():
     assert a.unitary().name == "a.unitary()"
     assert (a + b).name == "a + b"
     assert (a * b).name == "a * b"
+    assert (a ** 2).name == "a ** 2"
     assert (2.0 * a).name == "2.0 * a"
     assert (a / 2.0).name == "a / 2.0"
 
