@@ -11,9 +11,12 @@ nengo\_spa\.semantic_pointer
 
       AbsorbingElement
       Identity
+      NegativeIdentity
       SemanticPointer
+      SemanticPointerSign
       Zero
 
    .. autoclass:: SemanticPointer
       :special-members: __invert__, __pow__
       :exclude-members: connect_to, construct, evaluate
+      

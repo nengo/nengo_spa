@@ -2,7 +2,7 @@ import nengo
 import numpy as np
 from nengo.exceptions import ValidationError
 
-from nengo_spa.algebras.base import AbstractAlgebra, ElementSidedness
+from nengo_spa.algebras.base import AbstractAlgebra, AbstractSign, ElementSidedness
 from nengo_spa.algebras.hrr_algebra import HrrAlgebra
 from nengo_spa.ast.base import Fixed, TypeCheckedBinaryOp, infer_types
 from nengo_spa.ast.expr_tree import (
@@ -155,6 +155,24 @@ class SemanticPointer(Fixed):
             vocab=self.vocab,
             algebra=self.algebra,
             name=self._get_method_name("unitary"),
+        )
+
+    def sign(self):
+        """Return the sign of the Semantic Pointer.
+
+        See `.AbstractAlgebra.sign` for details on signs of Semantic Pointers.
+
+        Returns
+        -------
+        SemanticPointerSign
+            Sign of the Semantic Pointer.
+        """
+        return SemanticPointerSign(
+            self.algebra.sign(self.v),
+            dimensions=len(self),
+            vocab=self.vocab,
+            algebra=self.algebra,
+            name=self._get_method_name("sign"),
         )
 
     def copy(self):
@@ -462,6 +480,109 @@ class SemanticPointer(Fixed):
                     "Operation not supported for SemanticPointer with "
                     "different algebra."
                 )
+
+
+class SemanticPointerSign(AbstractSign):
+    """Sign of a Semantic Pointer.
+
+    This class acts as proxy to the actual sign instance of the underlying
+    algebra. Use the *sign* attribute if you want to perform equality checks
+    with other signs.
+
+    Parameters
+    ----------
+    sign : AbstractSign
+        Actual underlying sign.
+    algebra : AbstractAlgebra, optional
+        The underlying algebra of the Semantic Pointer for which the sign is
+        represented.
+    dimensions : int, optional
+        Number of dimensions of the Semantic Pointer for which the sign is
+        represented. If not given, *vocab* must be given.
+    vocab : Vocabulary, optional
+        Vocabulary of the Semantic Pointer for which the sign is represented.
+        If not given, *dimensions* must be given. If *dimensions* and *vocab*
+        are given, they must agree on the dimensionality.
+    name : str or Node, optional
+        Name of the Semantic Pointer including the invoked sign operation.
+
+    Attributes
+    ----------
+    sign : AbstractSign
+        Actual underlying sign
+    algebra : AbstractAlgebra or None
+        The underlying algebra of the Semantic Pointer for which the sign is
+        represented.
+    dimensions : int
+        Number of dimensions of the Semantic Pointer for which the sign is
+        represented.
+    vocab : Vocabulary or None
+        Vocabulary of the Semantic Pointer for which the sign is represented.
+    """
+
+    def __init__(self, sign, *, algebra=None, dimensions=None, vocab=None, name=None):
+        self.sign = sign
+        self.algebra = algebra
+        self.dimensions = dimensions
+        self.vocab = vocab
+
+        if name is not None and not isinstance(name, Node):
+            name = Leaf(name)
+        self._expr_tree = name
+
+        if self.dimensions is None:
+            self.dimensions = self.vocab.dimensions
+        if self.vocab is not None and self.vocab.dimensions != self.dimensions:
+            raise ValueError(
+                "dimensions must match vocab.dimensions if both are given."
+            )
+
+    def is_positive(self):
+        return self.sign.is_positive()
+
+    def is_negative(self):
+        return self.sign.is_negative()
+
+    def is_zero(self):
+        return self.sign.is_zero()
+
+    def is_indefinite(self):
+        return self.sign.is_indefinite()
+
+    def to_vector(self, d):
+        return self.sign.to_vector(d)
+
+    def __repr__(self):
+        return (
+            f"SemanticPointerSign({self.sign!r}, "
+            f"algebra={self.algebra!r}, "
+            f"dimensions={self.dimensions!r}, "
+            f"vocab={self.vocab!r}, "
+            f"name={self._expr_tree!r})"
+        )
+
+    def __eq__(self, other):
+        raise NotImplementedError(
+            "Do not check SemanticPointerSign instances for equality. "
+            "Instead use the underlying `sign` attribute."
+        )
+
+    def to_semantic_pointer(self):
+        """Return the Semantic Pointer corresponding to the represented sign.
+
+        Returns
+        -------
+        SemanticPointer
+            Semantic Pointer corresponding to the represented sign.
+        """
+        return SemanticPointer(
+            self.to_vector(self.dimensions),
+            algebra=self.algebra,
+            vocab=self.vocab,
+            name=FunctionCall(
+                tuple(), AttributeAccess("to_semantic_pointer", self._expr_tree)
+            ),
+        )
 
 
 class Identity(SemanticPointer):
