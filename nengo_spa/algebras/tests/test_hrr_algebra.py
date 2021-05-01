@@ -149,8 +149,10 @@ class TestHrrSign:
         [
             (HrrSign(0, 0), [0, 0, 0, 0]),
             (HrrSign(1, 1), [1, 0, 0, 0]),
+            (HrrSign(1, 0), [1, 0, 0, 0]),
             (HrrSign(1, -1), [0, 1, 0, 0]),
             (HrrSign(-1, 1), [0, -1, 0, 0]),
+            (HrrSign(-1, 0), [-1, 0, 0, 0]),
             (HrrSign(-1, -1), [-1, 0, 0, 0]),
             (HrrSign(0, 0), [0, 0, 0]),
             (HrrSign(1, 0), [1, 0, 0]),
@@ -160,11 +162,6 @@ class TestHrrSign:
     def test_to_vector(self, sign, expected):
         assert HrrAlgebra().sign(expected) == sign  # sanity check
         assert np.allclose(sign.to_vector(len(expected)), expected)
-
-    @pytest.mark.parametrize("sign,d", [(HrrSign(1, 0), 4), (HrrSign(1, 1), 3)])
-    def test_invalid_to_vector(self, sign, d):
-        with pytest.raises(ValueError):
-            sign.to_vector(d)
 
     def test_equality(self):
         assert HrrSign(1, 1) == HrrSign(1, 1)
