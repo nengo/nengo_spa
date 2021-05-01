@@ -51,9 +51,10 @@ def test_translate(Simulator, seed):
         model.buffer2 = spa.State(vocab=32)
 
         spa.sym.A >> model.buffer1
-        spa.translate(
-            model.buffer1, model.buffer2.vocab, populate=True
-        ) >> model.buffer2
+        (
+            spa.translate(model.buffer1, model.buffer2.vocab, populate=True)
+            >> model.buffer2
+        )
 
         p = nengo.Probe(model.buffer2.output, synapse=0.03)
 
