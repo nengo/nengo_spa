@@ -19,6 +19,7 @@ from nengo_spa.exceptions import SpaTypeError
 from nengo_spa.semantic_pointer import (
     AbsorbingElement,
     Identity,
+    NegativeIdentity,
     SemanticPointer,
     SemanticPointerSign,
     Zero,
@@ -95,6 +96,14 @@ def test_sign():
     sign = a.sign()
     assert isinstance(sign, SemanticPointerSign)
     assert sign.sign == HrrSign(1, 1)
+
+
+def test_abs():
+    neg_sp = NegativeIdentity(16)
+    assert neg_sp.sign().is_negative()
+    abs_sp = neg_sp.abs()
+    assert abs_sp.sign().is_positive()
+    assert np.allclose(abs_sp.v, Identity(16).v)
 
 
 def test_add_sub(algebra, rng):
@@ -443,6 +452,7 @@ def test_name():
     assert a.normalized().name == "a.normalized()"
     assert a.unitary().name == "a.unitary()"
     assert a.sign().to_semantic_pointer().name == "a.sign().to_semantic_pointer()"
+    assert a.abs().name == "a.abs()"
     assert (a + b).name == "a + b"
     assert (a * b).name == "a * b"
     assert (a ** 2).name == "a ** 2"

@@ -175,6 +175,18 @@ class SemanticPointer(Fixed):
             name=self._get_method_name("sign"),
         )
 
+    def abs(self):
+        """Return the absolute Semantic Pointer.
+
+        See `.AbstractAlgebra.abs` for details on absolute Semantic Pointers.
+        """
+        return SemanticPointer(
+            self.algebra.abs(self.v),
+            vocab=self.vocab,
+            algebra=self.algebra,
+            name=self._get_method_name("abs"),
+        )
+
     def copy(self):
         """Return another semantic pointer with the same data."""
         return SemanticPointer(
