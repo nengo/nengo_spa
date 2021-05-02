@@ -1,0 +1,864 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.algebras.base &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+  
+<script src="../../../_static/underscore.js"></script>
+  
+  
+<script src="../../../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../../../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../../../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../../../v1.2.0/_modules/nengo_spa/algebras/base.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.1/_modules/nengo_spa/algebras/base.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.0/_modules/nengo_spa/algebras/base.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../../../v1.2.0/_modules/nengo_spa/algebras/base.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <h1>Source code for nengo_spa.algebras.base</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">ABCMeta</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+
+<div class="viewcode-block" id="ElementSidedness"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.ElementSidedness">[docs]</a><span class="k">class</span> <span class="nc">ElementSidedness</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The side in a binary operation for which a special element&#39;s properties hold.&quot;&quot;&quot;</span>
+
+    <span class="n">LEFT</span> <span class="o">=</span> <span class="s2">&quot;left&quot;</span>
+    <span class="n">RIGHT</span> <span class="o">=</span> <span class="s2">&quot;right&quot;</span>
+    <span class="n">TWO_SIDED</span> <span class="o">=</span> <span class="s2">&quot;two-sided&quot;</span></div>
+
+
+<span class="k">class</span> <span class="nc">_DuckTypedABCMeta</span><span class="p">(</span><span class="n">ABCMeta</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__instancecheck__</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">instance</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__instancecheck__</span><span class="p">(</span><span class="n">instance</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">True</span>
+
+        <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="nb">dir</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">member</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">instance</span><span class="p">,</span> <span class="n">member</span><span class="p">),</span> <span class="s2">&quot;__self__&quot;</span>
+            <span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+            <span class="ne">DeprecationWarning</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Please do not rely on pure duck-typing for </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">. &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;Explicitly register your class </span><span class="si">{</span><span class="n">instance</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;as a virtual subclass of </span><span class="si">{</span><span class="bp">cls</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2"> or derive from it.&quot;</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+
+<div class="viewcode-block" id="AbstractAlgebra"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra">[docs]</a><span class="k">class</span> <span class="nc">AbstractAlgebra</span><span class="p">(</span><span class="n">metaclass</span><span class="o">=</span><span class="n">_DuckTypedABCMeta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstract base class for algebras.</span>
+
+<span class="sd">    Custom algebras can be defined by implementing the interface of this</span>
+<span class="sd">    abstract base class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AbstractAlgebra.is_valid_dimensionality"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.is_valid_dimensionality">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid_dimensionality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether *d* is a valid vector dimensionality.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Dimensionality</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            *True*, if *d* is a valid vector dimensionality for the use with</span>
+<span class="sd">            the algebra.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.create_vector"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.create_vector">[docs]</a>    <span class="k">def</span> <span class="nf">create_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a vector fulfilling given properties in the algebra.</span>
+
+<span class="sd">        Valid properties and combinations thereof depend on the concrete</span>
+<span class="sd">        algebra. It is suggested that the *properties* is either a *set* of</span>
+<span class="sd">        *str* (if order does not matter) or a *list* of *str* (if order does</span>
+<span class="sd">        matter). Use the constants defined in `.CommonProperties` where</span>
+<span class="sd">        appropriate.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality</span>
+<span class="sd">        properties</span>
+<span class="sd">            Definition of properties for the vector to fulfill. Type and</span>
+<span class="sd">            specification format depend on the concrete algbra, but it is</span>
+<span class="sd">            suggested to use either a *set* or *list* of *str* (depending on</span>
+<span class="sd">            whether order of properties matters) utilizing the constants defined</span>
+<span class="sd">            in `.CommonProperties` where applicable.</span>
+<span class="sd">        rng : numpy.random.RandomState, optional</span>
+<span class="sd">            The random number generator to use to create the vector.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray</span>
+<span class="sd">            Random vector with desired properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.make_unitary"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.make_unitary">[docs]</a>    <span class="k">def</span> <span class="nf">make_unitary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a unitary vector based on the vector *v*.</span>
+
+<span class="sd">        A unitary vector does not change the length of a vector it is bound to.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to base unitary vector on.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray</span>
+<span class="sd">            Unitary vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.superpose"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.superpose">[docs]</a>    <span class="k">def</span> <span class="nf">superpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the superposition of *a* and *b*.</span>
+
+<span class="sd">        This is commonly elementwise addition.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        a : (d,) ndarray</span>
+<span class="sd">            Left operand in superposition.</span>
+<span class="sd">        b : (d,) ndarray</span>
+<span class="sd">            Right operand in superposition.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Superposed vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.bind"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.bind">[docs]</a>    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the binding of *a* and *b*.</span>
+
+<span class="sd">        The resulting vector should in most cases be dissimilar to both inputs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        a : (d,) ndarray</span>
+<span class="sd">            Left operand in binding.</span>
+<span class="sd">        b : (d,) ndarray</span>
+<span class="sd">            Right operand in binding.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Bound vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.binding_power"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.binding_power">[docs]</a>    <span class="k">def</span> <span class="nf">binding_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the binding power of *v* using the *exponent*.</span>
+
+<span class="sd">        For a positive *exponent*, the binding power is defined as binding</span>
+<span class="sd">        (*exponent*-1) times bindings of *v* to itself. For a negative</span>
+<span class="sd">        *exponent*, the binding power is the approximate inverse bound to itself</span>
+<span class="sd">        according to the prior definition. Depending on the algebra, fractional</span>
+<span class="sd">        exponents might be valid or return a *ValueError*, if not. Usually, a</span>
+<span class="sd">        fractional binding power will require that *v* has a positive sign.</span>
+
+<span class="sd">        Note the following special exponents:</span>
+
+<span class="sd">        * an exponent of -1 will return the approximate inverse,</span>
+<span class="sd">        * an exponent of 0 will return the identity vector,</span>
+<span class="sd">        * and an *exponent* of 1 will return *v* itself.</span>
+
+<span class="sd">        The default implementation supports integer exponents only and will</span>
+<span class="sd">        apply the `.bind` method multiple times. It requires the algebra to have</span>
+<span class="sd">        a left identity.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to bind repeatedly to itself.</span>
+<span class="sd">        exponent : int or float</span>
+<span class="sd">            Exponent of the binding power.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Binding power of *v*.</span>
+
+<span class="sd">        See also</span>
+<span class="sd">        --------</span>
+<span class="sd">        AbstractAlgebra.sign</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">int</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span> <span class="o">==</span> <span class="n">exponent</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> only supports integer binding powers.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="n">exponent</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
+
+        <span class="n">power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">identity_element</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">LEFT</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">exponent</span><span class="p">)):</span>
+            <span class="n">power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="n">power</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">exponent</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">power</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">power</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">power</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.invert"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.invert">[docs]</a>    <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Invert vector *v*.</span>
+
+<span class="sd">        A vector bound to its inverse will result in the identity vector.</span>
+
+<span class="sd">        Some algebras might not have an inverse only on specific sides. In that</span>
+<span class="sd">        case a *NotImplementedError* may be raised for non-existing inverses.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to invert.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            Side in the binding operation on which the returned value acts as</span>
+<span class="sd">            inverse.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Inverted vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.get_binding_matrix"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.get_binding_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_binding_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">swap_inputs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the transformation matrix for binding with a fixed vector.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Fixed vector to derive binding matrix for.</span>
+<span class="sd">        swap_inputs : bool, optional</span>
+<span class="sd">            By default the matrix will be such that *v* becomes the *right*</span>
+<span class="sd">            operand in the binding. By setting *swap_inputs*, the matrix will</span>
+<span class="sd">            be such that *v* becomes the *left* operand. For binding operations</span>
+<span class="sd">            that are commutative (such as circular convolution), this has no</span>
+<span class="sd">            effect.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d, d) ndarray</span>
+<span class="sd">            Transformation matrix to perform binding with *v*.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.get_inversion_matrix"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.get_inversion_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_inversion_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the transformation matrix for inverting a vector.</span>
+
+<span class="sd">        Some algebras might not have an inverse only on specific sides. In that</span>
+<span class="sd">        case a *NotImplementedError* may be raised for non-existing inverses.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality (determines the matrix size).</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            Side in the binding operation on which a transformed vectors acts as</span>
+<span class="sd">            inverse.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d, d) ndarray</span>
+<span class="sd">            Transformation matrix to invert a vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.implement_superposition"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.implement_superposition">[docs]</a>    <span class="k">def</span> <span class="nf">implement_superposition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_neurons_per_d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implement neural network for superposing vectors.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_neurons_per_d : int</span>
+<span class="sd">            Neurons to use per dimension.</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Dimensionality of the vectors.</span>
+<span class="sd">        n : int</span>
+<span class="sd">            Number of vectors to superpose in the network.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            Tuple *(net, inputs, output)* where *net* is the implemented</span>
+<span class="sd">            `nengo.Network`, *inputs* a sequence of length *n* of inputs to the</span>
+<span class="sd">            network, and *output* the network output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.implement_binding"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.implement_binding">[docs]</a>    <span class="k">def</span> <span class="nf">implement_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_neurons_per_d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">unbind_left</span><span class="p">,</span> <span class="n">unbind_right</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Implement neural network for binding vectors.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_neurons_per_d : int</span>
+<span class="sd">            Neurons to use per dimension.</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Dimensionality of the vectors.</span>
+<span class="sd">        unbind_left : bool</span>
+<span class="sd">            Whether the left input should be unbound from the right input.</span>
+<span class="sd">        unbind_right : bool</span>
+<span class="sd">            Whether the right input should be unbound from the left input.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            Tuple *(net, inputs, output)* where *net* is the implemented</span>
+<span class="sd">            `nengo.Network`, *inputs* a sequence of the left and the right</span>
+<span class="sd">            input in that order, and *output* the network output.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.sign"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.sign">[docs]</a>    <span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the sign of *v* defined by the algebra.</span>
+
+<span class="sd">        The exact definition of the sign depends on the concrete algebra, but</span>
+<span class="sd">        should be analogous to the sign of a (complex) number in so far that</span>
+<span class="sd">        binding two vectors with the same sign produces a &quot;positive&quot; vector.</span>
+<span class="sd">        There might, however, be multiple types of negative signs, where binding</span>
+<span class="sd">        vectors with different types of negative signs will produce another</span>
+<span class="sd">        &quot;negative&quot; vector.</span>
+
+<span class="sd">        Furthermore, if the algebra supports fractional binding powers, it</span>
+<span class="sd">        should do so for all &quot;non-negative&quot; vectors, but not &quot;negative&quot; vectors.</span>
+
+<span class="sd">        If an algebra does not have the notion of a sign, it may raise a</span>
+<span class="sd">        :py:class:`NotImplementedError`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to determine sign of.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        AbstractSign</span>
+<span class="sd">            The sign of the input vector.</span>
+
+<span class="sd">        See Also</span>
+<span class="sd">        --------</span>
+<span class="sd">        AbstractAlgebra.abs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.abs"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.abs">[docs]</a>    <span class="k">def</span> <span class="nf">abs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the absolute vector of *v* defined by the algebra.</span>
+
+<span class="sd">        The exact definition of &quot;absolute vector&quot; may depend on the concrete</span>
+<span class="sd">        algebra. It should be a &quot;positive&quot; vector (see `.sign`) that relates</span>
+<span class="sd">        to the input vector.</span>
+
+<span class="sd">        The default implementation requires that the possible signs of the</span>
+<span class="sd">        algebra correspond to actual vectors within the algebra. It will bind</span>
+<span class="sd">        the inverse of the sign vector (from the left side) to the vector *v*.</span>
+
+<span class="sd">        If an algebra does not have the notion of a sign or absolute vector,</span>
+<span class="sd">        it may raise a :py:class:`NotImplementedError`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to obtain the absolute vector of.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            The absolute vector relating to the input vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">to_vector</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">))),</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.absorbing_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.absorbing_element">[docs]</a>    <span class="k">def</span> <span class="nf">absorbing_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the standard absorbing element of dimensionality *d*.</span>
+
+<span class="sd">        An absorbing element will produce a scaled version of itself when bound</span>
+<span class="sd">        to another vector. The standard absorbing element is the absorbing</span>
+<span class="sd">        element with norm 1.</span>
+
+<span class="sd">        Some algebras might not have an absorbing element other than the zero</span>
+<span class="sd">        vector. In that case a *NotImplementedError* may be raised.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            Side in the binding operation on which the element absorbs.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Standard absorbing element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.identity_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.identity_element">[docs]</a>    <span class="k">def</span> <span class="nf">identity_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the identity element of dimensionality *d*.</span>
+
+<span class="sd">        The identity does not change the vector it is bound to.</span>
+
+<span class="sd">        Some algebras might not have an identity element. In that case a</span>
+<span class="sd">        *NotImplementedError* may be raised.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            Side in the binding operation on which the element acts as identity.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Identity element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.negative_identity_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.negative_identity_element">[docs]</a>    <span class="k">def</span> <span class="nf">negative_identity_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the negative identity element of dimensionality *d*.</span>
+
+<span class="sd">        The negative identity only changes the sign of the vector it is bound to.</span>
+
+<span class="sd">        Some algebras might not have a negative identity element (or even the</span>
+<span class="sd">        notion of a sign). In that case a :py:class`NotImplementedError` may be</span>
+<span class="sd">        raised.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            Side in the binding operation on which the element acts as negative</span>
+<span class="sd">            identity.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Negative identity element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractAlgebra.zero_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.zero_element">[docs]</a>    <span class="k">def</span> <span class="nf">zero_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the zero element of dimensionality *d*.</span>
+
+<span class="sd">        The zero element produces itself when bound to a different vector.</span>
+<span class="sd">        Usually this will be the zero vector.</span>
+
+<span class="sd">        Some algebras might not have a zero element. In that case a</span>
+<span class="sd">        *NotImplementedError* may be raised.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            Side in the binding operation on which the element acts as zero.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Zero element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="AbstractSign"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign">[docs]</a><span class="k">class</span> <span class="nc">AbstractSign</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstract base class for implementing signs for an algebra.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="AbstractSign.is_positive"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_positive">[docs]</a>    <span class="k">def</span> <span class="nf">is_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return whether the sign is positive.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractSign.is_negative"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_negative">[docs]</a>    <span class="k">def</span> <span class="nf">is_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return whether the sign is negative.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractSign.is_zero"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_zero">[docs]</a>    <span class="k">def</span> <span class="nf">is_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return whether the sign neither positive nor negative (i.e. zero),</span>
+<span class="sd">        but definite.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_positive</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_negative</span><span class="p">()</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_indefinite</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="AbstractSign.is_indefinite"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_indefinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_indefinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return whether the sign is neither positive nor negative nor zero.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractSign.to_vector"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.to_vector">[docs]</a>    <span class="k">def</span> <span class="nf">to_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the vector in the algebra corresponding to the sign.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Vector corresponding to the sign.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="GenericSign"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign">[docs]</a><span class="k">class</span> <span class="nc">GenericSign</span><span class="p">(</span><span class="n">AbstractSign</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A generic sign implementation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    sign : -1, 0, 1, None</span>
+<span class="sd">        The represented sign. *None* is used for an indefinite sign.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sign</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">sign</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;sign must be one of -1, 0, 1, None&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">=</span> <span class="n">sign</span>
+
+<div class="viewcode-block" id="GenericSign.is_positive"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_positive">[docs]</a>    <span class="k">def</span> <span class="nf">is_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_indefinite</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="GenericSign.is_negative"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_negative">[docs]</a>    <span class="k">def</span> <span class="nf">is_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_indefinite</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">&lt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="GenericSign.is_zero"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_zero">[docs]</a>    <span class="k">def</span> <span class="nf">is_zero</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_indefinite</span><span class="p">()</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="GenericSign.is_indefinite"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_indefinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_indefinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="ow">is</span> <span class="kc">None</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(sign=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">sign</span></div>
+
+
+<div class="viewcode-block" id="CommonProperties"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.base.CommonProperties">[docs]</a><span class="k">class</span> <span class="nc">CommonProperties</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Definition of constants for common properties of vectors in an algebra.</span>
+
+<span class="sd">    Use these for best interoperability between algebras.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">UNITARY</span> <span class="o">=</span> <span class="s2">&quot;unitary&quot;</span>
+    <span class="sd">&quot;&quot;&quot;A unitary vector does not change the length of a vector it is bound to.&quot;&quot;&quot;</span>
+
+    <span class="n">POSITIVE</span> <span class="o">=</span> <span class="s2">&quot;positive&quot;</span>
+    <span class="sd">&quot;&quot;&quot;A positive vector does not change the sign of a vector it is bound to.</span>
+
+<span class="sd">    A positive vector allows for fractional binding powers.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+</pre></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

@@ -1,0 +1,787 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.algebras.hrr_algebra &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+  
+<script src="../../../_static/underscore.js"></script>
+  
+  
+<script src="../../../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../../../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../../../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../../../v1.2.0/_modules/nengo_spa/algebras/hrr_algebra.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.1/_modules/nengo_spa/algebras/hrr_algebra.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.0/_modules/nengo_spa/algebras/hrr_algebra.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../../../v1.2.0/_modules/nengo_spa/algebras/hrr_algebra.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <h1>Source code for nengo_spa.algebras.hrr_algebra</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">nengo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">nengo_spa.algebras.base</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">AbstractAlgebra</span><span class="p">,</span>
+    <span class="n">AbstractSign</span><span class="p">,</span>
+    <span class="n">CommonProperties</span><span class="p">,</span>
+    <span class="n">ElementSidedness</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.networks.circularconvolution</span> <span class="kn">import</span> <span class="n">CircularConvolution</span>
+
+
+<div class="viewcode-block" id="HrrAlgebra"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra">[docs]</a><span class="k">class</span> <span class="nc">HrrAlgebra</span><span class="p">(</span><span class="n">AbstractAlgebra</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Holographic Reduced Representations (HRRs) algebra.</span>
+
+<span class="sd">    Uses element-wise addition for superposition, circular convolution for</span>
+<span class="sd">    binding with an approximate inverse.</span>
+
+<span class="sd">    The circular convolution :math:`c` of vectors :math:`a` and :math:`b`</span>
+<span class="sd">    is given by</span>
+
+<span class="sd">    .. math:: c[i] = \sum_j a[j] b[i - j]</span>
+
+<span class="sd">    where negative indices on :math:`b` wrap around to the end of the vector.</span>
+
+<span class="sd">    This computation can also be done in the Fourier domain,</span>
+
+<span class="sd">    .. math:: c = DFT^{-1} ( DFT(a) \odot DFT(b) )</span>
+
+<span class="sd">    where :math:`DFT` is the Discrete Fourier Transform operator, and</span>
+<span class="sd">    :math:`DFT^{-1}` is its inverse.</span>
+
+<span class="sd">    Circular convolution as a binding operation is associative, commutative,</span>
+<span class="sd">    distributive.</span>
+
+<span class="sd">    More information on circular convolution as a binding operation can be</span>
+<span class="sd">    found in [plate2003]_.</span>
+
+<span class="sd">    .. [plate2003] Plate, Tony A. Holographic Reduced Representation:</span>
+<span class="sd">       Distributed Representation for Cognitive Structures. Stanford, CA: CSLI</span>
+<span class="sd">       Publications, 2003.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">_instance</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">cls</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">HrrAlgebra</span><span class="p">,</span> <span class="bp">cls</span><span class="p">)</span><span class="o">.</span><span class="fm">__new__</span><span class="p">(</span><span class="bp">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_instance</span>
+
+<div class="viewcode-block" id="HrrAlgebra.is_valid_dimensionality"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.is_valid_dimensionality">[docs]</a>    <span class="k">def</span> <span class="nf">is_valid_dimensionality</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether *d* is a valid vector dimensionality.</span>
+
+<span class="sd">        For circular convolution all positive numbers are valid</span>
+<span class="sd">        dimensionalities.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Dimensionality</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">            *True*, if *d* is a valid vector dimensionality for the use with</span>
+<span class="sd">            the algebra.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.create_vector"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.create_vector">[docs]</a>    <span class="k">def</span> <span class="nf">create_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">rng</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a vector fulfilling given properties in the algebra.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality</span>
+<span class="sd">        properties : set of str</span>
+<span class="sd">            Definition of properties for the vector to fulfill. Valid set</span>
+<span class="sd">            elements are constants defined in `.HrrProperties`.</span>
+<span class="sd">        rng : numpy.random.RandomState, optional</span>
+<span class="sd">            The random number generator to use to create the vector.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ndarray</span>
+<span class="sd">            Random vector with desired properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">rng</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">()</span>
+
+        <span class="n">v</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">v</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">HrrProperties</span><span class="o">.</span><span class="n">POSITIVE</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+            <span class="n">properties</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">HrrProperties</span><span class="o">.</span><span class="n">POSITIVE</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">HrrProperties</span><span class="o">.</span><span class="n">UNITARY</span> <span class="ow">in</span> <span class="n">properties</span><span class="p">:</span>
+            <span class="n">properties</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">HrrProperties</span><span class="o">.</span><span class="n">UNITARY</span><span class="p">)</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_unitary</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">properties</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid properties: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">properties</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">v</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.make_unitary"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.make_unitary">[docs]</a>    <span class="k">def</span> <span class="nf">make_unitary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="n">fft_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">fft</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">fft_imag</span> <span class="o">=</span> <span class="n">fft_val</span><span class="o">.</span><span class="n">imag</span>
+        <span class="n">fft_real</span> <span class="o">=</span> <span class="n">fft_val</span><span class="o">.</span><span class="n">real</span>
+        <span class="n">fft_norms</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">fft_imag</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">fft_real</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">invalid</span> <span class="o">=</span> <span class="n">fft_norms</span> <span class="o">&lt;=</span> <span class="mf">0.0</span>
+        <span class="n">fft_val</span><span class="p">[</span><span class="n">invalid</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">fft_norms</span><span class="p">[</span><span class="n">invalid</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="n">fft_unit</span> <span class="o">=</span> <span class="n">fft_val</span> <span class="o">/</span> <span class="n">fft_norms</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">ifft</span><span class="p">(</span><span class="n">fft_unit</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)))</span><span class="o">.</span><span class="n">real</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.superpose"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.superpose">[docs]</a>    <span class="k">def</span> <span class="nf">superpose</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.bind"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.bind">[docs]</a>    <span class="k">def</span> <span class="nf">bind</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">!=</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Inputs must have same length.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">b</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="n">n</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.binding_power"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.binding_power">[docs]</a>    <span class="k">def</span> <span class="nf">binding_power</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">exponent</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Returns the binding power of *v* using the *exponent*.</span>
+
+<span class="sd">        The binding power is defined as binding (*exponent*-1) times bindings</span>
+<span class="sd">        of *v* to itself. Fractional binding powers are supported.</span>
+
+<span class="sd">        Note the following special exponents:</span>
+
+<span class="sd">        * an exponent of -1 will return the approximate inverse,</span>
+<span class="sd">        * an exponent of 0 will return the identity vector,</span>
+<span class="sd">        * and an *exponent* of w1cne will return *v* itself.</span>
+
+<span class="sd">        The following relations hold for integer exponents, and for unitary</span>
+<span class="sd">        vectors:</span>
+
+<span class="sd">        * :math:`v^a \circledast v^b = v^{a+b}`,</span>
+<span class="sd">        * :math:`(v^a)^b = v^{ab}`.</span>
+
+<span class="sd">        If :math:`a \geq 0` and :math:`b \geq 0`, then the first relation holds also</span>
+<span class="sd">        for non-unitary vectors with real exponents.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to bind repeatedly to itself.</span>
+<span class="sd">        exponent : int or float</span>
+<span class="sd">            Exponent of the binding power.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Binding power of *v*.</span>
+
+<span class="sd">        See also</span>
+<span class="sd">        --------</span>
+<span class="sd">        .sign</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span> <span class="o">!=</span> <span class="n">exponent</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">v</span><span class="p">)</span><span class="o">.</span><span class="n">is_positive</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;Fractional binding powers are only supported for &#39;positive&#39; vectors.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">exponent</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">irfft</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">**</span> <span class="nb">abs</span><span class="p">(</span><span class="n">exponent</span><span class="p">),</span> <span class="n">n</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.invert"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.invert">[docs]</a>    <span class="k">def</span> <span class="nf">invert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Invert vector *v*.</span>
+
+<span class="sd">        This turns circular convolution into circular correlation, meaning that</span>
+<span class="sd">        ``A*B*~B`` is approximately ``A``.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        For the vector ``[1, 2, 3, 4, 5]``, the inverse is ``[1, 5, 4, 3, 2]``.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to invert.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            This argument has no effect because the HRR algebra is commutative</span>
+<span class="sd">            and the inverse is two-sided.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Inverted vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">))]</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.get_binding_matrix"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.get_binding_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_binding_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">swap_inputs</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span>
+            <span class="n">T</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">v</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="n">j</span><span class="p">)</span> <span class="o">%</span> <span class="n">D</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">T</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.get_inversion_matrix"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.get_inversion_matrix">[docs]</a>    <span class="k">def</span> <span class="nf">get_inversion_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the transformation matrix for inverting a vector.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality (determines the matrix size).</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            This argument has no effect because the HRR algebra is commutative</span>
+<span class="sd">            and the inverse is two-sided.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d, d) ndarray</span>
+<span class="sd">            Transformation matrix to invert a vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">d</span><span class="p">)[</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">d</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.implement_superposition"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.implement_superposition">[docs]</a>    <span class="k">def</span> <span class="nf">implement_superposition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_neurons_per_d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span><span class="n">size_in</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">node</span><span class="p">,</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">node</span><span class="p">,),</span> <span class="n">node</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.implement_binding"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.implement_binding">[docs]</a>    <span class="k">def</span> <span class="nf">implement_binding</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_neurons_per_d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">unbind_left</span><span class="p">,</span> <span class="n">unbind_right</span><span class="p">):</span>
+        <span class="n">net</span> <span class="o">=</span> <span class="n">CircularConvolution</span><span class="p">(</span><span class="n">n_neurons_per_d</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">unbind_left</span><span class="p">,</span> <span class="n">unbind_right</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">net</span><span class="p">,</span> <span class="p">(</span><span class="n">net</span><span class="o">.</span><span class="n">input_a</span><span class="p">,</span> <span class="n">net</span><span class="o">.</span><span class="n">input_b</span><span class="p">),</span> <span class="n">net</span><span class="o">.</span><span class="n">output</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.sign"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.sign">[docs]</a>    <span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the HRR sign of *v*.</span>
+
+<span class="sd">        See `AbstractAlgebra.sign` for general information on the notion of a</span>
+<span class="sd">        sign for algbras, and `.HrrSign` for details specific to HRRs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        v : (d,) ndarray</span>
+<span class="sd">            Vector to determine sign of.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HrrSign</span>
+<span class="sd">            The sign of the input vector.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dc</span><span class="p">,</span> <span class="n">nyquist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fft</span><span class="o">.</span><span class="n">rfft</span><span class="p">(</span><span class="n">v</span><span class="p">)[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">nyquist</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">nyquist</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">HrrSign</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dc</span><span class="o">.</span><span class="n">real</span><span class="p">)),</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">nyquist</span><span class="o">.</span><span class="n">real</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.absorbing_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.absorbing_element">[docs]</a>    <span class="k">def</span> <span class="nf">absorbing_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the standard absorbing element of dimensionality *d*.</span>
+
+<span class="sd">        An absorbing element will produce a scaled version of itself when bound</span>
+<span class="sd">        to another vector. The standard absorbing element is the absorbing</span>
+<span class="sd">        element with norm 1.</span>
+
+<span class="sd">        The absorbing element for circular convolution is the vector</span>
+<span class="sd">        :math:`(1, 1, \dots, 1)^{\top} / \sqrt{d}`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            This argument has no effect because the HRR algebra is commutative</span>
+<span class="sd">            and the standard absorbing element is two-sided.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Standard absorbing element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.identity_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.identity_element">[docs]</a>    <span class="k">def</span> <span class="nf">identity_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the identity element of dimensionality *d*.</span>
+
+<span class="sd">        The identity does not change the vector it is bound to.</span>
+
+<span class="sd">        The identity element for circular convolution is the vector</span>
+<span class="sd">        :math:`(1, 0, \dots, 0)^{\top}`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            This argument has no effect because the HRR algebra is commutative</span>
+<span class="sd">            and the identity is two-sided.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Identity element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.negative_identity_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.negative_identity_element">[docs]</a>    <span class="k">def</span> <span class="nf">negative_identity_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Return the negative identity element of dimensionality *d*.</span>
+
+<span class="sd">        The negative identity element for circular convolution is the vector</span>
+<span class="sd">        :math:`(-1, 0, \dots, 0)^{\top}`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            This argument has no effect because the HRR algebra is commutative</span>
+<span class="sd">            and the identity is two-sided.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Negative identity element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">identity_element</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="HrrAlgebra.zero_element"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.zero_element">[docs]</a>    <span class="k">def</span> <span class="nf">zero_element</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">sidedness</span><span class="o">=</span><span class="n">ElementSidedness</span><span class="o">.</span><span class="n">TWO_SIDED</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the zero element of dimensionality *d*.</span>
+
+<span class="sd">        The zero element produces itself when bound to a different vector.</span>
+<span class="sd">        For circular convolution this is the zero vector.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+<span class="sd">        sidedness : ElementSidedness, optional</span>
+<span class="sd">            This argument has no effect because the HRR algebra is commutative</span>
+<span class="sd">            and the zero element is two-sided.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Zero element.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="HrrSign"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign">[docs]</a><span class="k">class</span> <span class="nc">HrrSign</span><span class="p">(</span><span class="n">AbstractSign</span><span class="p">):</span>
+    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Represents a sign in the `.HrrAlgebra`.</span>
+
+<span class="sd">    For odd dimensionalities, the sign is equal to the sign of the DC component</span>
+<span class="sd">    of the Fourier representation of the vector. For even dimensionalities the</span>
+<span class="sd">    sign is constituted out of the signs of the DC component and Nyquist</span>
+<span class="sd">    frequency. Thus, for even dimensionalities, there is a total of four</span>
+<span class="sd">    sub-signs excluding zero. The overall sign is considered positive if the</span>
+<span class="sd">    DC component is positive and the Nyquist component is non-negative;</span>
+<span class="sd">    the sign is considered negative if either component is negative; and</span>
+<span class="sd">    the sign is considered zero if both are zero. Binding two Semantic Pointers</span>
+<span class="sd">    with the same sub-sign will yield a positive Semantic Pointer. See the table</span>
+<span class="sd">    below for details.</span>
+
+<span class="sd">    .. table:: Resulting Semantic Pointer signs from HRR binding two Semantic</span>
+<span class="sd">         Pointers. (Only the upper triangle is given as the matrix is</span>
+<span class="sd">         symmetric.)</span>
+
+<span class="sd">        ================== =========== ========== ========== ========== ======</span>
+<span class="sd">        Sign (DC, Nyquist) \+ (+1, +1) − (+1, -1) − (-1, +1) − (−1, -1) (0, 0)</span>
+<span class="sd">        ================== =========== ========== ========== ========== ======</span>
+<span class="sd">        \+ (+1, +1)        \+ (+1, +1) − (+1, -1) − (−1, +1) − (−1, -1) (0, 0)</span>
+<span class="sd">        − (+1, -1)                     \+ (1, +1) − (−1, -1) − (−1, +1) (0, 0)</span>
+<span class="sd">        − (−1, +1)                                \+ (1, +1) − (+1, -1) (0, 0)</span>
+<span class="sd">        − (−1, -1)                                           \+ (1, +1) (0, 0)</span>
+<span class="sd">        (0, 0)                                                          (0, 0)</span>
+<span class="sd">        ================== =========== ========== ========== ========== ======</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dc_sign : int</span>
+<span class="sd">        Sign of the DC component.</span>
+<span class="sd">    nyquist_sign : int</span>
+<span class="sd">        Sign of the Nyquist frequency component. Will be set to the *dc_sign*</span>
+<span class="sd">        if zero.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;dc_sign&quot;</span><span class="p">,</span> <span class="s2">&quot;nyquist_sign&quot;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dc_sign</span><span class="p">,</span> <span class="n">nyquist_sign</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dc_sign</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">nyquist_sign</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s2">&quot;nyquist_sign must be 0 if dc_sign is 0 to constitute a valid &quot;</span>
+                <span class="s2">&quot;sign in the HrrAlgebra.&quot;</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">dc_sign</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;dc_sign must be one of -1, 0, 1&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">nyquist_sign</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;nyquist_sign must be one of -1, 0, 1&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">=</span> <span class="n">dc_sign</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">=</span> <span class="n">nyquist_sign</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span>
+
+<div class="viewcode-block" id="HrrSign.is_positive"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.is_positive">[docs]</a>    <span class="k">def</span> <span class="nf">is_positive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">&gt;=</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="HrrSign.is_negative"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.is_negative">[docs]</a>    <span class="k">def</span> <span class="nf">is_negative</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">&lt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="HrrSign.is_indefinite"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.is_indefinite">[docs]</a>    <span class="k">def</span> <span class="nf">is_indefinite</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="HrrSign.to_vector"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.to_vector">[docs]</a>    <span class="k">def</span> <span class="nf">to_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the vector in the algebra corresponding to the sign.</span>
+
+<span class="sd">        =======  ============  =======================================</span>
+<span class="sd">        DC sign  Nyquist sign  Vector</span>
+<span class="sd">        =======  ============  =======================================</span>
+<span class="sd">         1        1            [ 1,  0, 0, ...] (identity)</span>
+<span class="sd">         1       -1            [ 0,  1, 0, 0, ...]</span>
+<span class="sd">        -1        1            [ 0, -1, 0, ...]</span>
+<span class="sd">        -1       -1            [-1,  0, 0, 0, ...] (negative identity)</span>
+<span class="sd">         0        0            [ 0,  0, 0, ...] (zero)</span>
+<span class="sd">        =======  ============  =======================================</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        d : int</span>
+<span class="sd">            Vector dimensionality.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (d,) ndarray</span>
+<span class="sd">            Vector corresponding to the sign.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="n">v</span> <span class="o">=</span> <span class="n">HrrAlgebra</span><span class="p">()</span><span class="o">.</span><span class="n">identity_element</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">roll</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">*</span> <span class="n">v</span></div>
+
+    <span class="k">def</span> <span class="fm">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="si">{}</span><span class="s2">(dc_sign=</span><span class="si">{}</span><span class="s2">, nyquist_sign=</span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">HrrSign</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dc_sign</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">dc_sign</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">nyquist_sign</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">nyquist_sign</span></div>
+
+
+<div class="viewcode-block" id="HrrProperties"><a class="viewcode-back" href="../../../modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrProperties">[docs]</a><span class="k">class</span> <span class="nc">HrrProperties</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Vector properties supported by the `.HrrAlgebra`.&quot;&quot;&quot;</span>
+
+    <span class="n">UNITARY</span> <span class="o">=</span> <span class="n">CommonProperties</span><span class="o">.</span><span class="n">UNITARY</span>
+    <span class="sd">&quot;&quot;&quot;A unitary vector does not change the length of a vector it is bound to.&quot;&quot;&quot;</span>
+
+    <span class="n">POSITIVE</span> <span class="o">=</span> <span class="n">CommonProperties</span><span class="o">.</span><span class="n">POSITIVE</span>
+    <span class="sd">&quot;&quot;&quot;A positive vector does not change the sign of a vector it is bound to.</span>
+
+<span class="sd">    A positive vector allows for fractional binding powers.</span>
+<span class="sd">    &quot;&quot;&quot;</span></div>
+</pre></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

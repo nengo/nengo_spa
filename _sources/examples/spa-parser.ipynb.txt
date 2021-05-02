@@ -1,0 +1,181 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Parsing simple commands"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This example is a simplified version\n",
+    "of the language parsing model presented in\n",
+    "[Stewart & Eliasmith,\n",
+    "2013](http://compneuro.uwaterloo.ca/publications/stewart2013.html).\n",
+    "Please refer to that paper for the high-level details."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline\n",
+    "\n",
+    "import nengo\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "import nengo_spa as spa\n",
+    "\n",
+    "seed = 0"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 1: Create the model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "sequence = \"WRITE ONE NONE WRITE TWO NONE THREE WRITE NONE\".split()\n",
+    "\n",
+    "\n",
+    "def input_vision(t):\n",
+    "    index = int(t / 0.5) % len(sequence)\n",
+    "    return sequence[index]\n",
+    "\n",
+    "\n",
+    "# Number of dimensions for the SPs\n",
+    "dimensions = 64\n",
+    "\n",
+    "# Make a model object with the SPA network\n",
+    "model = spa.Network(label=\"Parser\", seed=seed)\n",
+    "n_per_dim = 50\n",
+    "\n",
+    "with model:\n",
+    "    # Specify the modules to be used\n",
+    "    vision = spa.Transcode(input_vision, output_vocab=dimensions)\n",
+    "    phrase = spa.State(dimensions, neurons_per_dimension=n_per_dim)\n",
+    "    motor = spa.State(dimensions, neurons_per_dimension=n_per_dim)\n",
+    "    noun = spa.State(dimensions, feedback=1.0, neurons_per_dimension=n_per_dim)\n",
+    "    verb = spa.State(dimensions, feedback=1.0, neurons_per_dimension=n_per_dim)\n",
+    "\n",
+    "    # Specify the action mapping\n",
+    "    none_vision_cond = spa.dot(\n",
+    "        spa.sym.NONE - spa.sym.WRITE - spa.sym.ONE - spa.sym.TWO - spa.sym.THREE, vision\n",
+    "    )\n",
+    "    num_vision_cond = spa.dot(vision, spa.sym.ONE + spa.sym.TWO + spa.sym.THREE)\n",
+    "\n",
+    "    with spa.ActionSelection() as action_sel:\n",
+    "        spa.ifmax(\"Write vis\", spa.dot(vision, spa.sym.WRITE), vision >> verb)\n",
+    "        spa.ifmax(\"Memorize\", num_vision_cond, vision >> noun)\n",
+    "        spa.ifmax(\n",
+    "            \"Write mem\",\n",
+    "            0.5 * (none_vision_cond + spa.dot(phrase, spa.sym.WRITE * spa.sym.VERB)),\n",
+    "            phrase * ~spa.sym.NOUN >> motor,\n",
+    "        )\n",
+    "\n",
+    "    noun * spa.sym.NOUN + verb * spa.sym.VERB >> phrase"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 2: Probe the output"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with model:\n",
+    "    p_vision = nengo.Probe(vision.output, synapse=0.03)\n",
+    "    p_phrase = nengo.Probe(phrase.output, synapse=0.03)\n",
+    "    p_motor = nengo.Probe(motor.output, synapse=0.03)\n",
+    "    p_noun = nengo.Probe(noun.output, synapse=0.03)\n",
+    "    p_verb = nengo.Probe(verb.output, synapse=0.03)\n",
+    "    p_selected_actions = nengo.Probe(action_sel.thalamus.output, synapse=0.01)\n",
+    "    p_utility = nengo.Probe(action_sel.bg.input, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 3: Run the model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(4.5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 4: Plot the results"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = model.vocabs[dimensions]\n",
+    "\n",
+    "fig, ax = plt.subplots(7, 1, sharex=True, figsize=(16, 12))\n",
+    "\n",
+    "ax[0].plot(sim.trange(), spa.similarity(sim.data[p_vision], vocab))\n",
+    "ax[0].set_ylabel(\"Vision\")\n",
+    "\n",
+    "ax[1].plot(sim.trange(), spa.similarity(sim.data[p_phrase], vocab))\n",
+    "ax[1].set_ylabel(\"Phrase\")\n",
+    "\n",
+    "ax[2].plot(sim.trange(), spa.similarity(sim.data[p_motor], vocab))\n",
+    "ax[2].legend(vocab.keys(), loc=\"right\", bbox_to_anchor=(1.11, 0.5))\n",
+    "ax[2].set_ylabel(\"Motor\")\n",
+    "\n",
+    "ax[3].plot(sim.trange(), spa.similarity(sim.data[p_noun], vocab))\n",
+    "ax[3].set_ylabel(\"Noun\")\n",
+    "\n",
+    "ax[4].plot(sim.trange(), spa.similarity(sim.data[p_verb], vocab))\n",
+    "ax[4].set_ylabel(\"Verb\")\n",
+    "\n",
+    "ax[5].plot(sim.trange(), sim.data[p_utility])\n",
+    "ax[5].legend(tuple(action_sel.keys()), loc=\"right\", bbox_to_anchor=(1.13, -0.1))\n",
+    "ax[5].set_ylabel(\"Utility\")\n",
+    "\n",
+    "ax[6].plot(sim.trange(), sim.data[p_selected_actions])\n",
+    "ax[6].set_ylabel(\"Selected Action\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

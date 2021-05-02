@@ -1,0 +1,1575 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transitioning to nengo_spa coming from the core Nengo legacy SPA implementation &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+  
+<script src="../_static/underscore.js"></script>
+  
+  
+<script src="../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+  
+<script async="async" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  
+<script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Implementing a custom module" href="custom-module.html" />
+    <link rel="prev" title="Introduction to NengoSPA" href="intro.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../user-guide.html">User Guide</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../user-guide/spa-intro.html">Introduction to the Semantic Pointer Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction to NengoSPA</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Transitioning to <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code> coming from the core Nengo legacy SPA implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Why-switch-to-nengo_spa?">Why switch to <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code>?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Importing-nengo_spa">Importing nengo_spa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Rule-1-of-using-nengo_spa">Rule 1 of using nengo_spa</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#A-basic-model">A basic model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Transcode">Transcode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Action-rules">Action rules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Vocabularies">Vocabularies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nengo_spa-and-the-config-system">nengo_spa and the config system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Semantic-Pointers">Semantic Pointers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Representing-identity">Representing identity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#New-associative-memory-classes">New associative memory classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custom-module.html">Implementing a custom module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user-guide/algebras.html">Algebras</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../v1.2.0/examples/intro-coming-from-legacy-spa.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../v1.1.1/examples/intro-coming-from-legacy-spa.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../v1.1.0/examples/intro-coming-from-legacy-spa.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../v1.2.0/examples/intro-coming-from-legacy-spa.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt *,
+div.nbinput.container div.input_area pre,
+div.nboutput.container div.output_area pre,
+div.nbinput.container div.input_area .highlight,
+div.nboutput.container div.output_area .highlight {
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+div.nbinput.container > div[class*=highlight],
+div.nboutput.container > div[class*=highlight] {
+    margin: 0;
+}
+
+div.nbinput.container div.prompt *,
+div.nboutput.container div.prompt * {
+    background: none;
+}
+
+div.nboutput.container div.output_area .highlight,
+div.nboutput.container div.output_area pre {
+    background: unset;
+}
+
+div.nboutput.container div.output_area div.highlight {
+    color: unset;  /* override Pygments text color */
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    width: 4.5ex;
+    padding-top: 5px;
+    position: relative;
+    user-select: none;
+}
+
+div.nbinput.container div.prompt > div,
+div.nboutput.container div.prompt > div {
+    position: absolute;
+    right: 0;
+    margin-right: 0.3ex;
+}
+
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        width: unset;
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+
+    div.nbinput.container div.prompt > div,
+    div.nboutput.container div.prompt > div {
+        position: unset;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    /*background: #f5f5f5;*/
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 5px;
+    margin: 0;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+</style>
+<div class="section" id="Transitioning-to-nengo_spa-coming-from-the-core-Nengo-legacy-SPA-implementation">
+<h1>Transitioning to <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code> coming from the core Nengo legacy SPA implementation<a class="headerlink" href="#Transitioning-to-nengo_spa-coming-from-the-core-Nengo-legacy-SPA-implementation" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial is intended for persons who are already familiar with the legacy Semantic Pointer Architecture (SPA) implementation that was shipped with core Nengo until at least version 2.7. Thus, it will not explain any of the background behind the SPA and will reference concepts used in the legacy implementation. If you are completely new to the SPA, you might want to start with <a class="reference internal" href="intro.html"><span class="doc">this tutorial that assumes no knowledge of the legacy SPA implementation</span></a>.</p>
+<div class="section" id="Why-switch-to-nengo_spa?">
+<h2>Why switch to <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code>?<a class="headerlink" href="#Why-switch-to-nengo_spa?" title="Permalink to this headline">¶</a></h2>
+<p>You might wonder why you should switch to <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code>, if you have been using the legacy SPA and it was working well for you. Here is a number of reasons to prefer <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code>:</p>
+<div class="section" id="Support-for-action-rules-of-arbitrary-complexity">
+<h3>Support for action rules of arbitrary complexity<a class="headerlink" href="#Support-for-action-rules-of-arbitrary-complexity" title="Permalink to this headline">¶</a></h3>
+<p>A rule as complex as <code class="docutils literal notranslate"><span class="pre">dot((role</span> <span class="pre">*</span> <span class="pre">filler</span> <span class="pre">+</span> <span class="pre">BiasVector)</span> <span class="pre">*</span> <span class="pre">tag,</span> <span class="pre">cmp)</span> <span class="pre">&gt;&gt;</span> <span class="pre">...</span></code>, which includes two circular convolutions and a dot product of two non-fixed values, is possible with nengo_spa. This was not possible with the legacy SPA implementation.</p>
+</div>
+<div class="section" id="“Type-safety”-in-action-rules">
+<h3>“Type safety” in action rules<a class="headerlink" href="#“Type-safety”-in-action-rules" title="Permalink to this headline">¶</a></h3>
+<p>If different vocabularies are combined an explicit conversion is required. This prevents hard-to-track-down bugs. This conversion is also explicit about <em>how</em> the conversion is done, instead of just applying a fixed method that is not always appropriate.</p>
+</div>
+<div class="section" id="The-neural-representations-optimized-for-better-accuracy">
+<h3>The neural representations optimized for better accuracy<a class="headerlink" href="#The-neural-representations-optimized-for-better-accuracy" title="Permalink to this headline">¶</a></h3>
+<p>That means less neurons are needed to achieve the same performance. This can make simulations run faster. This improvement of accuracy is comparable to the results presented in <a class="reference external" href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0149928">“Optimizing Semantic Pointer Representations for Symbol-Like Processing in Spiking Neural Networks”</a> which achieved improvements of up to 25 times. In contrast to that paper, the implementation used in <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code> is purely based on setting
+appropriate radii and distributions for evaluation points as well as intercepts. This implementation is much faster.</p>
+</div>
+<div class="section" id="New-Python-based-syntax">
+<h3>New Python-based syntax<a class="headerlink" href="#New-Python-based-syntax" title="Permalink to this headline">¶</a></h3>
+<p>A new Python-based syntax gives syntax highlighting and can make use of static checking tools like pylint to catch misspelled names and similar errors early.</p>
+</div>
+<div class="section" id="Support-for-algebras">
+<h3>Support for algebras<a class="headerlink" href="#Support-for-algebras" title="Permalink to this headline">¶</a></h3>
+<p>The SPA uses circular convolution for binding by default, but other binding operations are also viable. Different <a class="reference internal" href="../user-guide/algebras.html"><span class="doc">algebras</span></a> can be implemented with <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code>. In particular, an implementation of the <a class="reference internal" href="../modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra"><span class="std std-ref">vector-derived transformation binding (VTB)</span></a> is provided, which is especially suited for deep structures.</p>
+</div>
+<div class="section" id="Other-features">
+<h3>Other features<a class="headerlink" href="#Other-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>The neural representation has been optimized to allow the representation of the identity vector (with the option to turn this optimization off).</p></li>
+<li><p>SPA networks can be used as and within normal Nengo networks. For example, instead of a basic and an SPA associative memory network, there is only one type of network that can be used in either case.</p></li>
+<li><p>SPA networks can be nested.</p></li>
+<li><p>Support for the Nengo config system.</p></li>
+<li><p>Scalars can now be routed and used as inputs/outputs using <code class="docutils literal notranslate"><span class="pre">spa.Scalar</span></code>.</p></li>
+<li><p>Lots of fixed issues and in general less possibilities to do things wrong.</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="Importing-nengo_spa">
+<h2>Importing nengo_spa<a class="headerlink" href="#Importing-nengo_spa" title="Permalink to this headline">¶</a></h2>
+<p>To save typing it is recommended to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">nengo_spa</span> <span class="pre">as</span> <span class="pre">spa</span></code>. Note that this is only a very small difference to <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">nengo.spa</span> <span class="pre">as</span> <span class="pre">spa</span></code> which imports the legacy SPA. In the following, it is assumed that you imported <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code> as <code class="docutils literal notranslate"><span class="pre">spa</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">import</span> <span class="nn">nengo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">import</span> <span class="nn">nengo_spa</span> <span class="k">as</span> <span class="nn">spa</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.examine</span> <span class="kn">import</span> <span class="n">pairs</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.exceptions</span> <span class="kn">import</span> <span class="n">SpaParseError</span><span class="p">,</span> <span class="n">SpaTypeError</span>
+
+<span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">RandomState</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># change this to change vocabularies</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">d</span> <span class="o">=</span> <span class="mi">32</span>  <span class="c1"># Default dimensionality to use in the examples</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Rule-1-of-using-nengo_spa">
+<h2>Rule 1 of using nengo_spa<a class="headerlink" href="#Rule-1-of-using-nengo_spa" title="Permalink to this headline">¶</a></h2>
+<p>When using <code class="docutils literal notranslate"><span class="pre">nengo_spa</span></code>, use <code class="docutils literal notranslate"><span class="pre">spa.Network()</span></code> in any place where you would use a <code class="docutils literal notranslate"><span class="pre">nengo.Network()</span></code>. There isn’t any downside to using <code class="docutils literal notranslate"><span class="pre">spa.Network()</span></code> and in this way you will not run into problems of using <code class="docutils literal notranslate"><span class="pre">nengo.Network()</span></code> where <code class="docutils literal notranslate"><span class="pre">spa.Network()</span></code> is required. That being said, if you have existing <code class="docutils literal notranslate"><span class="pre">nengo.Network</span></code>s (that do not use any SPA features), these can stay <code class="docutils literal notranslate"><span class="pre">nengo.Network</span></code>s. In other words, you will only have to touch code using the SPA to upgrade to nengo_spa; networks
+not using the SPA system may stay as they are.</p>
+<p>If you want to know when exactly <code class="docutils literal notranslate"><span class="pre">spa.Network()</span></code> is required, here are the conditions:</p>
+<ol class="arabic simple">
+<li><p>If you build action rules, they have to be build in a <code class="docutils literal notranslate"><span class="pre">spa.Network()</span></code>.</p></li>
+<li><p>Each network referenced in an action rule has to be a <code class="docutils literal notranslate"><span class="pre">spa.Network()</span></code>.</p></li>
+</ol>
+</div>
+<div class="section" id="A-basic-model">
+<h2>A basic model<a class="headerlink" href="#A-basic-model" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">bind</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="n">state</span> <span class="o">&gt;&gt;</span> <span class="n">bind</span><span class="o">.</span><span class="n">input_left</span>
+    <span class="o">~</span><span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">bind</span><span class="o">.</span><span class="n">input_right</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">bind</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>This defines a basic SPA model. It is conceptually similar to what you were to write in legacy SPA, but the syntax has changed considerably and there are some other fine differences.</p>
+<p>The first difference is that instead of <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">spa.SPA()</span> <span class="pre">...</span></code>, we are using <code class="docutils literal notranslate"><span class="pre">with</span> <span class="pre">spa.Network()</span> <span class="pre">...</span></code>. There is no difference between the top-level <code class="docutils literal notranslate"><span class="pre">spa.SPA</span></code> and <code class="docutils literal notranslate"><span class="pre">spa.Module</span></code> anymore. Everything is just a <code class="docutils literal notranslate"><span class="pre">spa.Network</span></code>.</p>
+<p>The next two lines are almost the same as for the legacy SPA. You define the modules with the vocabulary dimension as before. There is, however, no need anymore to assign them as attributes to <code class="docutils literal notranslate"><span class="pre">model</span></code>. But you are free to do so, if you prefer.</p>
+<p>The next lines are what previously was implemented with <code class="docutils literal notranslate"><span class="pre">nengo.spa.Cortical</span></code>. Now these rules can be written down directly in Python code without a special object. Each <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> means, take the left side and route it to the input an the right side. (Previously this was done with the assignment operator <code class="docutils literal notranslate"><span class="pre">=</span></code> and the other way around.) When accessing specific inputs of a module, standard dot notation is used (instead of an underscore). Also note that the names of some of the inputs have changed.
+They follow a consistent naming scheme now: always starting with <code class="docutils literal notranslate"><span class="pre">input_</span></code> and you use the same name in action rules as in manually created Nengo connections. Because everything is stated in pure Python code now, you have to be explicit about when you are using a symbolic reference to a semantic pointer. That is done with the <code class="docutils literal notranslate"><span class="pre">spa.sym.</span></code> prefix. The vocabulary from which the specified semantic pointer is taken will be inferred from the context.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Let us plot the result. Note that we can access the <em>d</em>-dimensional default vocabulary with <code class="docutils literal notranslate"><span class="pre">model.vocabs[d]</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a0abd6d0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_9_1.png" src="../_images/examples_intro-coming-from-legacy-spa_9_1.png" />
+</div>
+</div>
+<p>There is another detail you might notice here: the <code class="docutils literal notranslate"><span class="pre">keys</span></code> attribute on the vocabularies is now a function. This is to have <code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code> adhere to the usual Python API of dictionaries and mapping types.</p>
+</div>
+<div class="section" id="Transcode">
+<h2>Transcode<a class="headerlink" href="#Transcode" title="Permalink to this headline">¶</a></h2>
+<p>In the previous example, input was provided directly in the action rules. But this does not allow for time-varying inputs. The legacy SPA <code class="docutils literal notranslate"><span class="pre">Input</span></code> has been replaced with <code class="docutils literal notranslate"><span class="pre">spa.Transcode</span></code> which has an API more similar to classic <code class="docutils literal notranslate"><span class="pre">nengo.Nodes</span></code>. It takes either a constant value or a function which may return any of the following:</p>
+<ul class="simple">
+<li><p>A string that is parsed as a semantic pointer.</p></li>
+<li><p>A symbolic Semantic Pointer expression.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">SemanticPointer</span></code> instance.</p></li>
+<li><p>A NumPy array.</p></li>
+</ul>
+<p>The next examples demonstrates this. It also manually specifies a vocabulary, but ignore this for now as the changes to <code class="docutils literal notranslate"><span class="pre">Vocabulay</span></code> will be discussed later.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">stimulus_fn</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">0.5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;A * B&quot;</span>  <span class="c1"># Return string to be parsed</span>
+    <span class="k">elif</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">1.0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;C * B&quot;</span><span class="p">)</span>  <span class="c1"># Return SemanticPointer instance</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>  <span class="c1"># Return a numpy array</span>
+
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+    <span class="n">bind</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Bind</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+    <span class="n">spa_input</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Transcode</span><span class="p">(</span><span class="n">stimulus_fn</span><span class="p">,</span> <span class="n">output_vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">)</span>
+
+    <span class="n">spa_input</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="n">state</span> <span class="o">&gt;&gt;</span> <span class="n">bind</span><span class="o">.</span><span class="n">input_left</span>
+    <span class="o">~</span><span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">bind</span><span class="o">.</span><span class="n">input_right</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">bind</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">vocab</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">vocab</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a3153f10&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_14_1.png" src="../_images/examples_intro-coming-from-legacy-spa_14_1.png" />
+</div>
+</div>
+<p>In addition to providing output, you can now use the <code class="docutils literal notranslate"><span class="pre">spa.Transcode</span></code> module to provide an input from the network. Its output function gets three inputs: the current simulation time, a <code class="docutils literal notranslate"><span class="pre">SemanticPointer</span></code> instance of the input, and the input vocabulary. To create a <code class="docutils literal notranslate"><span class="pre">Transcode</span></code> instance, the dimensionality (or vocabulary) has to be passed in twice. The first specifies the input vocabulary (the one passed to the output function), the second one specifies the output vocabulary that will be used
+to pares the function’s output.</p>
+<p>In the following example we compute the circular convolution with <code class="docutils literal notranslate"><span class="pre">~B</span></code> in math instead of a neural network.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">cconv</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">p</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;~B&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="n">p</span>
+
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">bind</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Transcode</span><span class="p">(</span><span class="n">cconv</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="n">spa_input</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Transcode</span><span class="p">(</span><span class="s2">&quot;A * B&quot;</span><span class="p">,</span> <span class="n">output_vocab</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">spa_input</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="n">state</span> <span class="o">&gt;&gt;</span> <span class="n">bind</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">bind</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.03</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;best&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a08fc940&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_18_1.png" src="../_images/examples_intro-coming-from-legacy-spa_18_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Action-rules">
+<h2>Action rules<a class="headerlink" href="#Action-rules" title="Permalink to this headline">¶</a></h2>
+<p>We have already seen how to create cortical action rules with nengo_spa. The next example shows how to add action rules implemented through the basal ganglia-thalamus loop. It is the classical routing through a sequence example.</p>
+<p>The action rules have to be defined in the context of a <code class="docutils literal notranslate"><span class="pre">spa.ActionSelection</span></code> object (you are allowed to have multiple independent <code class="docutils literal notranslate"><span class="pre">ActionSelection</span></code> objects). Each rule is defined with the <code class="docutils literal notranslate"><span class="pre">spa.ifmax</span></code> function. The first argument is an expression that provides the utility value, and all remaining arguments are routings to do when that rules utility value is the largest.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">spa_input</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Transcode</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">output_vocab</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">spa_input</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">ActionSelection</span><span class="p">():</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">D</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">D</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">E</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">E</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Similarity&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_23_1.png" src="../_images/examples_intro-coming-from-legacy-spa_23_1.png" />
+</div>
+</div>
+<p>There is no need to manually create the basal ganglia and thalamus anymore. This happens automatically. You can access these objects as the <code class="docutils literal notranslate"><span class="pre">bg</span></code> and <code class="docutils literal notranslate"><span class="pre">thalamus</span></code> attributes of the <code class="docutils literal notranslate"><span class="pre">ActionSelection</span></code> object. This example also demonstrates how to name actions by using a optional first (!) argument to <code class="docutils literal notranslate"><span class="pre">ifmax</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">start2</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">spa_input</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Transcode</span><span class="p">(</span><span class="n">start2</span><span class="p">,</span> <span class="n">output_vocab</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">spa_input</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">ActionSelection</span><span class="p">()</span> <span class="k">as</span> <span class="n">action_sel</span><span class="p">:</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="s2">&quot;state == A&quot;</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="s2">&quot;state == B&quot;</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="s2">&quot;state == C&quot;</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">D</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="s2">&quot;state == D&quot;</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">D</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">E</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="s2">&quot;state == E&quot;</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">E</span><span class="p">),</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+
+    <span class="n">p_thalamus</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">action_sel</span><span class="o">.</span><span class="n">thalamus</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+    <span class="n">p_utility</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">action_sel</span><span class="o">.</span><span class="n">bg</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p_thalamus</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">action_sel</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;x-small&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Thalamus output&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p_utility</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">action_sel</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">fontsize</span><span class="o">=</span><span class="s2">&quot;x-small&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Utility&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Text(0, 0.5, &#39;Utility&#39;)
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_27_1.png" src="../_images/examples_intro-coming-from-legacy-spa_27_1.png" />
+</div>
+</div>
+<p>Opposed to the legacy SPA, nengo_spa allows arbitrarily complex actions rules. In the following example we define dot products between two states and dynamic circular convolutions. All required networks will be created automatically.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state_ab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">state_a</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">state_b</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">state_ab</span>
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state_a</span>
+    <span class="n">state_ab</span> <span class="o">*</span> <span class="o">~</span><span class="n">state_a</span> <span class="o">&gt;&gt;</span> <span class="n">state_b</span>
+
+    <span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">ActionSelection</span><span class="p">():</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state_ab</span><span class="p">,</span> <span class="n">state_a</span> <span class="o">*</span> <span class="n">state_b</span><span class="p">),</span> <span class="n">state_ab</span> <span class="o">*</span> <span class="o">~</span><span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">out</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span> <span class="o">&gt;&gt;</span> <span class="n">out</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a019c610&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_31_1.png" src="../_images/examples_intro-coming-from-legacy-spa_31_1.png" />
+</div>
+</div>
+<p>Note that there is no automatic sharing of networks in the action rules. If, for example, you define the same circular convolution in there, two such networks will be created. But you can define a single circular convolution, assign it to a variable, and reuse that variable to reuse the circular convolution network like so:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cconv</span> <span class="o">=</span> <span class="n">state1</span> <span class="o">*</span> <span class="n">state2</span>
+<span class="n">cconv</span> <span class="o">*</span> <span class="o">~</span><span class="n">POINTER1</span> <span class="o">&gt;&gt;</span> <span class="n">state3</span>
+<span class="n">cconv</span> <span class="o">*</span> <span class="o">~</span><span class="n">POINTER2</span> <span class="o">&gt;&gt;</span> <span class="n">state4</span>
+</pre></div>
+</div>
+<p>If you have nengo_gui installed, it can be used to take a look at all the things that get created.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">nengo_gui.ipython</span> <span class="kn">import</span> <span class="n">IPythonViz</span>
+
+    <span class="n">vis</span> <span class="o">=</span> <span class="n">IPythonViz</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+<span class="k">except</span> <span class="p">(</span><span class="ne">ImportError</span><span class="p">,</span> <span class="ne">AttributeError</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GUI not installed or code not executed in Jupyter notebook.&quot;</span><span class="p">)</span>
+    <span class="n">vis</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">vis</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+GUI not installed or code not executed in Jupyter notebook.
+</pre></div></div>
+</div>
+</div>
+<div class="section" id="Vocabularies">
+<h2>Vocabularies<a class="headerlink" href="#Vocabularies" title="Permalink to this headline">¶</a></h2>
+<p>Nengo_spa behaves a lot like legacy SPA when providing dimensionalities only. Vocabularies will implicitly be created according to the specified dimensions and Semantic Pointers will be automatically added. When creating a vocabulary explicitly, things are a little bit different. In that case the vocabulary will be in strict-mode by default. That means an exception will be raised when trying to parse a Semantic Pointer that is not in the vocabulary. This is to prevent accidentally adding new
+Semantic Pointers (something that tended to happen with the associative memory in legacy SPA) and can make it easier to notice typing errors.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">SpaParseError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Error parsing expression &#39;A&#39; with 32-dimensional vocab  at 0x7fd9a0381b20: name &#39;A&#39; is not defined
+</pre></div></div>
+</div>
+<p>All Semantic Pointers have to be added to the vocabulary with either <code class="docutils literal notranslate"><span class="pre">add</span></code> or the new <code class="docutils literal notranslate"><span class="pre">populate</span></code> method before they are recognized by <code class="docutils literal notranslate"><span class="pre">parse</span></code>. You can add multiple pointers add once by separating them with a semicolon in <code class="docutils literal notranslate"><span class="pre">populate</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">vocab</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">,</span> <span class="n">vocab</span><span class="o">.</span><span class="n">create_pointer</span><span class="p">())</span>
+<span class="n">vocab</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;B; C&quot;</span><span class="p">)</span>
+<span class="n">vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;A + B + C&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+SemanticPointer(array([ 3.05703289e-02,  5.17268764e-01, -3.05163733e-02, -1.65742905e-01,
+        4.07998650e-04, -4.66466802e-01,  1.85889223e-01, -9.84536190e-02,
+        2.05388329e-01,  6.66899980e-01, -1.31254620e-01, -3.40330950e-02,
+        2.41410023e-01, -5.17499157e-01, -2.38508011e-01,  2.88028693e-01,
+        2.79172931e-02,  4.23138182e-01, -1.77870802e-01, -5.20428358e-01,
+       -3.18948002e-01,  2.50932866e-01,  2.45376879e-01,  2.72511956e-01,
+        3.70793384e-01, -4.11998873e-01,  5.07650926e-01,  3.00410895e-01,
+       -3.06841313e-01,  3.36849637e-01, -6.91286211e-02, -2.82017544e-01]), vocab=&lt;nengo_spa.vocabulary.Vocabulary object at 0x7fd9a039c5b0&gt;, algebra=&lt;nengo_spa.algebras.hrr_algebra.HrrAlgebra object at 0x7fd9a31e7af0&gt;, name=&#39;A + B + C&#39;
+</pre></div></div>
+</div>
+<p>If you prefer to automatically add unknown vectors, you can disable strict mode. This can be especially useful when experimenting with initial ideas in the GUI.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">&quot;A&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+SemanticPointer(array([-0.02289058, -0.13421333,  0.04758596, -0.13906621,  0.10455379,
+        0.16095464, -0.11882202,  0.20077817, -0.04005542,  0.19448251,
+        0.07376143,  0.18893406, -0.16783948, -0.01797782,  0.2443353 ,
+       -0.10404104, -0.34294483, -0.32701773, -0.42193715, -0.35590082,
+       -0.06929582,  0.21522891, -0.07444539,  0.05446297, -0.0185161 ,
+        0.00143914, -0.02831479, -0.02932172,  0.0776329 , -0.1979663 ,
+        0.17004599,  0.15487689]), vocab=&lt;nengo_spa.vocabulary.Vocabulary object at 0x7fd9a0381370&gt;, algebra=&lt;nengo_spa.algebras.hrr_algebra.HrrAlgebra object at 0x7fd9a31e7af0&gt;, name=&#39;A&#39;
+</pre></div></div>
+</div>
+<p>The new <code class="docutils literal notranslate"><span class="pre">populate</span></code> method is much more powerful than adding pointers with <code class="docutils literal notranslate"><span class="pre">parse</span></code>. For example you can use existing Semantic pointers to construct new ones and you can use transforms as <code class="docutils literal notranslate"><span class="pre">normalized()</span></code> and <code class="docutils literal notranslate"><span class="pre">unitary()</span></code> to make vectors unit length or normalized. Note that a simple Semantic Pointer will be normalized, but you need to explicitly do this when constructing a pointer out of others.</p>
+<p>In the following example we create a vocabulary with four pointers <em>A</em>, <em>B</em>, <em>C</em>, and <em>D</em>. <em>A</em> is made unitary, D is constructed from other vectors and normalized.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">vocab</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A.unitary(); B; C; D = (A * B + C).normalized()&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Another new and sometimes useful method is <code class="docutils literal notranslate"><span class="pre">parse_n</span></code> which allows to parse multiple Semantic Pointer expressions at once. This can be useful for programmatically constructing a list of pointers for plotting. The following example demonstrates that for all convolution pairs. It also shows that when using a predefined vocabulary, the modules will obtain their dimensionality from that vocabulary. No need to pass dimensionality and vocabulary anymore!</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">vocab</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">vocab</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A; B; C&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">*</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plot_keys</span> <span class="o">=</span> <span class="n">pairs</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+<span class="n">plot_vectors</span> <span class="o">=</span> <span class="n">vocab</span><span class="o">.</span><span class="n">parse_n</span><span class="p">(</span><span class="o">*</span><span class="n">plot_keys</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">plot_vectors</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">plot_keys</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a023f940&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_45_1.png" src="../_images/examples_intro-coming-from-legacy-spa_45_1.png" />
+</div>
+</div>
+<p>Another feature of nengo_spa is “type-safety” in the sense that you cannot just connect things with different vocabularies in action rules.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">v1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">v1</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A; B&quot;</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">v2</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;B; C&quot;</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">state1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+        <span class="n">state2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+        <span class="n">state2</span> <span class="o">&gt;&gt;</span> <span class="n">state1</span>
+<span class="k">except</span> <span class="n">SpaTypeError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Different vocabularies: TVocabulary&lt;32-dimensional vocab  at 0x7fd9a02bc910&gt;, TVocabulary&lt;32-dimensional vocab  at 0x7fd9a031c1c0&gt;
+</pre></div></div>
+</div>
+<p>If we want to do this, we have to be explicit about how the conversion between the vocabularies is supposed to be happen. The first option (if both vocabularies have the same dimensionality) is to just reinterpret the Semantic Pointer in the other vocabulary. Because the vectors in both vocabularies are independent (by default) the <em>A</em> from <code class="docutils literal notranslate"><span class="pre">v2</span></code> will be different from <em>A</em> in <code class="docutils literal notranslate"><span class="pre">v1</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">v1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">v1</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A; B&quot;</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">v2</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A; B&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+    <span class="n">state2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+
+    <span class="n">spa</span><span class="o">.</span><span class="n">reinterpret</span><span class="p">(</span><span class="n">state2</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">state1</span>
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state2</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">state1</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">v1</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">v2</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;v1[&#39;A&#39;]&quot;</span><span class="p">,</span> <span class="s2">&quot;v2[&#39;A&#39;]&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a0b3a190&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_51_1.png" src="../_images/examples_intro-coming-from-legacy-spa_51_1.png" />
+</div>
+</div>
+<p>We see that the value in <code class="docutils literal notranslate"><span class="pre">state2</span></code> is still similar to <code class="docutils literal notranslate"><span class="pre">v2</span></code>’s <em>A</em> even though <code class="docutils literal notranslate"><span class="pre">state2</span></code> uses <code class="docutils literal notranslate"><span class="pre">v1</span></code> as vocabulary.</p>
+<p>The second choice to convert between vocabularies is <code class="docutils literal notranslate"><span class="pre">translate</span></code> which will construct a transformation matrix to convert from one vocabulary to the other based on the Semantic Pointer names. This also works with vocabularies that do not match in dimensionality, but the target vocabulary should contain all keys of the source vocabulary. If this is not the case, you will get either a warning or an exception depending on whether you are using strict-mode vocabularies. You can also use the
+<code class="docutils literal notranslate"><span class="pre">populate=True</span></code> argument to <code class="docutils literal notranslate"><span class="pre">translate</span></code> to have all missing keys added to the target vocabulary.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">v1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">v1</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A; B&quot;</span><span class="p">)</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Vocabulary</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">pointer_gen</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+<span class="n">v2</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s2">&quot;A; B&quot;</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">state1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">v1</span><span class="p">)</span>
+    <span class="n">state2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span>
+
+    <span class="n">spa</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">state2</span><span class="p">,</span> <span class="n">v1</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="n">state1</span>
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state2</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">state1</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">v1</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">v2</span><span class="p">[</span><span class="s2">&quot;A&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;v1[&#39;A&#39;]&quot;</span><span class="p">,</span> <span class="s2">&quot;v2[&#39;A&#39;]&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a02d1640&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_55_1.png" src="../_images/examples_intro-coming-from-legacy-spa_55_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="nengo_spa-and-the-config-system">
+<h2>nengo_spa and the config system<a class="headerlink" href="#nengo_spa-and-the-config-system" title="Permalink to this headline">¶</a></h2>
+<p>One of the major improvements in nengo_spa is the extensive use of Nengo’s config system. For example it allows to set the vocab for all states globally.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[36]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">()</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">]</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">d</span>
+
+    <span class="n">state1</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">()</span>
+    <span class="n">state2</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">()</span>
+
+    <span class="n">state1</span> <span class="o">&gt;&gt;</span> <span class="n">state2</span>
+    <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state1</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">state2</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[37]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[38]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a041c220&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_59_1.png" src="../_images/examples_intro-coming-from-legacy-spa_59_1.png" />
+</div>
+</div>
+<p>The config system can also be used to set neuron numbers, subdimensions, and various other parameters, in particular of objects created when building action rules.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[39]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">def</span> <span class="nf">start3</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="mf">0.1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;A&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;0&quot;</span>
+
+
+<span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">Network</span><span class="p">(</span><span class="n">seed</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">]</span><span class="o">.</span><span class="n">neurons_per_dimension</span> <span class="o">=</span> <span class="mi">10</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">]</span><span class="o">.</span><span class="n">subdimensions</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">spa</span><span class="o">.</span><span class="n">Thalamus</span><span class="p">]</span><span class="o">.</span><span class="n">synapse_channel</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Lowpass</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+
+    <span class="n">state</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">State</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+    <span class="n">spa_input</span> <span class="o">=</span> <span class="n">spa</span><span class="o">.</span><span class="n">Transcode</span><span class="p">(</span><span class="n">start3</span><span class="p">,</span> <span class="n">output_vocab</span><span class="o">=</span><span class="n">d</span><span class="p">)</span>
+
+    <span class="n">spa_input</span> <span class="o">&gt;&gt;</span> <span class="n">state</span>
+    <span class="k">with</span> <span class="n">spa</span><span class="o">.</span><span class="n">ActionSelection</span><span class="p">():</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">B</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+        <span class="n">spa</span><span class="o">.</span><span class="n">ifmax</span><span class="p">(</span><span class="n">spa</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">state</span><span class="p">,</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">C</span><span class="p">),</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">spa</span><span class="o">.</span><span class="n">sym</span><span class="o">.</span><span class="n">A</span> <span class="o">&gt;&gt;</span> <span class="n">state</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Probe</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">synapse</span><span class="o">=</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[40]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="k">with</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Simulator</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="k">as</span> <span class="n">sim</span><span class="p">:</span>
+    <span class="n">sim</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+<span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">trange</span><span class="p">(),</span> <span class="n">spa</span><span class="o">.</span><span class="n">similarity</span><span class="p">(</span><span class="n">sim</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time [s]&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Similarity&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">vocabs</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[41]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;matplotlib.legend.Legend at 0x7fd9a03311f0&gt;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_intro-coming-from-legacy-spa_63_1.png" src="../_images/examples_intro-coming-from-legacy-spa_63_1.png" />
+</div>
+</div>
+</div>
+<div class="section" id="Semantic-Pointers">
+<h2>Semantic Pointers<a class="headerlink" href="#Semantic-Pointers" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">SemanticPointer</span></code> class has become immutable in nengo_spa to avoid accidental modifiction of Semantic Pointers. Whenever an operation is applied to a <code class="docutils literal notranslate"><span class="pre">SemanticPointer</span></code> (for example <code class="docutils literal notranslate"><span class="pre">SemanticPointer(d)</span> <span class="pre">+</span> <span class="pre">SemanticPointer(d)</span></code> or <code class="docutils literal notranslate"><span class="pre">SemanticPointer(d).normalized()</span></code> a new instance will be created.</p>
+<p>To facilitate mathematical analysis of encoding schemes some special vectors are predefined:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">nengo_spa.pointer.Identity(d)</span></code> gives the identity vector for circular convolution.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nengo_spa.pointer.Zero(d)</span></code> gives the vector of all zeros (absorbing element for circular convolution).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">nengo_spa.pointer.AbsorbingElement(d)</span></code> gives a vector that destroys all information under circluar convolution except for a DC offset.</p></li>
+</ul>
+</div>
+<div class="section" id="Representing-identity">
+<h2>Representing identity<a class="headerlink" href="#Representing-identity" title="Permalink to this headline">¶</a></h2>
+<p>In nengo_spa <code class="docutils literal notranslate"><span class="pre">spa.State()</span></code> is optimized to allow the representation of the identity vector. This is not always necessary as in many models the identity never needs to represented. With <code class="docutils literal notranslate"><span class="pre">represent_identity=False</span></code> this optimization can be disabled. This can make the representation for non-identity vectors slightly better. It also simplifies the internal structure of <code class="docutils literal notranslate"><span class="pre">spa.State()</span></code> which can be helpful for applying learning rules.</p>
+</div>
+<div class="section" id="New-associative-memory-classes">
+<h2>New associative memory classes<a class="headerlink" href="#New-associative-memory-classes" title="Permalink to this headline">¶</a></h2>
+<p>To reduce the number of arguments of the associative memory class it has been split into two classes. <code class="docutils literal notranslate"><span class="pre">spa.ThresholdingAssocMem</span></code> is the applying a simple threshold, <code class="docutils literal notranslate"><span class="pre">spa.WTAAssocMem</span></code> performs a winner-take-all clean-up with lateral inhibitory connections. There is also a new type of associative memory <code class="docutils literal notranslate"><span class="pre">spa.IAAssocMem</span></code> based on independent accumulators, that also exhibits winner-take-all behaviour, but with different dynamics. For more information see the paper “<a class="reference external" href="http://compneuro.uwaterloo.ca/publications/gosmann2017a.html">A Spiking Independent
+Accumulator Model for Winner-Take-All Computation</a>”.</p>
+<p>To implement auto-associative memories, the <code class="docutils literal notranslate"><span class="pre">input_keys</span></code> and <code class="docutils literal notranslate"><span class="pre">output_keys</span></code> arguments have been replaced by a single <code class="docutils literal notranslate"><span class="pre">mapping</span></code> arguments.</p>
+</div>
+</div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

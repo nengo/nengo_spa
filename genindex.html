@@ -1,0 +1,1364 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Index &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+  
+<script src="_static/underscore.js"></script>
+  
+  
+<script src="_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul>
+<li class="toctree-l1"><a class="reference internal" href="getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="v1.2.0/genindex.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="v1.1.1/genindex.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="v1.1.0/genindex.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="v1.2.0/genindex.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#H"><strong>H</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#W"><strong>W</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.__invert__">__invert__() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.__pow__">__pow__() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.abs">abs() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.abs">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.abs">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.absorbing_element">absorbing_element() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.absorbing_element">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.absorbing_element">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.absorbing_element">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.AbsorbingElement">AbsorbingElement (class in nengo_spa.semantic_pointer)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra">AbstractAlgebra (class in nengo_spa.algebras.base)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign">AbstractSign (class in nengo_spa.algebras.base)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.IA.accumulators">accumulators (nengo_spa.networks.selection.IA attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.actions">actions (nengo_spa.modules.Thalamus attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.ActionSelection">ActionSelection (class in nengo_spa)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.html#nengo_spa.ActionSelection.active">active (nengo_spa.ActionSelection attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.add">add() (nengo_spa.vocabulary.Vocabulary method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyMap.add">(nengo_spa.vocabulary.VocabularyMap method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.AssociativeMemory.add_default_output">add_default_output() (nengo_spa.modules.AssociativeMemory method)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray.add_neuron_input">add_neuron_input() (nengo_spa.networks.IdentityEnsembleArray method)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray.add_neuron_output">add_neuron_output() (nengo_spa.networks.IdentityEnsembleArray method)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray.add_output">add_output() (nengo_spa.networks.IdentityEnsembleArray method)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.algebra">algebra (nengo_spa.semantic_pointer.SemanticPointer attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.algebra">(nengo_spa.semantic_pointer.SemanticPointerSign attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.algebra">(nengo_spa.vocabulary.Vocabulary attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.testing.html#nengo_spa.testing.assert_sp_close">assert_sp_close() (in module nengo_spa.testing)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.AssociativeMemory">AssociativeMemory (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.AxisAlignedVectors">AxisAlignedVectors() (in module nengo_spa.vector_generation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia">BasalGanglia (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.ActionSelection.bg">bg (nengo_spa.ActionSelection attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.bias">bias (nengo_spa.modules.Thalamus attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.bias_input">bias_input (nengo_spa.modules.BasalGanglia attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Bind">Bind (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.bind">bind() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.bind">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.bind">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.bind">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.bind">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.binding_power">binding_power() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.binding_power">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.binding_power">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.binding_power">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.ActionSelection.built">built (nengo_spa.ActionSelection attribute)</a>
+</li>
+      <li>
+    built-in function
+
+      <ul>
+        <li><a href="modules/nengo_spa.html#nengo_spa.ifmax">nengo_spa.ifmax()</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.MatrixMult.C">C (nengo_spa.networks.MatrixMult attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.CircularConvolution">CircularConvolution (class in nengo_spa.networks)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.CommonProperties">CommonProperties (class in nengo_spa.algebras.base)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Compare">Compare (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.compare">compare() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network.config">config() (nengo_spa.Network property)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.connect">connect() (nengo_spa.modules.Thalamus method)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.connect_bg">connect_bg() (nengo_spa.modules.Thalamus method)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.connect_fixed">connect_fixed() (nengo_spa.modules.Thalamus method)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.connect_gate">connect_gate() (nengo_spa.modules.Thalamus method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.construct_channel">construct_channel() (nengo_spa.modules.Thalamus method)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.construct_gate">construct_gate() (nengo_spa.modules.Thalamus method)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.copy">copy() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.create_inhibit_node">create_inhibit_node() (in module nengo_spa)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.create_pointer">create_pointer() (nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.create_subset">create_subset() (nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.create_vector">create_vector() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.create_vector">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.create_vector">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.create_vector">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.dc_sign">dc_sign (nengo_spa.algebras.hrr_algebra.HrrSign attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network.declare_input">declare_input() (nengo_spa.Network method)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network.declare_output">declare_output() (nengo_spa.Network method)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.dimensions">dimensions (nengo_spa.semantic_pointer.SemanticPointerSign attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyMap.discard">discard() (nengo_spa.vocabulary.VocabularyMap method)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.distance">distance() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.operators.html#nengo_spa.operators.dot">dot() (in module nengo_spa.operators)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.dot">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+        <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.dot">(nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.ElementSidedness">ElementSidedness (class in nengo_spa.algebras.base)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.EquallySpacedPositiveUnitaryHrrVectors">EquallySpacedPositiveUnitaryHrrVectors (class in nengo_spa.vector_generation)</a>
+</li>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.ExpectedUnitLengthVectors">ExpectedUnitLengthVectors (class in nengo_spa.vector_generation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign">GenericSign (class in nengo_spa.algebras.base)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.get_binding_matrix">get_binding_matrix() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.get_binding_matrix">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.get_binding_matrix">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.get_binding_matrix">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.get_binding_matrix">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network.get_input_vocab">get_input_vocab() (nengo_spa.Network class method)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.get_inversion_matrix">get_inversion_matrix() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.get_inversion_matrix">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.get_inversion_matrix">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.get_inversion_matrix">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyMap.get_or_create">get_or_create() (nengo_spa.vocabulary.VocabularyMap method)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network.get_output_vocab">get_output_vocab() (nengo_spa.Network class method)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.get_swapping_matrix">get_swapping_matrix() (nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.gpe">gpe (nengo_spa.modules.BasalGanglia attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.gpi">gpi (nengo_spa.modules.BasalGanglia attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="H">H</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra">HrrAlgebra (class in nengo_spa.algebras.hrr_algebra)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrProperties">HrrProperties (class in nengo_spa.algebras.hrr_algebra)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign">HrrSign (class in nengo_spa.algebras.hrr_algebra)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.IA">IA (class in nengo_spa.networks.selection)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.IAAssocMem">IAAssocMem (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.Identity">Identity (class in nengo_spa.semantic_pointer)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.identity_element">identity_element() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.identity_element">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.identity_element">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.identity_element">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray">IdentityEnsembleArray (class in nengo_spa.networks)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.implement_binding">implement_binding() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.implement_binding">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.implement_binding">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.implement_binding">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.implement_superposition">implement_superposition() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.implement_superposition">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.implement_superposition">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.implement_superposition">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.input">input (nengo_spa.modules.BasalGanglia attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Scalar.input">(nengo_spa.modules.Scalar attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.State.input">(nengo_spa.modules.State attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.input">(nengo_spa.modules.Thalamus attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Transcode.input">(nengo_spa.modules.Transcode attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray.input">(nengo_spa.networks.IdentityEnsembleArray attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.IA.input">(nengo_spa.networks.selection.IA attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding.input">(nengo_spa.networks.selection.Thresholding attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.WTA.input">(nengo_spa.networks.selection.WTA attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Compare.input_a">input_a (nengo_spa.modules.Compare attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Product.input_a">(nengo_spa.modules.Product attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.CircularConvolution.input_a">(nengo_spa.networks.CircularConvolution attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Compare.input_b">input_b (nengo_spa.modules.Compare attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Product.input_b">(nengo_spa.modules.Product attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.CircularConvolution.input_b">(nengo_spa.networks.CircularConvolution attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Bind.input_left">input_left (nengo_spa.modules.Bind attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.MatrixMult.input_left">(nengo_spa.networks.MatrixMult attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB.input_left">(nengo_spa.networks.TVTB attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB.input_left">(nengo_spa.networks.VTB attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.IA.input_reset">input_reset (nengo_spa.networks.selection.IA attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Bind.input_right">input_right (nengo_spa.modules.Bind attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.MatrixMult.input_right">(nengo_spa.networks.MatrixMult attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB.input_right">(nengo_spa.networks.TVTB attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB.input_right">(nengo_spa.networks.VTB attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Superposition.inputs">inputs (nengo_spa.modules.Superposition attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.invert">invert() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.invert">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.invert">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.invert">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_indefinite">is_indefinite() (nengo_spa.algebras.base.AbstractSign method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_indefinite">(nengo_spa.algebras.base.GenericSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.is_indefinite">(nengo_spa.algebras.hrr_algebra.HrrSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.is_indefinite">(nengo_spa.semantic_pointer.SemanticPointerSign method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_negative">is_negative() (nengo_spa.algebras.base.AbstractSign method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_negative">(nengo_spa.algebras.base.GenericSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.is_negative">(nengo_spa.algebras.hrr_algebra.HrrSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.is_negative">(nengo_spa.semantic_pointer.SemanticPointerSign method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_positive">is_positive() (nengo_spa.algebras.base.AbstractSign method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_positive">(nengo_spa.algebras.base.GenericSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.is_positive">(nengo_spa.algebras.hrr_algebra.HrrSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.is_positive">(nengo_spa.semantic_pointer.SemanticPointerSign method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.is_valid_dimensionality">is_valid_dimensionality() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.is_valid_dimensionality">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.is_valid_dimensionality">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.is_valid_dimensionality">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.is_zero">is_zero() (nengo_spa.algebras.base.AbstractSign method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.GenericSign.is_zero">(nengo_spa.algebras.base.GenericSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.is_zero">(nengo_spa.semantic_pointer.SemanticPointerSign method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.keys">keys (nengo_spa.vocabulary.Vocabulary attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.ElementSidedness.LEFT">LEFT (nengo_spa.algebras.base.ElementSidedness attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.length">length() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.linv">linv() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.make_unitary">make_unitary() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.make_unitary">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.make_unitary">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.make_unitary">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB.mat">mat (nengo_spa.networks.TVTB attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB.mat">(nengo_spa.networks.VTB attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB.matmuls">matmuls (nengo_spa.networks.TVTB attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB.matmuls">(nengo_spa.networks.VTB attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.MatrixMult">MatrixMult (class in nengo_spa.networks)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.max_similarity">max_similarity (nengo_spa.vocabulary.Vocabulary attribute)</a>
+</li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.base">nengo_spa.algebras.base</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.hrr_algebra">nengo_spa.algebras.hrr_algebra</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.tvtb_algebra">nengo_spa.algebras.tvtb_algebra</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.vtb_algebra">nengo_spa.algebras.vtb_algebra</a>
+</li>
+        <li><a href="modules/nengo_spa.examine.html#module-nengo_spa.examine">nengo_spa.examine</a>
+</li>
+        <li><a href="modules/nengo_spa.exceptions.html#module-nengo_spa.exceptions">nengo_spa.exceptions</a>
+</li>
+        <li><a href="modules/nengo_spa.math.html#module-nengo_spa.math">nengo_spa.math</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#module-nengo_spa.modules">nengo_spa.modules</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#module-nengo_spa.networks">nengo_spa.networks</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#module-nengo_spa.networks.selection">nengo_spa.networks.selection</a>
+</li>
+        <li><a href="modules/nengo_spa.operators.html#module-nengo_spa.operators">nengo_spa.operators</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#module-nengo_spa.semantic_pointer">nengo_spa.semantic_pointer</a>
+</li>
+        <li><a href="modules/nengo_spa.testing.html#module-nengo_spa.testing">nengo_spa.testing</a>
+</li>
+        <li><a href="modules/nengo_spa.vector_generation.html#module-nengo_spa.vector_generation">nengo_spa.vector_generation</a>
+</li>
+        <li><a href="modules/nengo_spa.version.html#module-nengo_spa.version">nengo_spa.version</a>
+</li>
+        <li><a href="modules/nengo_spa.vocabulary.html#module-nengo_spa.vocabulary">nengo_spa.vocabulary</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.mse">mse() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.name">name (nengo_spa.semantic_pointer.SemanticPointer attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.negative_identity_element">negative_identity_element() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.negative_identity_element">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.negative_identity_element">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.negative_identity_element">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.NegativeIdentity">NegativeIdentity (class in nengo_spa.semantic_pointer)</a>
+</li>
+      <li>
+    nengo_spa.algebras.base
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.base">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.algebras.hrr_algebra
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.hrr_algebra">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.algebras.tvtb_algebra
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.tvtb_algebra">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.algebras.vtb_algebra
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#module-nengo_spa.algebras.vtb_algebra">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.examine
+
+      <ul>
+        <li><a href="modules/nengo_spa.examine.html#module-nengo_spa.examine">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.exceptions
+
+      <ul>
+        <li><a href="modules/nengo_spa.exceptions.html#module-nengo_spa.exceptions">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.ifmax()
+
+      <ul>
+        <li><a href="modules/nengo_spa.html#nengo_spa.ifmax">built-in function</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.math
+
+      <ul>
+        <li><a href="modules/nengo_spa.math.html#module-nengo_spa.math">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.modules
+
+      <ul>
+        <li><a href="modules/nengo_spa.modules.html#module-nengo_spa.modules">module</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    nengo_spa.networks
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#module-nengo_spa.networks">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.networks.selection
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#module-nengo_spa.networks.selection">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.operators
+
+      <ul>
+        <li><a href="modules/nengo_spa.operators.html#module-nengo_spa.operators">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.semantic_pointer
+
+      <ul>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#module-nengo_spa.semantic_pointer">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.sym">nengo_spa.sym (built-in variable)</a>
+</li>
+      <li>
+    nengo_spa.testing
+
+      <ul>
+        <li><a href="modules/nengo_spa.testing.html#module-nengo_spa.testing">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.vector_generation
+
+      <ul>
+        <li><a href="modules/nengo_spa.vector_generation.html#module-nengo_spa.vector_generation">module</a>
+</li>
+      </ul></li>
+      <li>
+    nengo_spa.version
+
+      <ul>
+        <li><a href="modules/nengo_spa.version.html#module-nengo_spa.version">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.version.html#nengo_spa.version.nengo_spa.version.dev">nengo_spa.version.dev (in module nengo_spa.version)</a>
+</li>
+      <li><a href="modules/nengo_spa.version.html#nengo_spa.version.nengo_spa.version.name">nengo_spa.version.name (in module nengo_spa.version)</a>
+</li>
+      <li><a href="modules/nengo_spa.version.html#nengo_spa.version.nengo_spa.version.version">nengo_spa.version.version (in module nengo_spa.version)</a>
+</li>
+      <li><a href="modules/nengo_spa.version.html#nengo_spa.version.nengo_spa.version.version_info">nengo_spa.version.version_info (in module nengo_spa.version)</a>
+</li>
+      <li>
+    nengo_spa.vocabulary
+
+      <ul>
+        <li><a href="modules/nengo_spa.vocabulary.html#module-nengo_spa.vocabulary">module</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network">Network (class in nengo_spa)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.normalized">normalized() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.nyquist_sign">nyquist_sign (nengo_spa.algebras.hrr_algebra.HrrSign attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.OrthonormalVectors">OrthonormalVectors (class in nengo_spa.vector_generation)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.output">output (nengo_spa.modules.BasalGanglia attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Bind.output">(nengo_spa.modules.Bind attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Compare.output">(nengo_spa.modules.Compare attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Product.output">(nengo_spa.modules.Product attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Scalar.output">(nengo_spa.modules.Scalar attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.State.output">(nengo_spa.modules.State attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Superposition.output">(nengo_spa.modules.Superposition attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus.output">(nengo_spa.modules.Thalamus attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Transcode.output">(nengo_spa.modules.Transcode attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.CircularConvolution.output">(nengo_spa.networks.CircularConvolution attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.IdentityEnsembleArray.output">(nengo_spa.networks.IdentityEnsembleArray attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.MatrixMult.output">(nengo_spa.networks.MatrixMult attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.IA.output">(nengo_spa.networks.selection.IA attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding.output">(nengo_spa.networks.selection.Thresholding attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.WTA.output">(nengo_spa.networks.selection.WTA attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB.output">(nengo_spa.networks.TVTB attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB.output">(nengo_spa.networks.VTB attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.examine.html#nengo_spa.examine.pairs">pairs() (in module nengo_spa.examine)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.parse">parse() (nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.parse_n">parse_n() (nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.populate">populate() (nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.CommonProperties.POSITIVE">POSITIVE (nengo_spa.algebras.base.CommonProperties attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrProperties.POSITIVE">(nengo_spa.algebras.hrr_algebra.HrrProperties attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbProperties.POSITIVE">(nengo_spa.algebras.tvtb_algebra.TvtbProperties attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbProperties.POSITIVE">(nengo_spa.algebras.vtb_algebra.VtbProperties attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.math.html#nengo_spa.math.prob_cleanup">prob_cleanup() (in module nengo_spa.math)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Product">Product (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.CircularConvolution.product">product (nengo_spa.networks.CircularConvolution attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.rbind">rbind() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.operators.html#nengo_spa.operators.reinterpret">reinterpret() (in module nengo_spa.operators)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.reinterpret">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.ElementSidedness.RIGHT">RIGHT (nengo_spa.algebras.base.ElementSidedness attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.rinv">rinv() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Scalar">Scalar (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer">SemanticPointer (class in nengo_spa.semantic_pointer)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign">SemanticPointerSign (class in nengo_spa.semantic_pointer)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.sign">sign (nengo_spa.semantic_pointer.SemanticPointerSign attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.sign">sign() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.sign">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.sign">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.sign">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.sign">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.examine.html#nengo_spa.examine.similarity">similarity() (in module nengo_spa.examine)</a>
+</li>
+      <li><a href="modules/nengo_spa.exceptions.html#nengo_spa.exceptions.SpaActionSelectionError">SpaActionSelectionError</a>
+</li>
+      <li><a href="modules/nengo_spa.exceptions.html#nengo_spa.exceptions.SpaException">SpaException</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.exceptions.html#nengo_spa.exceptions.SpaParseError">SpaParseError</a>
+</li>
+      <li><a href="modules/nengo_spa.exceptions.html#nengo_spa.exceptions.SpaTypeError">SpaTypeError</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.State">State (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.stn">stn (nengo_spa.modules.BasalGanglia attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.strD1">strD1 (nengo_spa.modules.BasalGanglia attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.BasalGanglia.strD2">strD2 (nengo_spa.modules.BasalGanglia attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.strict">strict (nengo_spa.vocabulary.Vocabulary attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.superpose">superpose() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.superpose">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.superpose">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.superpose">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Superposition">Superposition (class in nengo_spa.modules)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.examine.html#nengo_spa.examine.text">text() (in module nengo_spa.examine)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Thalamus">Thalamus (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.html#nengo_spa.ActionSelection.thalamus">thalamus (nengo_spa.ActionSelection attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding.thresholded">thresholded (nengo_spa.networks.selection.Thresholding attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.WTA.thresholded">(nengo_spa.networks.selection.WTA attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.Thresholding">Thresholding (class in nengo_spa.networks.selection)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.IA.thresholding">thresholding (nengo_spa.networks.selection.IA attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.ThresholdingAssocMem">ThresholdingAssocMem (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.to_semantic_pointer">to_semantic_pointer() (nengo_spa.semantic_pointer.SemanticPointerSign method)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractSign.to_vector">to_vector() (nengo_spa.algebras.base.AbstractSign method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrSign.to_vector">(nengo_spa.algebras.hrr_algebra.HrrSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbSign.to_vector">(nengo_spa.algebras.tvtb_algebra.TvtbSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbSign.to_vector">(nengo_spa.algebras.vtb_algebra.VtbSign method)</a>
+</li>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.to_vector">(nengo_spa.semantic_pointer.SemanticPointerSign method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.Transcode">Transcode (class in nengo_spa.modules)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.transform_to">transform_to() (nengo_spa.vocabulary.Vocabulary method)</a>
+</li>
+      <li><a href="modules/nengo_spa.operators.html#nengo_spa.operators.translate">translate() (in module nengo_spa.operators)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.translate">(nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB">TVTB (class in nengo_spa.networks)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra">TvtbAlgebra (class in nengo_spa.algebras.tvtb_algebra)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbProperties">TvtbProperties (class in nengo_spa.algebras.tvtb_algebra)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbSign">TvtbSign (class in nengo_spa.algebras.tvtb_algebra)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.ElementSidedness.TWO_SIDED">TWO_SIDED (nengo_spa.algebras.base.ElementSidedness attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.CommonProperties.UNITARY">UNITARY (nengo_spa.algebras.base.CommonProperties attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrProperties.UNITARY">(nengo_spa.algebras.hrr_algebra.HrrProperties attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbProperties.UNITARY">(nengo_spa.algebras.tvtb_algebra.TvtbProperties attribute)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbProperties.UNITARY">(nengo_spa.algebras.vtb_algebra.VtbProperties attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.unitary">unitary() (nengo_spa.semantic_pointer.SemanticPointer method)</a>
+</li>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.UnitaryVectors">UnitaryVectors (class in nengo_spa.vector_generation)</a>
+</li>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.UnitLengthVectors">UnitLengthVectors (class in nengo_spa.vector_generation)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.v">v (nengo_spa.semantic_pointer.SemanticPointer attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.TVTB.vec">vec (nengo_spa.networks.TVTB attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB.vec">(nengo_spa.networks.VTB attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.EquallySpacedPositiveUnitaryHrrVectors.vectors">vectors (nengo_spa.vector_generation.EquallySpacedPositiveUnitaryHrrVectors attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary.vectors">(nengo_spa.vocabulary.Vocabulary attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="modules/nengo_spa.vector_generation.html#nengo_spa.vector_generation.VectorsWithProperties">VectorsWithProperties (class in nengo_spa.vector_generation)</a>
+</li>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer.vocab">vocab (nengo_spa.semantic_pointer.SemanticPointer attribute)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointerSign.vocab">(nengo_spa.semantic_pointer.SemanticPointerSign attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.html#nengo_spa.Network.vocabs">vocabs (nengo_spa.Network attribute)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.Vocabulary">Vocabulary (class in nengo_spa.vocabulary)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyMap">VocabularyMap (class in nengo_spa.vocabulary)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyMapParam">VocabularyMapParam (class in nengo_spa.vocabulary)</a>
+</li>
+      <li><a href="modules/nengo_spa.vocabulary.html#nengo_spa.vocabulary.VocabularyOrDimParam">VocabularyOrDimParam (class in nengo_spa.vocabulary)</a>
+</li>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.VTB">VTB (class in nengo_spa.networks)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra">VtbAlgebra (class in nengo_spa.algebras.vtb_algebra)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbProperties">VtbProperties (class in nengo_spa.algebras.vtb_algebra)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbSign">VtbSign (class in nengo_spa.algebras.vtb_algebra)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="W">W</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.networks.html#nengo_spa.networks.selection.WTA">WTA (class in nengo_spa.networks.selection)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.modules.html#nengo_spa.modules.WTAAssocMem">WTAAssocMem (class in nengo_spa.modules)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="modules/nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.Zero">Zero (class in nengo_spa.semantic_pointer)</a>
+</li>
+      <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra.zero_element">zero_element() (nengo_spa.algebras.base.AbstractAlgebra method)</a>
+
+      <ul>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra.zero_element">(nengo_spa.algebras.hrr_algebra.HrrAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.tvtb_algebra.TvtbAlgebra.zero_element">(nengo_spa.algebras.tvtb_algebra.TvtbAlgebra method)</a>
+</li>
+        <li><a href="modules/nengo_spa.algebras.html#nengo_spa.algebras.vtb_algebra.VtbAlgebra.zero_element">(nengo_spa.algebras.vtb_algebra.VtbAlgebra method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

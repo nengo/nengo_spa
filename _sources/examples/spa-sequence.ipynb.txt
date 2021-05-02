@@ -1,0 +1,179 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Routing through a sequence"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "This demo uses the basal ganglia model to cycle through a sequence of five\n",
+    "representations. The model incorporates a memory, which allows the basal ganglia to\n",
+    "update that memory based on a set of condition/action mappings. The mappings are defined\n",
+    "in the code such that A$\\rightarrow$B, B$\\rightarrow$C, etc. until E$\\rightarrow$A\n",
+    "completing a loop.\n",
+    "\n",
+    "When you run this demo, the sequence will be repeated indefinitely. It is interesting to\n",
+    "note the time between the ‘peaks’ of the selected items. It's about 40ms for this simple\n",
+    "action."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Setup for the notebook\n",
+    "%matplotlib inline\n",
+    "\n",
+    "import nengo\n",
+    "import matplotlib.pyplot as plt\n",
+    "\n",
+    "import nengo_spa as spa\n",
+    "\n",
+    "seed = 0"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 1: Create the model"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Notice that when you specify actions, you're determining which modules are connected to\n",
+    "which.  For example, by having a mapping that depends on the state of cortex, you are\n",
+    "determining that the cortex and basal ganglia must be connected.  As well, when you\n",
+    "specify that the result of the action changes the state of cortex, then you are\n",
+    "determining that thalamus must be connected to cortex."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def start(t):\n",
+    "    \"\"\"Set initial state for model\"\"\"\n",
+    "    if t < 0.05:\n",
+    "        return \"A\"\n",
+    "    else:\n",
+    "        return \"0\"\n",
+    "\n",
+    "\n",
+    "# Number of dimensions for the Semantic Pointers\n",
+    "dimensions = 16\n",
+    "\n",
+    "# Make a model object with the SPA network\n",
+    "model = spa.Network(label=\"Sequence_Network\", seed=seed)\n",
+    "\n",
+    "with model:\n",
+    "    # Specify the modules to be used\n",
+    "    stimulus = spa.Transcode(start, output_vocab=dimensions)\n",
+    "    cortex = spa.State(dimensions)\n",
+    "    stimulus >> cortex  # sets initial state for model\n",
+    "\n",
+    "    # Specify the action mapping\n",
+    "    with spa.ActionSelection() as action_sel:\n",
+    "        spa.ifmax(\"A to B\", spa.dot(cortex, spa.sym.A), spa.sym.B >> cortex)\n",
+    "        spa.ifmax(\"B to C\", spa.dot(cortex, spa.sym.B), spa.sym.C >> cortex)\n",
+    "        spa.ifmax(\"C to D\", spa.dot(cortex, spa.sym.C), spa.sym.D >> cortex)\n",
+    "        spa.ifmax(\"D to E\", spa.dot(cortex, spa.sym.D), spa.sym.E >> cortex)\n",
+    "        spa.ifmax(\"E to A\", spa.dot(cortex, spa.sym.E), spa.sym.A >> cortex)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 3: Probe the output"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with model:\n",
+    "    p_cortex = nengo.Probe(cortex.output, synapse=0.01)\n",
+    "    p_selected_actions = nengo.Probe(action_sel.thalamus.output, synapse=0.01)\n",
+    "    p_utility = nengo.Probe(action_sel.bg.input, synapse=0.01)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 4: Run the model"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "with nengo.Simulator(model) as sim:\n",
+    "    sim.run(0.5)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## Step 5: Plot the results"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Plot the results of the simulation. The first figure shows the semantic pointer\n",
+    "representation of the values stored in the \"cortex\" module. The second figure shows the\n",
+    "actions being executed, and the third figure shows the utility (similarity) of the\n",
+    "cortex representation to the conditions of each action."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "vocab = model.vocabs[dimensions]\n",
+    "\n",
+    "fig, (p1, p2, p3) = plt.subplots(3, 1, sharex=True, figsize=(12, 8))\n",
+    "\n",
+    "p1.plot(sim.trange(), spa.similarity(sim.data[p_cortex], vocab))\n",
+    "p1.legend(vocab.keys(), loc=\"right\", bbox_to_anchor=(1.09, 0.5))\n",
+    "p1.set_ylabel(\"State\")\n",
+    "\n",
+    "p2.plot(sim.trange(), sim.data[p_utility])\n",
+    "p2.legend(tuple(action_sel.keys()), loc=\"right\", bbox_to_anchor=(1.13, -0.1))\n",
+    "p2.set_ylabel(\"Selected Action\")\n",
+    "\n",
+    "p3.plot(sim.trange(), sim.data[p_selected_actions])\n",
+    "p3.set_ylabel(\"Utility\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python",
+   "pygments_lexer": "ipython3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

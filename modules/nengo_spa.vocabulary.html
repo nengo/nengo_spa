@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.vocabulary &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+  
+  
+<script src="../_static/underscore.js"></script>
+  
+  
+<script src="../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Developer Guide" href="../developer.html" />
+    <link rel="prev" title="nengo_spa.version" href="nengo_spa.version.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.html">nengo_spa</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.algebras.html">nengo_spa.algebras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.examine.html">nengo_spa.examine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.exceptions.html">nengo_spa.exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.math.html">nengo_spa.math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.modules.html">nengo_spa.modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.networks.html">nengo_spa.networks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.operators.html">nengo_spa.operators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.semantic_pointer.html">nengo_spa.semantic_pointer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.testing.html">nengo_spa.testing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.vector_generation.html">nengo_spa.vector_generation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nengo_spa.version.html">nengo_spa.version</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">nengo_spa.vocabulary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../v1.2.0/modules/nengo_spa.vocabulary.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../v1.1.1/modules/nengo_spa.vocabulary.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../v1.1.0/modules/nengo_spa.vocabulary.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../v1.2.0/modules/nengo_spa.vocabulary.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <div class="section" id="module-nengo_spa.vocabulary">
+<span id="nengo-spa-vocabulary"></span><h1>nengo_spa.vocabulary<a class="headerlink" href="#module-nengo_spa.vocabulary" title="Permalink to this headline">¶</a></h1>
+<p class="rubric">Classes</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vocabulary</span></code></a>(dimensions[, strict, …])</p></td>
+<td><p>A collection of semantic pointers, each with their own text label.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMap" title="nengo_spa.vocabulary.VocabularyMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyMap</span></code></a>([vocabs, rng])</p></td>
+<td><p>Maps dimensionalities to corresponding vocabularies.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMapParam" title="nengo_spa.vocabulary.VocabularyMapParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyMapParam</span></code></a>(name[, default, …])</p></td>
+<td><p>Nengo parameter that accepts <a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMap" title="nengo_spa.vocabulary.VocabularyMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyMap</span></code></a> instances.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#nengo_spa.vocabulary.VocabularyOrDimParam" title="nengo_spa.vocabulary.VocabularyOrDimParam"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyOrDimParam</span></code></a>(name[, default, …])</p></td>
+<td><p>Nengo parameter that accepts <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> or integer dimensionality.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="nengo_spa.vocabulary.Vocabulary">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.vocabulary.</span></code><code class="sig-name descname"><span class="pre">Vocabulary</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimensions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_similarity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pointer_gen</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algebra</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary" title="Permalink to this definition">¶</a></dt>
+<dd><p>A collection of semantic pointers, each with their own text label.</p>
+<p>The Vocabulary can also act as a dictionary, with keys as the names
+of the semantic pointers and values as the <a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SemanticPointer</span></code></a> objects
+themselves. The names of Semantic Pointers must be valid Python 2
+identifiers starting with a capital letter.</p>
+<p>Every vocabulary knows the special elements <em>AbsorbingElement</em>, <em>Identity</em>,
+and <em>Zero</em>. However, these are not included in the keys returned by <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary.keys" title="nengo_spa.vocabulary.Vocabulary.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>
+or the vectors returned by <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary.vectors" title="nengo_spa.vocabulary.Vocabulary.vectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">vectors</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dimensions</strong> (<em>int</em>) – Number of dimensions for each semantic pointer.</p></li>
+<li><p><strong>strict</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to automatically create missing semantic pointers. If a
+non-strict vocabulary is asked for a pointer that does not exist within
+the vocabulary, the missing pointer will be automatically added to the
+vocabulary. A strict vocabulary will throw an error if asked for a
+pointer that does not exist in the vocabulary.</p></li>
+<li><p><strong>max_similarity</strong> (<em>float</em><em>, </em><em>optional</em>) – When randomly generating pointers, ensure that the cosine of the
+angle between the new pointer and all existing pointers is less
+than this amount. If the system is unable to find such a pointer
+after 100 tries, a warning message is printed.</p></li>
+<li><p><strong>pointer_gen</strong> (<em>generator</em><em> or </em><em>np.random.RandomState</em><em>, </em><em>optional</em>) – Generator used to create vectors for new Semantic Pointers. Defaults to
+<a class="reference internal" href="nengo_spa.vector_generation.html#nengo_spa.vector_generation.UnitLengthVectors" title="nengo_spa.vector_generation.UnitLengthVectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitLengthVectors</span></code></a>. If a <code class="xref py py-obj docutils literal notranslate"><span class="pre">np.random.RandomState</span></code> is passed, it will
+be used by <a class="reference internal" href="nengo_spa.vector_generation.html#nengo_spa.vector_generation.UnitLengthVectors" title="nengo_spa.vector_generation.UnitLengthVectors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnitLengthVectors</span></code></a>.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – A name to display in the string representation of this vocabulary.</p></li>
+<li><p><strong>algebra</strong> (<a class="reference internal" href="nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra" title="nengo_spa.algebras.base.AbstractAlgebra"><em>AbstractAlgebra</em></a><em>, </em><em>optional</em>) – Defines the vector symbolic operators used for Semantic Pointers in the
+vocabulary. Defaults to <a class="reference internal" href="nengo_spa.algebras.html#nengo_spa.algebras.hrr_algebra.HrrAlgebra" title="nengo_spa.algebras.hrr_algebra.HrrAlgebra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">HrrAlgebra</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="nengo_spa.vocabulary.Vocabulary.keys">
+<code class="sig-name descname"><span class="pre">keys</span></code><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>The names of all known semantic pointers (e.g., <code class="docutils literal notranslate"><span class="pre">['A',</span> <span class="pre">'B',</span> <span class="pre">'C']</span></code>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>sequence</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.vocabulary.Vocabulary.max_similarity">
+<code class="sig-name descname"><span class="pre">max_similarity</span></code><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.max_similarity" title="Permalink to this definition">¶</a></dt>
+<dd><p>When randomly generating pointers, ensure that the cosine of the
+angle between the new pointer and all existing pointers is less
+than this amount. If the system is unable to find such a pointer
+after 100 tries, a warning message is printed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.vocabulary.Vocabulary.strict">
+<code class="sig-name descname"><span class="pre">strict</span></code><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.strict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to automatically create missing semantic pointers. If a
+non-strict vocabulary is asked for a pointer that does not exist within
+the vocabulary, the missing pointer will be automatically added to the
+vocabulary. A strict vocabulary will throw an error if asked for a
+pointer that does not exist in the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.vocabulary.Vocabulary.vectors">
+<code class="sig-name descname"><span class="pre">vectors</span></code><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.vectors" title="Permalink to this definition">¶</a></dt>
+<dd><p>All of the semantic pointer vectors in a matrix, in the same order
+as in <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary.keys" title="nengo_spa.vocabulary.Vocabulary.keys"><code class="xref py py-obj docutils literal notranslate"><span class="pre">keys</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="nengo_spa.vocabulary.Vocabulary.algebra">
+<code class="sig-name descname"><span class="pre">algebra</span></code><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.algebra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Defines the vector symbolic operators used for Semantic Pointers in the
+vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="nengo_spa.algebras.html#nengo_spa.algebras.base.AbstractAlgebra" title="nengo_spa.algebras.base.AbstractAlgebra">AbstractAlgebra</a>, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.create_pointer">
+<code class="sig-name descname"><span class="pre">create_pointer</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transform</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.create_pointer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.create_pointer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new semantic pointer and add it to the vocabulary.</p>
+<p>This will take into account the <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary.max_similarity" title="nengo_spa.vocabulary.Vocabulary.max_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_similarity</span></code></a> attribute.  If a
+pointer satisfying max_similarity is not generated after the specified
+number of attempts, the candidate pointer with lowest maximum cosine
+similarity with all existing pointers is returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>attempts</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of attempts to create a Semantic Pointer not
+exceeding <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary.max_similarity" title="nengo_spa.vocabulary.Vocabulary.max_similarity"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_similarity</span></code></a>.</p></li>
+<li><p><strong>transform</strong> (<em>str</em><em>, </em><em>optional</em>) – A transform to apply to the generated vector. Needs to be the name
+of a method of <a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SemanticPointer</span></code></a>. Currently, the only sensible
+value is ‘unitary’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The generated Semantic Pointer.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer">SemanticPointer</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.add">
+<code class="sig-name descname"><span class="pre">add</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add the semantic pointer <em>p</em> to the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> (<em>str</em>) – Name of the Semantic Pointer. Must be a valid Python 2 identifier
+starting with a capital letter. Must not be <em>AbsorbingElement</em>,
+<em>Identity</em>, or <em>Zero</em>.</p></li>
+<li><p><strong>p</strong> (<a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer"><em>SemanticPointer</em></a><em> or </em><em>array_like</em>) – Semantic Pointer to add.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.populate">
+<code class="sig-name descname"><span class="pre">populate</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointers</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.populate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.populate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populate the vocabulary with semantic pointers given an expression.</p>
+<p>In its most basic form <em>pointers</em> is a string of names separated with
+<code class="docutils literal notranslate"><span class="pre">;</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s1">&#39;A; B; C&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Semantic Pointers can be constructed from other Semantic Pointers:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s1">&#39;A; B; C = 0.3 * A + 1.4 * C&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Those constructed Semantic Pointers are <strong>not</strong> normalized to
+unit-length. This can be done by appending a <code class="docutils literal notranslate"><span class="pre">normalized()</span></code> call.
+In the same way unitary Semantic Pointers can be obtained with
+<code class="docutils literal notranslate"><span class="pre">unitary()</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vocab</span><span class="o">.</span><span class="n">populate</span><span class="p">(</span><span class="s1">&#39;A.unitary(); B; C = (A+B).normalized()&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>pointers</strong> (<em>string</em>) – The expression defining the semantic pointers to
+add to the vocabulary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.parse">
+<code class="sig-name descname"><span class="pre">parse</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate a text string and return the corresponding SemanticPointer.</p>
+<p>This uses the Python <code class="docutils literal notranslate"><span class="pre">eval()</span></code> function, so any Python operators that
+have been defined for SemanticPointers are valid (<code class="docutils literal notranslate"><span class="pre">+</span></code>, <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">*</span></code>,
+<code class="docutils literal notranslate"><span class="pre">~</span></code>, <code class="docutils literal notranslate"><span class="pre">()</span></code>). Valid semantic pointer terms must start
+with a capital letter.</p>
+<p>If the expression returns a scalar (int or float), a scaled version
+of the identity SemanticPointer will be returned.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.parse_n">
+<code class="sig-name descname"><span class="pre">parse_n</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">texts</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.parse_n"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.parse_n" title="Permalink to this definition">¶</a></dt>
+<dd><p>Applies <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary.parse" title="nengo_spa.vocabulary.Vocabulary.parse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse</span></code></a> to each item in <em>texts</em> and returns the result.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.dot">
+<code class="sig-name descname"><span class="pre">dot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.dot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the dot product with all terms in the Vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>v</strong> (<a class="reference internal" href="nengo_spa.semantic_pointer.html#nengo_spa.semantic_pointer.SemanticPointer" title="nengo_spa.semantic_pointer.SemanticPointer"><em>SemanticPointer</em></a><em> or </em><em>array_like</em>) – SemanticPointer to calculate dot product with.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.transform_to">
+<code class="sig-name descname"><span class="pre">transform_to</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">populate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.transform_to"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.transform_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a linear transform from one Vocabulary to another.</p>
+<p>This is simply the sum of the outer products of the corresponding
+terms in each Vocabulary if no <em>solver</em> is given, otherwise a
+least-squares solution will be obtained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>other</strong> (<a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a>) – The vocabulary to translate into.</p></li>
+<li><p><strong>populate</strong> (<em>Boolean</em>) – Whether to add the missing keys from the original vocabulary
+to the new target vocabulary.</p></li>
+<li><p><strong>keys</strong> (<em>list</em><em>, </em><em>optional</em>) – Limits the Semantic Pointers considered from the original
+vocabulary if given.</p></li>
+<li><p><strong>solver</strong> (<em>callable</em>) – Solver to obtain least-squares solution to map one vocabulary to
+the other.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.Vocabulary.create_subset">
+<code class="sig-name descname"><span class="pre">create_subset</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#Vocabulary.create_subset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.Vocabulary.create_subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a subset of this vocabulary.</p>
+<p>Creates and returns a subset of the current vocabulary that contains
+all the semantic pointers found in keys.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>keys</strong> (<em>sequence</em>) – List or set of semantic pointer names to be copied over to the
+new vocabulary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.vocabulary.VocabularyMap">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.vocabulary.</span></code><code class="sig-name descname"><span class="pre">VocabularyMap</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocabs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#VocabularyMap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.VocabularyMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maps dimensionalities to corresponding vocabularies.</p>
+<p>Acts like a Python dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocabs</strong> (<em>sequence of Vocabulary</em>) – A list of vocabularies to add to the mapping. The dimensionalities
+will be determined from the vocabulary objects.</p></li>
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/legacy.html#numpy.random.RandomState" title="(in NumPy v1.20)"><em>numpy.random.RandomState</em></a>) – Random number generator to use for newly created vocabularies (with
+<a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMap.get_or_create" title="nengo_spa.vocabulary.VocabularyMap.get_or_create"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_or_create</span></code></a>).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.VocabularyMap.add">
+<code class="sig-name descname"><span class="pre">add</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#VocabularyMap.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.VocabularyMap.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a vocabulary to the map.</p>
+<p>The dimensionality will be determined from the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vocab</strong> (<em>Vocaublary</em>) – Vocabulary to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.VocabularyMap.discard">
+<code class="sig-name descname"><span class="pre">discard</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#VocabularyMap.discard"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.VocabularyMap.discard" title="Permalink to this definition">¶</a></dt>
+<dd><p>Discard (remove) a vocabulary from the mapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vocab</strong> (<em>int</em><em> or </em><a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><em>Vocabulary</em></a>) – If an integer is given, the vocabulary associated to the
+dimensionality will be discarded. If a <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> is given, that
+specific instance will be discarded.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="nengo_spa.vocabulary.VocabularyMap.get_or_create">
+<code class="sig-name descname"><span class="pre">get_or_create</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimensions</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#VocabularyMap.get_or_create"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.VocabularyMap.get_or_create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets or creates a vocabulary of given dimensionality.</p>
+<p>If the mapping already maps the given dimensionality to a vocabulary,
+it will be returned. Otherwise, a new vocabulary will be created,
+added to the mapping, and returned.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dimensions</strong> (<em>int</em>) – Dimensionality of vocabulary to return.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Vocabulary of given dimensionality.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary">Vocabulary</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.vocabulary.VocabularyMapParam">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.vocabulary.</span></code><code class="sig-name descname"><span class="pre">VocabularyMapParam</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Unconfigurable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#VocabularyMapParam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.VocabularyMapParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nengo parameter that accepts <a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMap" title="nengo_spa.vocabulary.VocabularyMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyMap</span></code></a> instances.</p>
+<p>Sequences of <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> will be coerced to <a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMap" title="nengo_spa.vocabulary.VocabularyMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyMap</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt id="nengo_spa.vocabulary.VocabularyOrDimParam">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">nengo_spa.vocabulary.</span></code><code class="sig-name descname"><span class="pre">VocabularyOrDimParam</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">Unconfigurable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optional</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readonly</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/nengo_spa/vocabulary.html#VocabularyOrDimParam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#nengo_spa.vocabulary.VocabularyOrDimParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Nengo parameter that accepts <a class="reference internal" href="#nengo_spa.vocabulary.Vocabulary" title="nengo_spa.vocabulary.Vocabulary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> or integer dimensionality.</p>
+<p>If an integer is assigned, the vocabulary will retrieved from the
+instance’s <em>vocabs</em> attribute with <em>vocabs.get_or_create(dimensions)</em>.
+Thus, a class using <em>VocabularyOrDimParam</em> should also have an attribute
+<em>vocabs</em> of type <a class="reference internal" href="#nengo_spa.vocabulary.VocabularyMap" title="nengo_spa.vocabulary.VocabularyMap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">VocabularyMap</span></code></a>.</p>
+</dd></dl>
+
+</div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>

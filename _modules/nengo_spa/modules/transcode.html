@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nengo_spa.modules.transcode &#8212; NengoSPA 1.2.0 docs</title>
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/basic.css" type="text/css" />
+<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,400i,600|Rajdhani:700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link rel="stylesheet" href="https://www.nengo.ai/css/bootstrap.css" type="text/css">
+<style>
+  body .title-bar,
+  body .documentation-source h1:after {
+    background-color: #d40000;
+  }
+</style>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-41658423-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-41658423-2');
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/scrollreveal"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickyfill/2.1.0/stickyfill.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+<!-- From basic/layout.html -->
+<script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+  
+  
+<script src="../../../_static/underscore.js"></script>
+  
+  
+<script src="../../../_static/doctools.js"></script>
+  
+  
+<script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+  
+    <link rel="shortcut icon" href="../../../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  </head><body class="bg-dark">
+
+<header class="fixed-top header-top shadow-sm">
+  <nav class="navbar navbar-expand-md navbar-light bg-white">
+    <a class="navbar-brand" href="https://www.nengo.ai/">
+      <img
+        src="https://www.nengo.ai/design/_images/general-full-light.svg"
+        alt="Nengo"
+        class="logo"
+      />
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbar-collapse"
+      aria-controls="navbar-collapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/">What is Nengo?</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://www.nengo.ai/examples/">Examples</a>
+        </li>
+        <li class="nav-item dropdown active">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-docs"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Documentation</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-docs"
+          >
+            
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo/">Nengo core</a>
+            <a class="dropdown-item" href="https://github.com/nengo/nengo-gui/">NengoGUI</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-dl/">NengoDL</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-spa/">NengoSPA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-extras/">NengoExtras</a>
+            <a class="dropdown-item" href="https://arvoelke.github.io/nengolib-docs/">Nengolib</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/keras-spiking">KerasSpiking</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/pytorch-spiking">PyTorchSpiking</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-fpga/">NengoFPGA</a>
+            <a class="dropdown-item" href="https://www.nengo.ai/nengo-loihi/">NengoLoihi</a>
+            <a class="dropdown-item" href="https://labs.nengo.ai/nengo-ocl/">NengoOCL</a>
+            <a class="dropdown-item" href="https://github.com/project-rig/nengo_spinnaker">NengoSpiNNaker</a>
+            <a class="dropdown-item" href="https://github.com/nengo-labs/nengo-mpi">NengoMPI</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/documentation/"
+              >All documentation</a
+            >
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            id="navbar-dropdown-community"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            href="#"
+            >Community</a
+          >
+          <div
+            class="dropdown-menu shadow-lg border-0"
+            aria-labelledby="navbar-dropdown-community"
+          >
+            <a class="dropdown-item" href="https://forum.nengo.ai">Forum</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="https://www.nengo.ai/people/"
+              >People</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/summer-school/"
+              >Summer school</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/contributing/"
+              >Contributing</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/publications/"
+              >Publications</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/videos/"
+              >Videos</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/conduct/"
+              >Code of conduct</a
+            >
+            <a class="dropdown-item" href="https://www.nengo.ai/caa/">CAA</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link btn btn-success btn-sm text-white"
+            href="https://www.nengo.ai/getting-started/"
+            >Getting started</a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="main-content gradient-top">
+  <div class="container-fluid">
+    <div class="row"><a class="toggle-sidenav d-block d-md-none" href="#"
+  ><i class="icon-close fa fa-fw fa-arrow-left"></i
+  ><i class="icon-open fa fa-fw fa-arrow-right"></i
+></a>
+<div role="complementary" class="sidenav col-4 col-xl-3 p-0 border-right">
+  <h3 class="pt-5 px-5">
+    <a href="../../../index.html">
+      <img
+        class="img-fluid documentation-image"
+        src="https://www.nengo.ai/design/_images/nengo-spa-full-light.svg"
+        alt="NengoSPA"
+      />
+    </a>
+  </h3>
+<form class="px-5 py-3 my-0 border-bottom" action="../../../search.html" method="get">
+  <div class="form-group form-group-single">
+    <input type="text" name="q" class="form-control" placeholder="Search" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+    <button type="submit" class="btn btn-link">
+      <img src="https://www.nengo.ai/img/icon-search.svg" alt="Go" />
+    </button>
+  </div>
+</form><div class="p-5 toctree">
+  
+    <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../getting-started.html">Getting started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user-guide.html">User Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer.html">Developer Guide</a></li>
+</ul>
+
+  
+  </div>
+  
+  <form class="p-5 my-0 border-top">
+    <div class="form-group">
+      <label class="text-gray">Version:</label>
+      <select class="custom-select" onchange="switchVersion(this);">
+        
+        
+        <option selected>latest</option>
+        
+        
+          
+        <option value="../../../v1.2.0/_modules/nengo_spa/modules/transcode.html">
+          v1.2.0
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.1/_modules/nengo_spa/modules/transcode.html">
+          v1.1.1
+        </option>
+          
+        
+          
+        <option value="../../../v1.1.0/_modules/nengo_spa/modules/transcode.html">
+          v1.1.0
+        </option>
+          
+        
+      </select>
+    </div>
+  </form>
+  
+</div>
+      
+
+      <div class="col-12 col-md-8 col-xl-9">
+        <div class="container">
+          <div class="row">
+            <div class="col-10 offset-1 pb-5 documentation-source" role="main">
+              
+              
+              <div class="admonition note">
+                  <p class="admonition-title">Note</p>
+                  <p>
+                  This documentation is for a development version.
+                  <a href="../../../v1.2.0/_modules/nengo_spa/modules/transcode.html">
+                  Click here for the latest stable release (v1.2.0).
+                  </a>
+                  </p>
+              </div>
+              
+              
+  <h1>Source code for nengo_spa.modules.transcode</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">nengo</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">nengo.config</span> <span class="kn">import</span> <span class="n">Default</span>
+<span class="kn">from</span> <span class="nn">nengo.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">nengo.params</span> <span class="kn">import</span> <span class="n">IntParam</span><span class="p">,</span> <span class="n">Parameter</span>
+<span class="kn">from</span> <span class="nn">nengo.utils.stdlib</span> <span class="kn">import</span> <span class="n">checked_call</span>
+
+<span class="kn">from</span> <span class="nn">nengo_spa.ast.symbolic</span> <span class="kn">import</span> <span class="n">PointerSymbol</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.semantic_pointer</span> <span class="kn">import</span> <span class="n">SemanticPointer</span>
+<span class="kn">from</span> <span class="nn">nengo_spa.vocabulary</span> <span class="kn">import</span> <span class="n">VocabularyOrDimParam</span>
+
+
+<span class="k">class</span> <span class="nc">SpArrayExtractor</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vocab</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span> <span class="o">=</span> <span class="n">vocab</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">PointerSymbol</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">expr</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vocab</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">):</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">v</span>
+        <span class="k">return</span> <span class="n">value</span>
+
+
+<span class="k">def</span> <span class="nf">make_sp_func</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">vocab</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">sp_func</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">fn</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">vocab</span><span class="o">=</span><span class="n">vocab</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">sp_func</span>
+
+
+<span class="k">def</span> <span class="nf">make_parse_func</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">vocab</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create a function that calls func and parses the output in vocab.&quot;&quot;&quot;</span>
+
+    <span class="n">extractor</span> <span class="o">=</span> <span class="n">SpArrayExtractor</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">extractor</span><span class="p">(</span><span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">parse_func</span>
+
+
+<span class="k">class</span> <span class="nc">TranscodeFunctionParam</span><span class="p">(</span><span class="n">Parameter</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">coerce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+        <span class="n">fn</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">TranscodeFunctionParam</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">coerce</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+
+        <span class="n">pointer_cls</span> <span class="o">=</span> <span class="p">(</span><span class="n">SemanticPointer</span><span class="p">,</span> <span class="n">PointerSymbol</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fn</span>
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">coerce_callable</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">fn</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">obj</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">pointer_cls</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">fn</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Invalid output type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">attr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">obj</span><span class="o">=</span><span class="n">obj</span>
+            <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">coerce_callable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">fn</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">t</span><span class="p">,</span>
+                <span class="n">SemanticPointer</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">input_vocab</span><span class="o">.</span><span class="n">dimensions</span><span class="p">),</span> <span class="n">vocab</span><span class="o">=</span><span class="n">obj</span><span class="o">.</span><span class="n">input_vocab</span>
+                <span class="p">),</span>
+            <span class="p">)</span>
+        <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">size_in</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">size_in</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">t</span><span class="p">,)</span>
+
+        <span class="n">_</span><span class="p">,</span> <span class="n">invoked</span> <span class="o">=</span> <span class="n">checked_call</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">invoked</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Transcode function </span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2"> is expected to accept exactly 2 &quot;</span>
+                    <span class="s2">&quot;arguments: time as a float, and a SemanticPointer&quot;</span><span class="p">,</span>
+                    <span class="n">attr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Transcode function </span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2"> is expected to accept exactly 1 &quot;</span>
+                    <span class="s2">&quot;or 2 arguments: time as a float, and optionally &quot;</span>
+                    <span class="s2">&quot;the input data as NumPy array.&quot;</span><span class="p">,</span>
+                    <span class="n">attr</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span>
+                <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fn</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">to_node_output</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">input_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_vocab</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">fn</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">input_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="n">make_sp_func</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">input_vocab</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">output_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fn</span> <span class="o">=</span> <span class="n">make_parse_func</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="n">output_vocab</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">fn</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fn</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="n">SemanticPointer</span><span class="p">,</span> <span class="n">PointerSymbol</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">SpArrayExtractor</span><span class="p">(</span><span class="n">output_vocab</span><span class="p">)(</span><span class="n">fn</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invalid output type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span><span class="si">!r}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Transcode"><a class="viewcode-back" href="../../../modules/nengo_spa.modules.html#nengo_spa.modules.Transcode">[docs]</a><span class="k">class</span> <span class="nc">Transcode</span><span class="p">(</span><span class="n">Network</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Transcode from, to, and between Semantic Pointers.</span>
+
+<span class="sd">    This can thought of the equivalent of a `nengo.Node` for Semantic Pointers.</span>
+
+<span class="sd">    Either the *input_vocab* or the *output_vocab* argument must not be *None*.</span>
+<span class="sd">    (If you want both arguments to be *None*, use a normal `nengo.Node`.)</span>
+<span class="sd">    Which one of the parameters in the pairs *input_vocab/size_in* and</span>
+<span class="sd">    *output_vocab/size_out* is not set to *None*, determines whether a Semantic</span>
+<span class="sd">    Pointer input/output or a normal vector input/output is expected.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    function : func, optional (Default: None)</span>
+<span class="sd">        Function that transforms the input Semantic Pointer to an output</span>
+<span class="sd">        Semantic Pointer. The function signature depends on *input_vocab*:</span>
+
+<span class="sd">        * If *input_vocab* is *None*, the allowed signatures are the same as</span>
+<span class="sd">          for a `nengo.Node`. Either ``function(t)`` or ``function(t, x)``</span>
+<span class="sd">          where *t* (float) is the current simulation time and *x* (NumPy</span>
+<span class="sd">          array) is the current input to transcode with size *size_in*.</span>
+<span class="sd">        * If *input_vocab* is not *None*, the signature has to be</span>
+<span class="sd">          ``function(t, sp)`` where *t* (float) is the current simulation time</span>
+<span class="sd">          and *sp* (`.SemanticPointer`) is the current Semantic Pointer input.</span>
+<span class="sd">          The associated vocabulary can be obtained via ``sp.vocab``.</span>
+
+<span class="sd">        The allowed function return value depends on *output_vocab*:</span>
+
+<span class="sd">        * If *output_vocab* is *None*, the return value must be a NumPy array</span>
+<span class="sd">          (or equivalent) of size *size_out* or *None* (i.e. no return value)</span>
+<span class="sd">          if *size_out* is *None*.</span>
+<span class="sd">        * If *output_vocab* is not *None*, the return value can be either of:</span>
+<span class="sd">          NumPy array, `.SemanticPointer` instance, or an SemanticPointer</span>
+<span class="sd">          expression or symbolic expression as string that gets parsed with</span>
+<span class="sd">          the *output_vocab*.</span>
+<span class="sd">    input_vocab : Vocabulary, optional (Default: None)</span>
+<span class="sd">        Input vocabulary. Mutually exclusive with *size_in*.</span>
+<span class="sd">    output_vocab : Vocabulary, optional (Default: None)</span>
+<span class="sd">        Output vocabulary. Mutually exclusive with *size_out*.</span>
+<span class="sd">    size_in : int, optional (Default: None)</span>
+<span class="sd">        Input size. Mutually exclusive with *input_vocab*.</span>
+<span class="sd">    size_out : int, optional (Default: None)</span>
+<span class="sd">        Output size. Mutually exclusive with *output_vocab*.</span>
+<span class="sd">    **kwargs : dict</span>
+<span class="sd">        Additional keyword arguments passed to `nengo_spa.Network`.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    input : nengo.Node</span>
+<span class="sd">        Input.</span>
+<span class="sd">    output : nengo.Node</span>
+<span class="sd">        Output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">function</span> <span class="o">=</span> <span class="n">TranscodeFunctionParam</span><span class="p">(</span>
+        <span class="s2">&quot;function&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">input_vocab</span> <span class="o">=</span> <span class="n">VocabularyOrDimParam</span><span class="p">(</span>
+        <span class="s2">&quot;input_vocab&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">output_vocab</span> <span class="o">=</span> <span class="n">VocabularyOrDimParam</span><span class="p">(</span>
+        <span class="s2">&quot;output_vocab&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="n">size_in</span> <span class="o">=</span> <span class="n">IntParam</span><span class="p">(</span><span class="s2">&quot;size_in&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">size_out</span> <span class="o">=</span> <span class="n">IntParam</span><span class="p">(</span><span class="s2">&quot;size_out&quot;</span><span class="p">,</span> <span class="n">optional</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">readonly</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">function</span><span class="o">=</span><span class="n">Default</span><span class="p">,</span>
+        <span class="n">input_vocab</span><span class="o">=</span><span class="n">Default</span><span class="p">,</span>
+        <span class="n">output_vocab</span><span class="o">=</span><span class="n">Default</span><span class="p">,</span>
+        <span class="n">size_in</span><span class="o">=</span><span class="n">Default</span><span class="p">,</span>
+        <span class="n">size_out</span><span class="o">=</span><span class="n">Default</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Transcode</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># Vocabs need to be set before function which accesses vocab for</span>
+        <span class="c1"># validation.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span> <span class="o">=</span> <span class="n">input_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span> <span class="o">=</span> <span class="n">output_vocab</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_in</span> <span class="o">=</span> <span class="n">size_in</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_out</span> <span class="o">=</span> <span class="n">size_out</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;At least one of input_vocab and output_vocab needs to be &quot;</span>
+                <span class="s2">&quot;set. If neither the input nor the output is a Semantic &quot;</span>
+                <span class="s2">&quot;Pointer, use a basic nengo.Node instead.&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_in</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;The input_vocab and size_in arguments are mutually &quot;</span> <span class="s2">&quot;exclusive.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;size_in&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_out</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span>
+                <span class="s2">&quot;The output_vocab and size_out arguments are mutually &quot;</span> <span class="s2">&quot;exclusive.&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;size_in&quot;</span><span class="p">,</span>
+                <span class="bp">self</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="o">=</span> <span class="n">function</span>
+
+        <span class="n">node_size_in</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="o">.</span><span class="n">dimensions</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_in</span>
+        <span class="p">)</span>
+        <span class="n">node_size_out</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="o">.</span><span class="n">dimensions</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">size_out</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">node_size_in</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">node_size_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="o">.</span><span class="n">dimensions</span>
+            <span class="n">node_size_out</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">with</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">node</span> <span class="o">=</span> <span class="n">nengo</span><span class="o">.</span><span class="n">Node</span><span class="p">(</span>
+                <span class="n">TranscodeFunctionParam</span><span class="o">.</span><span class="n">to_node_output</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">function</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span>
+                <span class="p">),</span>
+                <span class="n">size_in</span><span class="o">=</span><span class="n">node_size_in</span><span class="p">,</span>
+                <span class="n">size_out</span><span class="o">=</span><span class="n">node_size_out</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">input</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">node</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">declare_input</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">input</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">input_vocab</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">declare_output</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_vocab</span><span class="p">)</span></div>
+</pre></div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><footer class="text-light footer-main gradient-bottom">
+  <p class="small text-center mb-0">
+    <a class="no-hover-line" href="https://appliedbrainresearch.com">
+      <img
+        src="https://appliedbrainresearch.com/img/logo-blue-notext.svg"
+        height="48"
+      />
+    </a>
+    <a href="https://www.nengo.ai/">What is Nengo?</a>
+    <a href="https://www.nengo.ai/examples/">Examples</a>
+    <a href="https://www.nengo.ai/documentation/">Documentation</a>
+    <a href="https://www.nengo.ai/getting-started/">Getting started</a>
+    <a href="https://www.nengo.ai/privacy/">Privacy</a>
+  </p>
+  <p class="small text-center mb-0">&copy; Applied Brain Research</p>
+</footer>
+<script>
+  function switchVersion(select) {
+    var option = select.selectedOptions[0];
+    if (option.hasAttribute("value")) {
+      window.location = option.value;
+    }
+  }
+</script>
+
+<script>
+  var elements = document.querySelectorAll('.sidenav');
+  Stickyfill.add(elements);
+</script>
+<script>
+  ScrollReveal().reveal(".fade-in", {
+      scale: 0.85,
+      duration: 1000,
+      delay: 250,
+      interval: 50
+  });
+</script>
+<script>
+  $('a.toggle-sidenav').on('click', function(e) {
+    e.preventDefault();
+    if ( $(this).hasClass('active') ) {
+      $(this).removeClass('active');
+      $('.sidenav').removeClass('open');
+    } else {
+      $(this).addClass('active');
+      $('.sidenav').addClass('open');
+    }
+  });
+</script>
+<script>
+  var lists = document.querySelectorAll('.toctree ul');
+  lists.forEach((ul) => {
+      ul.classList.add("nav");
+  });
+  var links = document.querySelectorAll('.toctree a');
+  links.forEach((link) => {
+      link.classList.add("nav-link");
+  });
+  $("body").scrollspy({target: ".sidenav"});
+</script>
+  </body>
+</html>
