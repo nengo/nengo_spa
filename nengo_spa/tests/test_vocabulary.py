@@ -70,6 +70,9 @@ def test_populate(rng):
     assert np.allclose(v["F"].v, v.parse("A + 2 * B").normalized().v)
     np.testing.assert_almost_equal(np.linalg.norm(v["F"].v), 1.0)
 
+    v.populate("Positive.abs()")
+    assert v["Positive"].sign().is_positive()
+
     v.populate("G = A; H")
     assert np.allclose(v["G"].v, v["A"].v)
     assert "H" in v
