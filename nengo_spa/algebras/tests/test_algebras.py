@@ -334,5 +334,6 @@ def test_abs(algebra, d, sidedness):
         v = algebra.abs(neg_v)
         assert algebra.sign(v).is_positive()
         assert np.allclose(v, algebra.identity_element(d, sidedness))
+        assert np.allclose(algebra.abs(v), v)  # idempotency
     except NotImplementedError:
         pass
