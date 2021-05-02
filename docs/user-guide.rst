@@ -7,3 +7,4 @@ User Guide
    examples/intro-coming-from-legacy-spa.ipynb
    examples/custom-module.ipynb
    user-guide/algebras
+   user-guide/fractional-binding

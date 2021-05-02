@@ -23,6 +23,7 @@ Base classes
 
 .. automodule:: nengo_spa.algebras.base
    :members:
+   :show-inheritance:
    :undoc-members:
 
    .. autosummary::
@@ -39,6 +40,7 @@ Holographic reduced representations (HRR)
 
 .. automodule:: nengo_spa.algebras.hrr_algebra
    :members:
+   :show-inheritance:
    :undoc-members:
 
    .. autosummary::
@@ -53,6 +55,7 @@ Vector-derived transformation binding (VTB)
 
 .. automodule:: nengo_spa.algebras.vtb_algebra
    :members:
+   :show-inheritance:
    :undoc-members:
 
    .. autosummary::
@@ -67,6 +70,7 @@ Transposed vector-derived transformation binding (TVTB)
 
 .. automodule:: nengo_spa.algebras.tvtb_algebra
    :members:
+   :show-inheritance:
    :undoc-members:
 
    .. autosummary::
