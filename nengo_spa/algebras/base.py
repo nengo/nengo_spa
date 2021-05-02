@@ -344,7 +344,7 @@ class AbstractAlgebra(metaclass=_DuckTypedABCMeta):
 
         The default implementation requires that the possible signs of the
         algebra correspond to actual vectors within the algebra. It will bind
-        the sign vector (from the left side) to the vector *v*.
+        the inverse of the sign vector (from the left side) to the vector *v*.
 
         If an algebra does not have the notion of a sign or absolute vector,
         it may raise a :py:class:`NotImplementedError`.
@@ -359,7 +359,7 @@ class AbstractAlgebra(metaclass=_DuckTypedABCMeta):
         (d,) ndarray
             The absolute vector relating to the input vector.
         """
-        return self.bind(self.sign(v).to_vector(len(v)), v)
+        return self.bind(self.invert(self.sign(v).to_vector(len(v))), v)
 
     def absorbing_element(self, d, sidedness=ElementSidedness.TWO_SIDED):
         """Return the standard absorbing element of dimensionality *d*.
