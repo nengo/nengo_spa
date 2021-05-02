@@ -73,6 +73,17 @@ def test_binary_operation_on_pointer_symbols(op, rng):
     assert_equal(node.output, vocab.parse("A" + op + "B").v)
 
 
+@pytest.mark.parametrize("scalar", [3, np.float64(3)])
+def test_pow_operation_on_pointer_symbols(scalar, rng):
+    vocab = spa.Vocabulary(16, pointer_gen=rng)
+    vocab.populate("A")
+
+    with spa.Network():
+        x = eval("PointerSymbol('A', TVocabulary(vocab)) ** scalar")
+        node = x.construct()
+    assert_equal(node.output, vocab.parse("A ** 3").v)
+
+
 def test_pointer_symbol_mul_with_array():
     with pytest.raises(TypeError):
         PointerSymbol("X") * np.array([1, 2])
