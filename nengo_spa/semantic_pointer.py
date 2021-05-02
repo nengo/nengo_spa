@@ -593,7 +593,9 @@ class SemanticPointerSign(AbstractSign):
             vocab=self.vocab,
             name=FunctionCall(
                 tuple(), AttributeAccess("to_semantic_pointer", self._expr_tree)
-            ),
+            )
+            if self._expr_tree is not None
+            else None,
         )
 
 

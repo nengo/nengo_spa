@@ -551,3 +551,12 @@ class TestSemanticPointerSign:
         sp = sp_sign.to_semantic_pointer()
         assert np.allclose(sp.v, np.ones(16))
         assert sp.algebra is algebra
+
+    def test_to_semantic_pointer_without_name(self):
+        algebra = HrrAlgebra()
+        sp_sign = SemanticPointerSign(
+            TestSemanticPointerSign.DummySign(1),
+            dimensions=16,
+            algebra=algebra,
+        )
+        sp_sign.to_semantic_pointer()  # should not throw
