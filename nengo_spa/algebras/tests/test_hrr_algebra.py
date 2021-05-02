@@ -10,22 +10,22 @@ def test_is_singleton():
 
 
 @pytest.mark.parametrize(
-    "sign,d,roll",
+    "sign,d",
     [
-        (HrrSign(1, 0), 15, 0),
-        (HrrSign(-1, 0), 15, 0),
-        (HrrSign(1, 1), 16, 0),
-        (HrrSign(1, -1), 16, 1),
-        (HrrSign(-1, 1), 16, 1),
-        (HrrSign(-1, -1), 16, 0),
+        (HrrSign(1, 0), 15),
+        (HrrSign(-1, 0), 15),
+        (HrrSign(1, 1), 16),
+        (HrrSign(1, -1), 16),
+        (HrrSign(-1, 1), 16),
+        (HrrSign(-1, -1), 16),
     ],
 )
-def test_sign_and_abs(sign, d, roll):
+def test_sign_and_abs(sign, d):
     algebra = HrrAlgebra()
     abs_v = algebra.abs(next(UnitLengthVectors(d)))
     v = algebra.bind(sign.to_vector(d), abs_v)
     assert algebra.sign(v) == sign
-    assert np.allclose(algebra.abs(v), np.roll(abs_v, 2 * roll))
+    assert np.allclose(algebra.abs(v), abs_v)
 
 
 def test_create_positive_vector(rng):
@@ -149,8 +149,10 @@ class TestHrrSign:
         [
             (HrrSign(0, 0), [0, 0, 0, 0]),
             (HrrSign(1, 1), [1, 0, 0, 0]),
+            (HrrSign(1, 0), [1, 0, 0, 0]),
             (HrrSign(1, -1), [0, 1, 0, 0]),
             (HrrSign(-1, 1), [0, -1, 0, 0]),
+            (HrrSign(-1, 0), [-1, 0, 0, 0]),
             (HrrSign(-1, -1), [-1, 0, 0, 0]),
             (HrrSign(0, 0), [0, 0, 0]),
             (HrrSign(1, 0), [1, 0, 0]),
@@ -160,11 +162,6 @@ class TestHrrSign:
     def test_to_vector(self, sign, expected):
         assert HrrAlgebra().sign(expected) == sign  # sanity check
         assert np.allclose(sign.to_vector(len(expected)), expected)
-
-    @pytest.mark.parametrize("sign,d", [(HrrSign(1, 0), 4), (HrrSign(1, 1), 3)])
-    def test_invalid_to_vector(self, sign, d):
-        with pytest.raises(ValueError):
-            sign.to_vector(d)
 
     def test_equality(self):
         assert HrrSign(1, 1) == HrrSign(1, 1)

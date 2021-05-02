@@ -65,7 +65,7 @@ def test_binding_and_invert(algebra, d, sidedness, rng):
             unbinding_passed += np.dot(a, r / np.linalg.norm(r)) > 0.6
 
         assert dissimilarity_passed >= 2 * 8
-        assert unbinding_passed >= 8
+        assert unbinding_passed >= 7
     except (NotImplementedError, DeprecationWarning):
         pass
 
@@ -334,5 +334,6 @@ def test_abs(algebra, d, sidedness):
         v = algebra.abs(neg_v)
         assert algebra.sign(v).is_positive()
         assert np.allclose(v, algebra.identity_element(d, sidedness))
+        assert np.allclose(algebra.abs(v), v)  # idempotency
     except NotImplementedError:
         pass

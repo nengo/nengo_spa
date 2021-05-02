@@ -363,12 +363,12 @@ class HrrSign(AbstractSign):
          symmetric.)
 
         ================== =========== ========== ========== ========== ======
-        Sign (DC, Nyquist) \+ (+1, ≥0) − (+1, <0) − (-1, ≥0) − (−1, <0) (0, 0)
+        Sign (DC, Nyquist) \+ (+1, +1) − (+1, -1) − (-1, +1) − (−1, -1) (0, 0)
         ================== =========== ========== ========== ========== ======
-        \+ (+1, ≥0)        \+ (+1, ≥0) − (+1, <0) − (−1, ≥0) − (−1, <0) (0, 0)
-        − (+1, <0)                     \+ (1, ≥0) − (−1, <0) − (−1, ≥0) (0, 0)
-        − (−1, ≥0)                                \+ (1, ≥0) − (+1, <0) (0, 0)
-        − (−1, <0)                                           \+ (1, ≥0) (0, 0)
+        \+ (+1, +1)        \+ (+1, +1) − (+1, -1) − (−1, +1) − (−1, -1) (0, 0)
+        − (+1, -1)                     \+ (1, +1) − (−1, -1) − (−1, +1) (0, 0)
+        − (−1, +1)                                \+ (1, +1) − (+1, -1) (0, 0)
+        − (−1, -1)                                           \+ (1, +1) (0, 0)
         (0, 0)                                                          (0, 0)
         ================== =========== ========== ========== ========== ======
 
@@ -377,8 +377,8 @@ class HrrSign(AbstractSign):
     dc_sign : int
         Sign of the DC component.
     nyquist_sign : int
-        Sign of the Nyquist frequency component. Set to zero for odd
-        dimensionalities by definition.
+        Sign of the Nyquist frequency component. Will be set to the *dc_sign*
+        if zero.
     """
 
     __slots__ = ["dc_sign", "nyquist_sign"]
@@ -396,6 +396,8 @@ class HrrSign(AbstractSign):
 
         self.dc_sign = dc_sign
         self.nyquist_sign = nyquist_sign
+        if self.nyquist_sign == 0:
+            self.nyquist_sign = self.dc_sign
 
     def is_positive(self):
         return self.dc_sign > 0 and self.nyquist_sign >= 0
@@ -412,11 +414,11 @@ class HrrSign(AbstractSign):
         =======  ============  =======================================
         DC sign  Nyquist sign  Vector
         =======  ============  =======================================
-         1       >=0           [ 1,  0, 0, ...] (identity)
-         1        <0           [ 0,  1, 0, 0, ...]
-        -1       >=0           [ 0, -1, 0, ...]
-        -1        <0           [-1,  0, 0, 0, ...] (negative identity)
-         0         0           [ 0,  0, 0, ...] (zero)
+         1        1            [ 1,  0, 0, ...] (identity)
+         1       -1            [ 0,  1, 0, 0, ...]
+        -1        1            [ 0, -1, 0, ...]
+        -1       -1            [-1,  0, 0, 0, ...] (negative identity)
+         0        0            [ 0,  0, 0, ...] (zero)
         =======  ============  =======================================
 
         Parameters
@@ -429,20 +431,8 @@ class HrrSign(AbstractSign):
         (d,) ndarray
             Vector corresponding to the sign.
         """
-        if self.dc_sign == 0 and self.nyquist_sign == 0:
+        if self.dc_sign == 0:
             return np.zeros(d)
-
-        is_even_dim = d % 2 == 0
-        if is_even_dim and self.nyquist_sign == 0:
-            raise ValueError(
-                "A sign with a zero nyquist_sign is only valid for odd "
-                "dimensionalities."
-            )
-        elif not is_even_dim and self.nyquist_sign != 0:
-            raise ValueError(
-                "A sign with a non-zero nyquist_sign is only valid for even "
-                "dimensionalities."
-            )
 
         v = HrrAlgebra().identity_element(d)
         if self.dc_sign * self.nyquist_sign < 0:

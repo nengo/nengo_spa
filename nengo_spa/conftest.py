@@ -1,3 +1,5 @@
+import pytest
+
 try:
     from pytest_nengo import (  # pylint: disable=unused-import
         pytest_configure,
@@ -5,7 +7,6 @@ try:
     )
 except ImportError:
     import nengo
-    import pytest
 
     @pytest.fixture(scope="session")
     def Simulator(request):
@@ -33,4 +34,7 @@ class TestConfig:
 
 def pytest_generate_tests(metafunc):
     if "algebra" in metafunc.fixturenames:
-        metafunc.parametrize("algebra", [a for a in TestConfig.algebras])
+        metafunc.parametrize(
+            "algebra",
+            [pytest.param(a, id=a.__class__.__name__) for a in TestConfig.algebras],
+        )

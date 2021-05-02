@@ -1,3 +1,5 @@
+import re
+
 import nengo
 import numpy as np
 import pytest
@@ -5,14 +7,30 @@ from nengo.exceptions import NengoWarning, ValidationError
 from numpy.testing import assert_equal
 
 import nengo_spa as spa
-from nengo_spa.algebras.base import AbstractAlgebra, ElementSidedness
-from nengo_spa.algebras.hrr_algebra import HrrAlgebra
+from nengo_spa.algebras.base import (
+    AbstractAlgebra,
+    CommonProperties,
+    ElementSidedness,
+    GenericSign,
+)
+from nengo_spa.algebras.hrr_algebra import HrrAlgebra, HrrSign
 from nengo_spa.ast.symbolic import PointerSymbol
 from nengo_spa.exceptions import SpaTypeError
-from nengo_spa.semantic_pointer import AbsorbingElement, Identity, SemanticPointer, Zero
+from nengo_spa.semantic_pointer import (
+    AbsorbingElement,
+    Identity,
+    NegativeIdentity,
+    SemanticPointer,
+    SemanticPointerSign,
+    Zero,
+)
 from nengo_spa.testing import assert_sp_close
 from nengo_spa.types import TVocabulary
-from nengo_spa.vector_generation import UnitLengthVectors
+from nengo_spa.vector_generation import (
+    UnitaryVectors,
+    UnitLengthVectors,
+    VectorsWithProperties,
+)
 from nengo_spa.vocabulary import Vocabulary
 
 
@@ -73,6 +91,21 @@ def test_make_unitary(algebra, d, rng):
     assert np.allclose(1, (b * b * b).length())
 
 
+def test_sign():
+    a = Identity(16)
+    sign = a.sign()
+    assert isinstance(sign, SemanticPointerSign)
+    assert sign.sign == HrrSign(1, 1)
+
+
+def test_abs():
+    neg_sp = NegativeIdentity(16)
+    assert neg_sp.sign().is_negative()
+    abs_sp = neg_sp.abs()
+    assert abs_sp.sign().is_positive()
+    assert np.allclose(abs_sp.v, Identity(16).v)
+
+
 def test_add_sub(algebra, rng):
     gen = UnitLengthVectors(10, rng=rng)
     a = SemanticPointer(next(gen), algebra=algebra)
@@ -117,6 +150,34 @@ def test_binding(algebra, d, rng):
         assert np.allclose((identity * a).v, a.v)
     except NotImplementedError:
         pass
+
+
+@pytest.mark.parametrize("d", [64, 65])
+def test_integer_binding_power(algebra, d, rng):
+    if not algebra.is_valid_dimensionality(d):
+        return
+
+    gen = UnitaryVectors(d, algebra, rng=rng)
+    a = SemanticPointer(next(gen), algebra=algebra)
+
+    assert np.allclose((a * a * a).v, (a ** 3).v)
+    assert np.allclose((a * a * a).v, pow(a, 3).v)
+
+
+@pytest.mark.parametrize("d", [64, 65])
+def test_fractional_binding_power(algebra, d, rng):
+    pytest.importorskip("scipy")
+
+    if not algebra.is_valid_dimensionality(d):
+        return
+
+    gen = VectorsWithProperties(
+        d, {CommonProperties.POSITIVE, CommonProperties.UNITARY}, algebra, rng=rng
+    )
+    a = SemanticPointer(next(gen), algebra=algebra)
+
+    assert np.allclose(a.v, (((a ** 0.5) ** 2).v))
+    assert np.allclose(a.v, (pow(a, 0.5) ** 2).v)
 
 
 @pytest.mark.filterwarnings("ignore:.*sidedness:DeprecationWarning")
@@ -390,8 +451,11 @@ def test_name():
     assert (~a).name == "~a"
     assert a.normalized().name == "a.normalized()"
     assert a.unitary().name == "a.unitary()"
+    assert a.sign().to_semantic_pointer().name == "a.sign().to_semantic_pointer()"
+    assert a.abs().name == "a.abs()"
     assert (a + b).name == "a + b"
     assert (a * b).name == "a * b"
+    assert (a ** 2).name == "a ** 2"
     assert (2.0 * a).name == "2.0 * a"
     assert (a / 2.0).name == "a / 2.0"
 
@@ -424,3 +488,75 @@ def test_translate(rng):
     with pytest.warns(NengoWarning, match="source vocabulary has keys not existent"):
         a1.translate(v3)
     assert np.allclose(a1.translate(v3, populate=True).dot(v3["A"]), 1.0, atol=0.2)
+
+
+class TestSemanticPointerSign:
+    class DummySign(GenericSign):
+        def to_vector(self, d):
+            return np.ones(d)
+
+    @pytest.mark.parametrize(
+        "sign,method,expected",
+        [
+            (1, "is_positive", True),
+            (-1, "is_negative", True),
+            (0, "is_zero", True),
+            (None, "is_indefinite", True),
+            (0, "is_positive", False),
+            (0, "is_negative", False),
+            (1, "is_zero", False),
+            (0, "is_indefinite", False),
+        ],
+    )
+    def test_proxies_underlying_sign_methods(self, sign, method, expected):
+        sp_sign = SemanticPointerSign(GenericSign(sign), vocab=Vocabulary(16))
+        assert getattr(sp_sign, method)() == expected
+
+    def test_proxies_underlying_to_vector_method(self):
+        sp_sign = SemanticPointerSign(
+            TestSemanticPointerSign.DummySign(1), vocab=Vocabulary(16)
+        )
+        assert np.allclose(sp_sign.to_vector(16), np.ones(16))
+
+    def test_equality(self):
+        with pytest.raises(NotImplementedError):
+            SemanticPointerSign(
+                GenericSign(1), vocab=Vocabulary(16)
+            ) == SemanticPointerSign(GenericSign(1), vocab=Vocabulary(16))
+
+    def test_repr(self):
+        assert re.match(
+            r"SemanticPointerSign\(GenericSign\(sign=1\), algebra=None, "
+            r"dimensions=16, vocab=\<.*\>, name=None\)",
+            repr(SemanticPointerSign(GenericSign(1), vocab=Vocabulary(16), name=None)),
+        )
+
+    def test_to_semantic_pointer_with_vocab(self):
+        vocab = Vocabulary(16)
+        sp_sign = SemanticPointerSign(
+            TestSemanticPointerSign.DummySign(1), vocab=vocab, name="a"
+        )
+        sp = sp_sign.to_semantic_pointer()
+        assert np.allclose(sp.v, np.ones(16))
+        assert sp.vocab is vocab
+
+    def test_to_semantic_pointer_with_algebra(self):
+        algebra = HrrAlgebra()
+        sp_sign = SemanticPointerSign(
+            TestSemanticPointerSign.DummySign(1),
+            dimensions=16,
+            algebra=algebra,
+            name="a",
+        )
+        sp = sp_sign.to_semantic_pointer()
+        assert np.allclose(sp.v, np.ones(16))
+        assert sp.algebra is algebra
+
+    def test_to_semantic_pointer_without_name(self):
+        algebra = HrrAlgebra()
+        sp_sign = SemanticPointerSign(
+            TestSemanticPointerSign.DummySign(1),
+            dimensions=16,
+            algebra=algebra,
+        )
+        sp_sign.to_semantic_pointer()  # should not throw
